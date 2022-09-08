@@ -1,5 +1,7 @@
 # EcommerceFinalProject
 Final Project 
 
-Team members
-noidsnovsndov
+Team members: 
+- Natan Lellouce
+- Kyle Husbands
+- Julien Bernardo
