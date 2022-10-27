@@ -11,30 +11,28 @@
   We plan on creating a biding market place website.
   Our website will implement the following features:
   
-1. As a user, I will be able to, register, login and logout of my account.
-2. As a user, I will be able to, change my password.
-3. As a buyer, I will be able to, view my order history.
-4. As a buyer, I will be able to, see items with the same category.
-5. As a buyer, I will be able to, contact the buyer regarding their products.
-6. As a buyer, I will be able to, search for specific products.  
-7. As a buyer, I will be able to, rate items and buyers.
-8. As a buyer, I will be able to, view my cart.
-9. As a buyer, I will be able to, edit quantitys in my cart.
-10. As a buyer, I will be able to, delete items from my cart.
-11. As a buyer, I will be able to, checkout items in my cart.
-12. As a buyer, I will be able to, view information of each item.
-13. As a buyer, I will be able to, make an offer on an item thats being sold at full price.
-14. As a buyer, I will be able to, save items and view them later. **(2 features: save and view)**
-15. As a buyer, I will be able to, view the items that I bid on.
-16. As a seller, I will be able to, set end dates for each of my items.
-17. As a seller, I will be able to, add an item to my inventory.
-18. As a seller, I will be able to, edit my products for sale.
-19. As a seller, I will be able to, delete my products for sale.
-20. As a seller, I will be able to, view my history of my sold items.
-21. As a seller, I will be able to, modify my storefront screen.
-22. As a seller, I will be able to, contact the people bidding on my items.
-23. As a seller, I will be able to, set a minimum bid on my items.
-24. As a seller, I will be able to, extend bid end times.
+1. As a person, I will be able to, search for items.
+2. As a person, I will be able to create my account and login.
+3. As a user, I will be able to, change my password.
+4. As a buyer, I will be able to, view my order history.
+5. As a buyer, I will be able to, see items with the same category.
+6. As a buyer, I will be able to, contact the seller regarding their products.
+7. As a buyer, I will be able to, search for specific products.  
+8. As a buyer, I will be able to, rate buyers.
+9. As a buyer, I will be able to, view my cart.
+10. As a buyer, I will be able to, edit quantitiess in my cart.
+11. As a buyer, I will be able to, delete items from my cart.
+12. As a buyer, I will be able to, checkout items in my cart.
+13. As a buyer, I will be able to, view information of each item.
+14. As a buyer, I will be able to, input a discount code.
+15. As a buyer, I will be able to, save items and view them later in my wishlist.
+17. As a seller, I will be able to, view all of my items.
+18. As a seller, I will be able to, add an item to my inventory.
+19. As a seller, I will be able to, edit my products for sale.
+20. As a seller, I will be able to, delete my products for sale.
+21. As a seller, I will be able to, view my history of my sold items.
+22. As a seller, I will be able to, modify my storefront screen.
+23. As a seller, I will be able to, reply to buyers about items
       
  We wil model our website off of Ebay, we estimate that we will spend 180 hours on the project, 60 hours per team member.
       
