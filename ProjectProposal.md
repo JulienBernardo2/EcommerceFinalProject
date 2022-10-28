@@ -13,7 +13,7 @@
   
 1. As a person, I will be able to, search for items.
 2. As a person, I will be able to create my account and login.
-3. As a user, I will be able to, change my password.
+3. As a buyer, I will be able to, edit my profile.
 4. As a buyer, I will be able to, view my order history.
 5. As a buyer, I will be able to, see items with the same category.
 6. As a buyer, I will be able to, contact the seller regarding their products.
@@ -31,7 +31,7 @@
 19. As a seller, I will be able to, edit my products for sale.
 20. As a seller, I will be able to, delete my products for sale.
 21. As a seller, I will be able to, view my history of my sold items.
-22. As a seller, I will be able to, modify my storefront screen.
+22. As a seller, I will be able to, modify my profile.
 23. As a seller, I will be able to, reply to buyers about items
       
  We wil model our website off of Ebay, we estimate that we will spend 180 hours on the project, 60 hours per team member.
