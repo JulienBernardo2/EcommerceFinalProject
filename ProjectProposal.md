@@ -20,6 +20,7 @@
 7. As a buyer, I will be able to, search for specific products.  
 8. As a buyer, I will be able to, rate buyers.
 9. As a buyer, I will be able to, view my cart.
+10. As a buyer, I will be able to, search for seller profiles 
 10. As a buyer, I will be able to, edit quantitiess in my cart.
 11. As a buyer, I will be able to, delete items from my cart.
 12. As a buyer, I will be able to, checkout items in my cart.
@@ -33,6 +34,7 @@
 21. As a seller, I will be able to, view my history of my sold items.
 22. As a seller, I will be able to, modify my profile.
 23. As a seller, I will be able to, reply to buyers about items
+24. As a seller i will be able to search for buyer profile
       
  We wil model our website off of Ebay, we estimate that we will spend 180 hours on the project, 60 hours per team member.
       
