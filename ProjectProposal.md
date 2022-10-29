@@ -12,7 +12,7 @@
   Our website will implement the following features:
   
 1. As a person, I will be able to, search for items.
-2. As a person, I will be able to create my account and login.
+2. As a person, I will be able to create my profile and login.
 3. As a buyer, I will be able to, edit my profile.
 4. As a buyer, I will be able to, view my order history.
 5. As a buyer, I will be able to, see items with the same category.
