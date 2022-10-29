@@ -26,20 +26,17 @@
 13. As a buyer, I will be able to, view my cart.
 14. As a buyer, I will be able to, edit quantities in my cart.
 15. As a buyer, I will be able to, delete products from my cart.
-16. As a buyer, I will be able to, checkout products in my cart.
-17. As a buyer, I will be able to, search for seller profiles
-18. As a buyer, I will be able to, rate sellers. 
-19. As a buyer, I will be able to, input a discount code for my cart.
-20. As a buyer, I will be able to, log out.
-21. As a buyer, I will be able to, save products and view them later in my wishlist.
-22. As a seller, I will be able to, view all of my products.
-23. As a seller, I will be able to, add products to the catalog.
-24. As a seller, I will be able to, edit my products for sale.
-25. As a seller, I will be able to, delete my products for sale.
-26. As a seller, I will be able to, view my history of my sold products.
-27. As a seller, I will be able to, modify my profile.
-28. As a seller, I will be able to, reply to buyers about products
-29. As a seller, I will be able to, log out
+16. As a buyer, I will be able to, checkout products in my cart. 
+17. As a buyer, I will be able to, input a discount code for my cart.
+18. As a buyer, I will be able to, log out.
+19. As a seller, I will be able to, view all of my products.
+20. As a seller, I will be able to, add products to the catalog.
+21. As a seller, I will be able to, edit my products for sale.
+22. As a seller, I will be able to, delete my products for sale.
+23. As a seller, I will be able to, view my history of my sold products.
+24. As a seller, I will be able to, modify my profile.
+25. As a seller, I will be able to, reply to buyers about products
+26. As a seller, I will be able to, log out
       
  We wil model our website off of Ebay, we estimate that we will spend 180 hours on the project, 60 hours per team member.
       
