@@ -29,15 +29,16 @@
 16. As a buyer, I will be able to, search for seller profiles
 17. As a buyer, I will be able to, rate sellers. 
 18. As a buyer, I will be able to, input a discount code for my cart.
-19. As a buyer, I will be able to, save products and view them later in my wishlist.
-20. As a seller, I will be able to, view all of my products.
-21. As a seller, I will be able to, add products to the catalog.
-22. As a seller, I will be able to, edit my products for sale.
-23. As a seller, I will be able to, delete my products for sale.
-24. As a seller, I will be able to, view my history of my sold products.
-25. As a seller, I will be able to, modify my profile.
-26. As a seller, I will be able to, reply to buyers about products
-27. As a seller i will be able to search for buyer profile
+18. As a buyer, I will be able to, log out.
+20. As a buyer, I will be able to, save products and view them later in my wishlist.
+21. As a seller, I will be able to, view all of my products.
+22. As a seller, I will be able to, add products to the catalog.
+23. As a seller, I will be able to, edit my products for sale.
+24. As a seller, I will be able to, delete my products for sale.
+25. As a seller, I will be able to, view my history of my sold products.
+26. As a seller, I will be able to, modify my profile.
+27. As a seller, I will be able to, reply to buyers about products
+28. As a seller, I will be able to, log out
       
  We wil model our website off of Ebay, we estimate that we will spend 180 hours on the project, 60 hours per team member.
       
