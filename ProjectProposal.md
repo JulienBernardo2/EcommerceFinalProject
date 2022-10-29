@@ -13,28 +13,31 @@
   
 1. As a person, I will be able to, search for items.
 2. As a person, I will be able to create my profile and login.
-3. As a buyer, I will be able to, edit my profile.
-4. As a buyer, I will be able to, view my order history.
-5. As a buyer, I will be able to, see items with the same category.
-6. As a buyer, I will be able to, contact the seller regarding their products.
-7. As a buyer, I will be able to, search for specific products.  
-8. As a buyer, I will be able to, rate buyers.
-9. As a buyer, I will be able to, view my cart.
-10. As a buyer, I will be able to, search for seller profiles 
-10. As a buyer, I will be able to, edit quantitiess in my cart.
-11. As a buyer, I will be able to, delete items from my cart.
-12. As a buyer, I will be able to, checkout items in my cart.
-13. As a buyer, I will be able to, view information of each item.
-14. As a buyer, I will be able to, input a discount code.
-15. As a buyer, I will be able to, save items and view them later in my wishlist.
-17. As a seller, I will be able to, view all of my items.
-18. As a seller, I will be able to, add an item to my inventory.
-19. As a seller, I will be able to, edit my products for sale.
-20. As a seller, I will be able to, delete my products for sale.
-21. As a seller, I will be able to, view my history of my sold items.
-22. As a seller, I will be able to, modify my profile.
-23. As a seller, I will be able to, reply to buyers about items
-24. As a seller i will be able to search for buyer profile
+3. As a person, I will be able to, see all items as a catalog.
+4. As a person, I will be able to, filter the catalog of items by category.
+5. As a buyer, I will be able to, edit my profile.
+6. As a buyer, I will be able to, view my order history.
+7. As a buyer, I will be able to, see all items as a catalog.
+8. As a buyer, I will be able to, filter the catalog of items by category.
+9. As a buyer, I will be able to, contact the seller regarding their products.
+10. As a buyer, I will be able to, search for specific products.  
+11. As a buyer, I will be able to, rate buyers.
+12. As a buyer, I will be able to, view my cart.
+13. As a buyer, I will be able to, search for seller profiles 
+14. As a buyer, I will be able to, edit quantitiess in my cart.
+15. As a buyer, I will be able to, delete items from my cart.
+16. As a buyer, I will be able to, checkout items in my cart.
+17. As a buyer, I will be able to, view information of each item.
+18. As a buyer, I will be able to, input a discount code.
+19. As a buyer, I will be able to, save items and view them later in my wishlist.
+20. As a seller, I will be able to, view all of my items.
+21. As a seller, I will be able to, add an item to my inventory.
+22. As a seller, I will be able to, edit my products for sale.
+23. As a seller, I will be able to, delete my products for sale.
+24. As a seller, I will be able to, view my history of my sold items.
+25. As a seller, I will be able to, modify my profile.
+26. As a seller, I will be able to, reply to buyers about items
+27. As a seller i will be able to search for buyer profile
       
  We wil model our website off of Ebay, we estimate that we will spend 180 hours on the project, 60 hours per team member.
       
