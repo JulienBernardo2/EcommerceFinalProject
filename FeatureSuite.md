@@ -1,12 +1,21 @@
-Feature: search products
-  In order to find products
-  As a person
-  I want to be able to input search terms to see the matching availible products
+# **Feature Suite**
 
-  Scenario: try searching "shoes"
-    Given that I have clicked in the search box
-    When I input "shoes"
-    Then I see many products with a similar or identical name, description or category to "shoes"
+### Team Members
+  1. Julien Bernardo
+  2. Natan Lellouche
+  3. Kyle Husbands
+
+---
+
+1. Feature: search products
+   <br> &emsp;In order to find products
+   <br> &emsp;As a person
+   <br> &emsp;I want to be able to input search terms to see the matching availible products
+    
+    &emsp;Scenario: try searching "shoes"
+    <br> &emsp;&emsp;Given that I have clicked in the search box
+    <br> &emsp;&emsp;When I input "shoes"
+    <br> &emsp;&emsp;Then I see many products with a similar or identical name, description or category to "shoes"
 
 Feature: view the catalog of products
   In order to browse through the catalog
