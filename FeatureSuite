@@ -3,154 +3,110 @@ Feature: search products
   As a person
   I want to be able to input search terms to see the matching availible products
 
-  Positive
   Scenario: try searching "shoes"
     Given that I have clicked in the search box
     When I input "shoes"
     Then I see many products with a similar or identical name, description or category to "shoes"
-
-  Negative
-  Scenario: try searching "shoes"
-    Given that I have clicked in the search box
-    When I input "shoes"
-    Then I see many products with an irrelevant name, description or category to "shoes"
 
 Feature: view the catalog of products
   In order to browse through the catalog
   As a person
   I want to be able to view the products for sale
 
-  Positive
   Scenario:
-    Given that I am in JKN-Bay
+    Given that I am at JKN-Bay website
     Then I see a catalog with all of the availible products
-
-  Negative
-  Scenario:
-    Given that I am in JKN-Bay
-    Then I cannot see the catalog
 
 Feature: create profile
   In order to be able to login
   As a person
-  I want to be able to create my account
+  I want to be able to create my profile
 
-  Positive
-  Scenario:
-    Given that I have clicked the create account button
+  Scenario: try input proper info
+    Given that I have clicked the create profile button
     When I input "Julien" as a username, "1234" as a password, "I am new to JKN-Bay" as my bio
     And I select buyer as my role
-    And I click the Create account button
+    And I click the Create profile button
     Then I am redirected to the login page
 
-  Negative
-  Scenario:
-    Given that I have clicked the create account button
+  Scenario: try input username that already taken
+    Given that I have clicked the create profile button
     When I input "Julien" as a username, "1234" as a password, "I am new to JKN-Bay" as my bio
     And I select buyer as my role
-    And I click the Create account button
+    And I click the Create profile button
     Then there is a error message shown stating that my username is already taken
 
 
 Feature: login
   In order to have access to all of the features of JKN-Bay
   As a person
-  I want to be able to login to my account
+  I want to be able to login to my profile
 
-  Positive
-  Scenario:
-    Given that I have created my account
-    When I input my username and password
-    And click the Login button
-    Then I am redirected to the main page of JKN-Bay with all of the features availible
+  Scenario: try with correct info
+    Given that I have created my profile
+    When I input the correct username and password for my profile
+    Then I am logged into my account
   
-  Negative
-  Scenario:
-    Given that I have created my account
-    When I input my username and password
-    And click the Login button
-    Then there is a error message shown stating that my username or password is incorrect
+  Scenario: try with incorrect info
+    Given that I have created my profile
+    When I input the incorrect username and password for my profile
+    Then I am not logged into my profile
 
 Feature: get discount code
   In order to get a rebait on checkout
   As a buyer
   I want to be able to get my discount code
 
-  Positive
   Scenario:
-    Given that i have just created my account
+    Given that I have just created my profile
     And logged into JKN-Bay
     When I click on Profile Button
-    Then I am able to see my one time discount code
-  
-  Negative
-  Scenario:
-    Given that i have already used my code
-    When I click on Profile Button
-    Then I am still able to see my one time discount code
-
+    Then I am able to see my discount code
 
 Feature: edit my profile
   In order to have the proper info for my profile
   As a buyer
   I want to be able to update my profile
 
-  Positive
-  Scenario:
+  Scenario: try to edit my bio
     Given that I have logged into JKN-Bay
     And I have clicked on the Profile button
-    When I input my new username or bio
+    When I input my new bio
     And click on the save button
-    Then there is a success message shown and my profile has the newly updated info
+    Then my bio is updated
 
-  Negative
-  Scenario:
+  Scenario: try to edit my username to one thats already taken
     Given that I have logged into JKN-Bay
     And I have clicked on the Profile button
-    When I input my new username or bio
+    When I input my new username thats already taken
     And click on the save button
-    Then there is an error message shown stating that the username is already taken and nothing is changed for my profile
+    Then there is an error message shown and my profile is not updated
 
 Feature: view order history
   In order to keep track of all my past orders
   As a buyer
   I want to be able to view all of my bought products
 
-  Positive
   Scenario:
     Given that I have logged into JKN-Bay
     And I have clicked on the Profile button
     When I click on the Order History button
     Then I see all of my bought products
 
-  Negative
-  Scenario:
-    Given that I have logged into JKN-Bay
-    And I have clicked on the Profile button
-    When I click on the Order History button
-    Then I see none of my bought products
-
 Feature: view the catalog of products
   In order to browse through the catalog
   As a buyer
   I want to be able to view the products for sale
 
-  Positive
   Scenario:
     Given that I am in JKN-Bay
     Then I see a catalog with all of the availible products
-
-  Negative
-  Scenario:
-    Given that I am in JKN-Bay
-    Then I cannot see the catalog
 
 Feature: contact seller
   In order to ask questions about products
   As a buyer
   I want to be able to contact the seller
 
-  Positive
   Scenario:
     Given that I am in the catalog and have an product that I want to question about
     When I click on the details button for that product
@@ -158,110 +114,102 @@ Feature: contact seller
     When I click the send button
     Then it sends my message to that seller 
 
-  Negative
-  Not sure yet
+Feature: view messages
+  In order to view the answers to my questions about a product
+  As a buyer
+  I want to be able to view my messages
+
+  Scenario: 
+    Given that I have logged into JKN-bay
+    When I click on the messages button
+    Then I see a list of messages from sellers
 
 Feature: add products to my cart
   In order to select products that I want to buy
   As a buyer
   I want to be able to add products to my cart
 
-  Positive
-  Scenario:
-    Given that I am in the catalog and have an product that I want
+  Scenario: add an item with a proper quantity amount
+    Given that I am in the catalog and have a product that I want
     When I click the add to cart button
     And I select the quantity that I want to add
-    Then that product is in my cart
-
-  Negative
-  Scenario:
-    Not sure
+    Then that product is added in my cart
+  
+  Scenario: add an item with an inproper quantity amount
+    Given that I am in the catalog and have a product that I want
+    When I click the add to cart button
+    And I select a quantity higher then the seller has in stock 
+    Then an error message is shown and nothing is added to my cart
 
 Feature: view details about a product
   In order to know more information about the product
   As a buyer
   I want to be able to view the details about a product
 
-  Positive
   Scenario:
     Given that I am in the catalog and have a product I want
     When I click the details button for that product
     Then I see all of the details for that product
 
-  Negative
-  Scenario:
-    Not sure
 
 Feature: search products
   In order to find products
   As a buyer
   I want to be able to input search terms to see the matching availible products
 
-  Positive
   Scenario: try searching "shoes"
     Given that I have clicked in the search box
     When I input "shoes"
     Then I see many products with a similar or identical name, description or category to "shoes"
-
-  Negative
-  Scenario: try searching "shoes"
-    Given that I have clicked in the search box
-    When I input "shoes"
-    Then I see many products with an irrelevant name, description or category to "shoes"
 
 Feature: view my cart
   In order to see all of my products in my cart
   As a buyer
   I want to be able to view my cart
 
-  Positive
   Scenario:
     Given that I have logged into JKN-Bay
     When I click on the Cart Button
-    Then I am able to see what is in my cart
+    Then I am able to see the products that are in my cart
 
 Feature: edit quantities in cart
   In order to edit the amount of a specific product in my cart
   As a buyer
   I want to be able to edit the amount of a specific product
 
-  Positive
-  Scenario:
+  Scenario: try with a proper quantity amount
     Given that I have added a product to my cart
-    When I click the on the quantity for the specific product in mind
+    When I click on the quantity for the specific product in mind
     And input the new quantity
     Then I click the Update cart button
-    And a success message is shown stating quantity has been updated
+    And a success message is shown and my cart is updated
 
-  Negative
-  Scenario:
+  Scenario: try with improper quantity amount
     Given that I have added a product to my cart
     When I click the on the quantity for the specific product in mind
-    And input the new quantity
+    And input the new quantity which is too low or high from what the seller has in stock
     Then I click the Update cart button
-    And a error message is shown stating not enough left in stock
+    And a error message is shown and my cart is not updated
 
 Feature: delete products from cart
   In order to delete products in my cart
   As a buyer
   I want to be able to delete the product
-  
-  Positive
+
   Scenario:
     Given that I have added a product to my cart
-    When I click on the delete button for th specific product in mind
-    Then the I should not see the product in my cart
+    When I click on the delete button for that specific product in mind
+    Then the product is deleted from my cart
 
 Feature: checkout my cart
   In order to buy products
   As a buyer
   I want to be able to buy many products
  
-  Scenario:
+  Scenario: 
     Given I have a product with a cost of $200 in my cart
     When I click the checkout button
-    Then those products are not in my cart anymore
-    And I should see a success message saying that the products have been checked out
+    Then my cart is empty
 
 
 Feature: input discount code
@@ -272,12 +220,7 @@ Feature: input discount code
   Scenario:
     Given that I have products in my cart
     And that I have inputted my discount code
-    Then the total price should decreas by 15%
-
-Feature: add products to wish list
-  In order to save products that I plan to purchase
-  As a buyer
-  I want to be able to add products to my wish list
+    Then the total price of my cart should decrease by 15%
 
 Feature: logout
   In order to safely exit JKN-bay
@@ -286,8 +229,7 @@ Feature: logout
 
   Scenario:
     Given that I have clicked the log out button
-    Then I should be brought to the main page as a person
-    And a success message should show stating that I have been successfully logged out
+    Then I should be redirected to the main page as a person
 
 Feature: view my products
   In order to view everything that I am selling
@@ -306,8 +248,8 @@ Feature: add products
   I want to be able to add them to the catalog
 
   Scenario:
-    Given that I have logged into JKN-Bay
-    And I am on the catalog
+    Given that I have clicked on the profile button
+    And I have clicked on the add product button
     When I click the add product button
     And input the product name, description, quantity
     Then I can see my new item in the catalog
@@ -321,7 +263,70 @@ Feature: edit products
     Given that I have clicked on the profile button
     And I have clicked on the desired product to edit
     When I input the new name or description or quantity
-    Then there is a success message shown and the product has the newly updated info 
+    Then there is a success message shown and the product has been updated 
+
+Feature: delete products
+  In order to keep track of what is being sold
+  As a seller
+  I want to be able to delete my products
+
+  Scenario:
+  Given that I have clicked on the profile button
+  When I click on the delete button for my desired product to delete
+  Then the product is deleted 
+
+Feature: view sold products history
+  In order to keep track of all my past products
+  As a buyer
+  I want to be able to view all of my sold products
+
+  Scenario:
+    Given that I have logged into JKN-Bay
+    And I have clicked on the Profile button
+    When I click on the Sold History button
+    Then I see all of my sold products
+
+Feature: edit my profile
+  In order to have the proper info for my profile
+  As a seller
+  I want to be able to update my profile
+
+  Scenario: try to edit my bio
+    Given that I have logged into JKN-Bay
+    And I have clicked on the Profile button
+    When I input my new bio
+    And click on the save button
+    Then my bio is updated
+
+  Scenario: try to edit my username to one thats already taken
+    Given that I have logged into JKN-Bay
+    And I have clicked on the Profile button
+    When I input my new username thats already taken
+    And click on the save button
+    Then there is an error message shown and my profile is not updated
+
+Feature: view messages
+  In order to view the questions about my products
+  As a seller
+  I want to be able to view my messages
+
+  Scenario: 
+    Given that I have logged into JKN-bay
+    When I click on the messages button
+    Then I see a list of messages from interested buyers
+
+Feature: reply to messages
+  In order to reply to the questions about my products
+  As a seller
+  I want to be able to reply to my messages
+
+  Scenario: 
+    Given that I have logged into JKN-bay
+    When I click on the messages button
+    Then I see a list of messages from interested buyers
+    When select the buyer message that I want to respond too
+    And input my message
+    Then the message is sent to the buyer
 
 Feature: logout
   In order to safely exit JKN-bay
@@ -330,5 +335,4 @@ Feature: logout
 
   Scenario:
     Given that I have clicked the log out button
-    Then I should be brought to the main page as a person
-    And a success message should show stating that I have been successfully logged out
+    Then I should be redirected to the main page as a person
