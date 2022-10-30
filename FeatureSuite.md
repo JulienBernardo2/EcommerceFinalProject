@@ -239,7 +239,7 @@
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have clicked on the profile button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I have clicked on the add product button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I click the add product button
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And input the product name, description, quantity, and category
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And input the product name, price, description, quantity, and category
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then I can see my new item in the catalog
 <br><br>
   <br>&emsp;&emsp;22. Feature: edit products
@@ -249,7 +249,7 @@
     <br><br>&emsp;&emsp;&emsp;&emsp;Scenario:
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have clicked on the profile button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I have clicked on the desired product to edit
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input the new name or description or quantity
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input the new name or price or description or quantity or category
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then there is a success message shown and the product has been updated 
 <br><br>
   <br>&emsp;&emsp;23. Feature: delete products
