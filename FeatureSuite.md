@@ -31,13 +31,13 @@
                  <br> &emsp;&emsp;&emsp;&emsp;I want to be able to create my profile
     <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try input proper info
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have clicked the create profile button
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input "Julien" as a username, "1234" as a password, "I am new to JKN-Bay" as my bio
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input "Julien Bernardo" as fullname, "1234" as a password, "H3e-23m" as my postal code, "665-444" as credit card         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;number, "laval" as my city
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I select buyer as my role
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I click the Create profile button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then I am redirected to the login page and my profile is created
-    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try input username that already taken
+    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try input improper info
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have clicked the create profile button
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input "Julien" as a username, "1234" as a password, "I am new to JKN-Bay" as my bio
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input "Julien Bernardo" as fullname, "1234" as a password, "hello" as my postal code, "hello" as credit card             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;number, "laval" as my city
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I select buyer as my role
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I click the Create profile button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then there is a error message shown and my profile is not created
@@ -75,13 +75,13 @@
     <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try to edit my bio
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have logged into JKN-Bay
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I have clicked on the Profile button
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input my new bio
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input my new info
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And click on the save button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then my bio is updated
-    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try to edit my username to one thats already taken
+    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try to edit my info incorrectly
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have logged into JKN-Bay
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I have clicked on the Profile button
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input my new username thats already taken
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input my new credit card or postal code that is fake
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And click on the save button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then there is an error message shown and my profile is not updated
    <br><br>
@@ -235,22 +235,33 @@
                       <br> &emsp;&emsp;&emsp;&emsp;In order to sell products
                       <br> &emsp;&emsp;&emsp;&emsp;As a seller
                       <br> &emsp;&emsp;&emsp;&emsp;I want to be able to add them to the catalog
-    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario:
+    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try with proper values
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have clicked on the profile button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I have clicked on the add product button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I click the add product button
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And input the product name, price, description, quantity, and category
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then I can see my new item in the catalog
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And input the product name, price, description, quantity, image, and category
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then I can see my new item is added in the catalog
+    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try with improper values
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have clicked on the profile button
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I have clicked on the add product button
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I click the add product button
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And input the product name, price, description, "hello" as quantity, image, and category
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then I can see my new item is not added in the catalog
 <br><br>
   <br>&emsp;&emsp;22. Feature: edit products
                       <br> &emsp;&emsp;&emsp;&emsp;In order to keep my product info up to date
                       <br> &emsp;&emsp;&emsp;&emsp;As a seller
                       <br> &emsp;&emsp;&emsp;&emsp;I want to be able to edit my product
-    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario:
+    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try with proper values
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have clicked on the profile button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I have clicked on the desired product to edit
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input the new name or price or description or quantity or category
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input the new info
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then there is a success message shown and the product has been updated 
+   <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try with improper values
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have clicked on the profile button
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I have clicked on the desired product to edit
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input the new info but with the wrong types for quantity
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then there is a error message shown and the product is not updated 
 <br><br>
   <br>&emsp;&emsp;23. Feature: delete products
                       <br> &emsp;&emsp;&emsp;&emsp;In order to keep track of what is being sold
@@ -272,22 +283,22 @@
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then I see all of my sold products
 <br><br>
   <br>&emsp;&emsp;25. Feature: edit my profile
-                      <br> &emsp;&emsp;&emsp;&emsp;In order to have the proper info for my profile
-                      <br> &emsp;&emsp;&emsp;&emsp;As a seller
-                      <br> &emsp;&emsp;&emsp;&emsp;I want to be able to update my profile
+                     <br> &emsp;&emsp;&emsp;&emsp;In order to have the proper info for my profile
+                     <br> &emsp;&emsp;&emsp;&emsp;As a seller
+                    <br> &emsp;&emsp;&emsp;&emsp;I want to be able to update my profile
     <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try to edit my bio
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have logged into JKN-Bay
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I have clicked on the Profile button
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input my new bio
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input my new info
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And click on the save button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then my bio is updated
-    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try to edit my username to one thats already taken
+    <br><br>&emsp;&emsp;&emsp;&emsp;Scenario: try to edit my info incorrectly
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Given that I have logged into JKN-Bay
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And I have clicked on the Profile button
-    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input my new username thats already taken
+    <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;When I input my new credit card or postal code that is fake
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;And click on the save button
     <br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Then there is an error message shown and my profile is not updated
-<br><br>
+   <br><br>
   <br>&emsp;&emsp;26. Feature: view messages
                       <br> &emsp;&emsp;&emsp;&emsp;In order to view the questions about my products
                       <br> &emsp;&emsp;&emsp;&emsp;As a seller
