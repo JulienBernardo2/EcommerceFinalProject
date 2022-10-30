@@ -34,9 +34,10 @@
 21. As a seller, I will be able to, edit my products for sale.
 22. As a seller, I will be able to, delete my products for sale.
 23. As a seller, I will be able to, view my history of my sold products.
-24. As a seller, I will be able to, modify my profile.
-25. As a seller, I will be able to, reply to buyers about products
-26. As a seller, I will be able to, log out
+24. As a seller, I will be able to, edit my profile.
+25. As a seller, I will be able to, view messages from buyers about products
+26. As a seller, I will be able to, reply to buyers about products
+27. As a seller, I will be able to, log out
       
  We wil model our website off of Ebay, we estimate that we will spend 180 hours on the project, 60 hours per team member.
       
