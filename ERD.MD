@@ -6,6 +6,7 @@
   3. Kyle Husbands
   
   ---
-  ![ERD](https://user-images.githubusercontent.com/82057989/198896483-4e05c507-c51f-4ea1-9fa2-88253b7d4387.png)
+![ERD](https://user-images.githubusercontent.com/82057989/198896543-9f432cdb-9943-4288-8c4d-1a24e2984ca6.jpg)
+
 
   
