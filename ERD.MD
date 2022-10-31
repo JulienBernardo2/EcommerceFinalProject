@@ -7,7 +7,7 @@
   
   ---
 
-![ERD](https://user-images.githubusercontent.com/82057989/199043982-051ee9ff-048c-4e93-bd63-5dc617a0d726.png)
+![ERD](https://user-images.githubusercontent.com/82057989/199044376-cc8a2589-1c33-4481-aae6-764a1f0f3370.jpg)
 
 
   
