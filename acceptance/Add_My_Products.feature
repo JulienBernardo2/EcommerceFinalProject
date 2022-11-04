@@ -4,8 +4,7 @@ Feature: Add_My_Products
   I want to be able to add them to the catalog
 
   Scenario:
-    Given that I am on "/Seller/index"
-    And that I have clicked on the "Profile" button
+    Given that I am on "/Product/index"
     When I click on the "Add product" button
     And input the feilds
-    Then I can see my new item in the catalog
+    Then I can see my new product in the "My products" page
