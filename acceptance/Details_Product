@@ -1,9 +1,0 @@
-Feature: Details_Product
-  In order to know more information about the product
-  As a buyer
-  I want to be able to view the details about a product
-
-  Scenario:
-    Given that I am on "/Product/index"
-    When I click the "Details" button 
-    Then I see all of the details
