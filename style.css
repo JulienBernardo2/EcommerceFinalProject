@@ -1,0 +1,27 @@
+		
+/*************************************This is for the Profile*****************************/
+.ProfileBody{
+	font: 13px/20px "Lucida Grande", Tahoma, Verdana, sans-serif;
+	background: steelblue;
+	text-align: center;
+}
+
+.formFormat{
+	font-size: 18px;
+	position: relative;
+  	margin: 30px auto;
+  	padding: 20px 20px 20px;
+  	width: 55%;
+  	background: #f3f3f3;
+  	border-radius: 5px;
+}
+
+h1{
+	position: relative;
+  	font-size: 25px;
+  	font-weight: bold;
+  	color: #555;
+  	text-shadow: 0 1px white;
+  	background: #f3f3f3;
+  	padding: 20px 20px 20px;
+}
