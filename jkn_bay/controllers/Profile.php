@@ -51,6 +51,21 @@ class Profile extends \jkn_bay\core\Controller{
 		 	$this->view('Profile/register');
 		 }
 	 }
+	
+	public function edit(){
+		$profile = new \jkn_bay\models\Profile;
+		$profile = $profile->get($_SESSION["profile_id"]); 
+
+		if(isset($_POST['action'])){
+			$profile->first_name = $_POST['first_name'];
+			$profile->middle_name = $_POST['middle_name'];
+			$profile->last_name = $_POST['last_name'];
+			$profile->update();
+			header('location:/Profile/edit?message=Profile Updated');
+		}else{
+			$this->view('Profile/edit', $profile);
+		}	
+	}
 
 	public function logout(){
 		session_destroy();

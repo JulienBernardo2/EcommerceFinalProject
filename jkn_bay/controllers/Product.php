@@ -41,4 +41,13 @@ class Product extends \jkn_bay\core\Controller{
 			$this->view('Product/add');
 		}
 	}
+
+	public function delete($product_id){
+			$product = new \jkn_bay\models\Product();
+			$product = $product->get($product_id);
+			$product->deleteMessages();
+			$product->delete();
+			
+			header('location:/Product/indexAdmin?message=Product Deleted');
+	}
 }

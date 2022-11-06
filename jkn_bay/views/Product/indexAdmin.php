@@ -1,4 +1,4 @@
-<html>
+	<html>
 	<head>
 		<!-- Jquery -->
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -51,7 +51,7 @@
 				    					<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
 				  					</li>
 				  					<li class="nav-item">
-				    					<a class="nav-link" href ="/Product/add">List a Product</a>
+				    					<a class="nav-link" href ="/Product/add">New Product</a>
 				  					</li>';
             			} ?>
            	        </ul>
@@ -65,27 +65,36 @@
 
 					{
 						echo"
-								<div class='row'>
-									<div class='col-md-3'></div>
-										<div class='product-top'>
+								<div class='wrapper'>
+								    <div class=product-img>
 											<img src='/images/$item->image' style='max-width:200px;max-height:200px'/>
-												<div class='overlay'>
-													<button type'button' class='btn btn-secondary' title=''>
-														<i class='fa fa-pencil'></i>
-													</button>
-													<button type'button' class='btn btn-secondary' title=''>
-														<i class='fa fa-trash'></i>
-													</button>
-												</div>
-										</div>
-
-										<div class='product-bottom text-center'>
-												<h3>$item->name</h3><br>
-												<h5>$item->price</h5><br>
-												<h6>$item->state</h6><br>
-										</div> 
-									</div>	
-
+								    </div>
+								    <div class='product-info'>
+								      <div class='product-text'>
+										<h1>$item->name</h1>
+										<h4>$item->state</h4>
+										<p>$item->price</p><br>
+								         <div class='rating'>
+								               <span><i class='fa fa-star'></i></span>
+								               <span><i class='fa fa-star'></i></span>
+								               <span><i class='fa fa-star'></i></span>
+								               <span><i class='fa fa-star'></i></span>
+								               <span><i class='fa fa-star-half-alt'></i></span>  
+								               <span>(250 rating)</span>
+								         </div>
+								         <p class='desc'>$item->description</p>
+								         <p class='desc'>In stock: $item->quantity</p>
+								      </div>
+								      <div class='product-price-btn'>
+								                <a class='edit-button' href ='/Product/edit/$item->product_id'>
+													<i class='fa fa-pencil'></i>Edit Product
+												</a>
+								                <a class='delete-button' href ='/Product/delete/$item->product_id'>
+													<i class='fa fa-trash'></i>Delete Product
+												</a>
+								      </div>
+								    </div>
+								</div>
 							";
 					}
 				?>

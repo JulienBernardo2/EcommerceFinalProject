@@ -15,13 +15,12 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
-
-		<link rel="stylesheet" href="/style.css"/>
 		<title>Log in Page</title>
 
+		
 	</head>
 	
-	<body class="ProfileBody">
+	<body>
 		<?php
 			if(isset($_GET['error'])){ ?>
 				<div class="alert alert-danger alert-dismissible">
@@ -42,24 +41,21 @@
 		</div>
 
 		<form action='' method='post'>
-			<div class="formFormat">
-	    			<label for="username">Username</label>
-	    			<input type="text" class="form-control" id="username" name='username' placeholder="Enter username">
-	  			<br>
+			<div class="form-group1">
+    			<label for="username">Username</label>
+    			<input type="text" class="form-control" id="username" name='username' placeholder="Enter username">
+  			</div><br>
 
-	    			<label for="password">Password</label>
-	    			<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
-	  			<br>
-	  			<br>
-	  			<button type="submit" name='action' value='Login' class="btn btn-primary">Login</button>
-	  			<br>
-	  			<br>
-	  			<p>Don't have an Account? <a href ="/Profile/register">Sign Up</a></p>
-	  			<br>
-  			</div>
+  			<div class="form-group2">
+    			<label for="password">Password</label>
+    			<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+  			</div><br>
+  			<br>
+  			<button type="submit" name='action' value='Login' class="btn btn-primary">Login</button>
+  			<br>
 		</form>
 
-		
+		<p>Don't have an Account? <a href ="/Profile/register">Sign Up</a></p>
 	</body>
 
 </html>

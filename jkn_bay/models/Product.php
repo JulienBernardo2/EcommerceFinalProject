@@ -24,4 +24,24 @@ class Product extends \jkn_bay\core\Models{
 		return $STMT->fetchAll();
 	}
 
+	public function delete(){
+		$SQL = "DELETE FROM product WHERE product_id=:product_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['product_id'=>$this->product_id]);
+	}
+
+	public function deleteMessages(){
+		$SQL = "DELETE FROM message WHERE product_id=:product_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['product_id'=>$this->product_id]);
+	}
+
+	public function get($product_id){
+		//get all records from the owner table
+		$SQL = "SELECT * FROM product WHERE product_id=:product_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['product_id'=>$product_id]);//pass any data for the query
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Product");
+		return $STMT->fetch();
+	}
 }
