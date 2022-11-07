@@ -42,6 +42,33 @@ class Product extends \jkn_bay\core\Controller{
 		}
 	}
 
+	public function edit($product_id){
+
+		$product = new \jkn_bay\models\Product();
+		$product = $product->get($product_id);
+		
+		$profile = new \jkn_bay\models\Profile();
+		$profile = $profile->get($_SESSION['username']);
+		
+		if(isset($_POST['action'])){
+
+			
+			$product->name = $_POST['name'];
+			$product->description = $_POST['description'];
+			$product->price = $_POST['price'];
+			$product->quantity = $_POST['quantity'];
+			$product->state = $_POST['state'];
+			$product->image = $_POST['image'];
+
+			//$product->update();
+
+			//header('location:/Product/indexAdmin/' . $profile_id);
+		}else{
+			
+			$this->view('/Product/edit', $product, $profile);
+		}
+	}
+
 	public function delete($product_id){
 			$product = new \jkn_bay\models\Product();
 			$product = $product->get($product_id);

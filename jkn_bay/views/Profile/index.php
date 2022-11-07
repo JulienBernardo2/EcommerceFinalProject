@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-	<link rel="stylesheet" href="/style.css"/>
+	<link rel="stylesheet" href="/css/Profile.css"/>
 	<head>
 <?php
 			if(isset($_GET['error'])){ ?>

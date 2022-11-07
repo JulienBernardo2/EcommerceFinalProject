@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-	<link rel="stylesheet" href="/style.css"/>
+	<link rel="stylesheet" href="/css/Profile.css"/>
 	<head>
 		<!-- Jquery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -89,7 +89,7 @@
   			<br>
   			<br>
   			</div>
-<button type="submit" name='action' value='Register' class="btn btn-primary">Sign up</button>
+				<button type="submit" name='action' value='Register' class="btn btn-secondary">Sign up</button>
   			<br>
   		
   		</div>
