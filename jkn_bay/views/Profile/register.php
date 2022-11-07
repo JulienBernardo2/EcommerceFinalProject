@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-	
+	<link rel="stylesheet" href="/style.css"/>
 	<head>
 		<!-- Jquery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -35,49 +35,65 @@
 				</div>
 		<?php  }
 		?>
+		<div>
+<div class="navbar">
+  <a class="active" href="#">Home</a> 
+  <a href="#">Search</a> 
+  <img src="/jknimage.png" alt="JKN" />
+  <a href="#">About</a> 
+  <a href="#">Profile</a> 
+</div>
+<div class = "left">
+		<h1 class = "signup">Sign up</h1>
+<form action='' method='post'>
+			<div class="form-group">
+    			<label for="username">Username</label>
+    			<input type="text" class="form-control" id="username" name='username' placeholder="Enter username">
+  			</div>
 
-		<h1>Sign up</h1>
-
-		<form action='' method='post'>
-    		<label for="username">Username</label>
-    		<input type="text" class="form-control" id="username" name='username' placeholder="Enter username">
-    		<br>
-
-    		<label for="password">Password</label>
-    		<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
-  			<br>
-
-  			
-    		<label for="passwordConf">Password Confirmation</label>
-    		<input type="password" class="form-control" id="passwordConf" name="password_confirmation" placeholder="Re-enter Password">
-  			<br>
-
-  			
-    		<label for="first_name">First Name</label>
+  			<div class="form-group">
+    			<label for="password">Password</label>
+    			<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+  			</div>
+			<div class="form-group">
+    			<label for="passwordConf">Password Confirmation</label>
+    			<input type="password" class="form-control" id="passwordConf" name="password_confirmation" placeholder="Re-enter Password">
+  			</div>
+  			<div class="form-group">
+    			<label for="first_name">First Name</label>
     		<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name">
-  			<br>
-
-  			<label for="last_name">Last Name</label>
+  			</div>
+  		</div>
+  			<div class = "right">
+  			<div class="form-group">
+    			<label for="last_name">Last Name</label>
     		<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name">
-  			<br>
-
-  			<label for="postal_code">Postal Code</label>
+  			</div>
+  			<div class="form-group">
+    			<label for="postal_code">Postal Code</label>
     		<input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="Enter Postal Code">
-  			<br>
-  			
-    		<label for="city">City</label>
+  			</div>
+  			<div class="form-group">
+    			<label for="city">City</label>
     		<input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
+  			</div>
+  			<div class="accounttype">
+  			Select Account Type
   			<br>
-			
-			<p>Select Account Type</p>
+  			<br>
     		<input type="radio" id="role_buy" name="role" value="buyer">
 			<label for="role_buy">Buyer</label>
   			<input type="radio" id="role_sell" name="role" value="seller">
 			<label for="role_sell">Seller</label>
-  			<br>
 
-  			<button type="submit" name='action' value='Register' class="btn btn-primary">Sign up</button>
   			<br>
+  			<br>
+  			</div>
+<button type="submit" name='action' value='Register' class="btn btn-primary">Sign up</button>
+  			<br>
+  		
+  		</div>
 		</form>
 	</body>
+</div>
 </html>
