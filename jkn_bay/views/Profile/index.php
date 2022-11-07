@@ -46,9 +46,9 @@
 			<div class="description">
   				<h1 class="title" >Welcome to JKN-Bay</h1>
   				<p>
-  					The company, which caters to individual sellers and small businesses, is a market leader in e-commerce worldwide. eBay is headquartered in San Jose, California. Customers can participate in Web sites set up within their own country or use one of the company's international sites.
+  					The company, which caters to individual sellers and small businesses, is a market leader in e-commerce worldwide. JKN-Bay is headquartered in Montreal, Canada. Customers can participate in Web sites set up within their own country or use one of the company's international sites.
   					<br></br>
-  					The company, which caters to individual sellers and small businesses, is a market leader in e-commerce worldwide. eBay is headquartered in San Jose, California. Customers can participate in Web sites set up within their own country or use one of the company's international sites.
+  					The company, which caters to individual sellers and small businesses, is a market leader in e-commerce worldwide. JKN-Bay is headquartered in Montreal, Canada. Customers can participate in Web sites set up within their own country or use one of the company's international sites.
   				</p>
   			</div>
 
