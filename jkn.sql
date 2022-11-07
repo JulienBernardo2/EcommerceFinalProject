@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2022 at 03:15 PM
+-- Generation Time: Nov 07, 2022 at 03:55 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -32,9 +32,8 @@ USE `jkn`;
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `message_id` int(11) NOT NULL,
-  `buyer_id` int(11) NOT NULL,
-  `seller_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `profile_id` int(11) NOT NULL,
   `text` varchar(30) NOT NULL,
   `date_time` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -48,11 +47,12 @@ CREATE TABLE `message` (
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
-  `seller_id` int(11) NOT NULL,
+  `profile_id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
   `description` varchar(30) NOT NULL,
-  `price` int(20) NOT NULL,
+  `price` float NOT NULL,
   `quantity` int(11) NOT NULL,
+  `state` enum('used','new') NOT NULL,
   `image` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -65,25 +65,22 @@ CREATE TABLE `product` (
 DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
   `profile_id` int(11) NOT NULL,
+  `username` varchar(20) NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `postal_code` varchar(20) NOT NULL,
   `city` varchar(15) NOT NULL,
   `password_hash` varchar(72) NOT NULL,
-  `role` enum('buyer','seller') NOT NULL DEFAULT 'buyer'
+  `role` enum('buyer','seller') NOT NULL DEFAULT 'seller'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `seller`
+-- Dumping data for table `profile`
 --
 
-DROP TABLE IF EXISTS `seller`;
-CREATE TABLE `seller` (
-  `seller_id` int(11) NOT NULL,
-  `profile_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `profile` (`profile_id`, `username`, `first_name`, `last_name`, `postal_code`, `city`, `password_hash`, `role`) VALUES
+(15, 'seller', 'seller', 'seller', 'seller', 'seller', '$2y$10$tjDKhGh8ZMYXpFqHNh4vk.QJtFy7YaGk4oBTHFnTr96VJsBFxy1m6', 'seller'),
+(16, 'buyer', 'buyer', 'buyer', 'buyer', 'buyer', '$2y$10$xNgbLXetMXrCm3zviwUa0epobXk75MwC2vAjjngBe227CZwMn6hWC', 'buyer');
 
 --
 -- Indexes for dumped tables
@@ -94,28 +91,22 @@ CREATE TABLE `seller` (
 --
 ALTER TABLE `message`
   ADD PRIMARY KEY (`message_id`),
-  ADD KEY `message_to_seller` (`seller_id`),
-  ADD KEY `message_to_product` (`product_id`);
+  ADD KEY `message_to_product` (`product_id`),
+  ADD KEY `message_to_profile` (`profile_id`);
 
 --
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`product_id`),
-  ADD KEY `product_to_seller` (`seller_id`);
+  ADD KEY `product_to_profile` (`profile_id`);
 
 --
 -- Indexes for table `profile`
 --
 ALTER TABLE `profile`
-  ADD PRIMARY KEY (`profile_id`);
-
---
--- Indexes for table `seller`
---
-ALTER TABLE `seller`
-  ADD PRIMARY KEY (`seller_id`),
-  ADD KEY `seller_to_profile` (`profile_id`);
+  ADD PRIMARY KEY (`profile_id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -125,25 +116,19 @@ ALTER TABLE `seller`
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `seller`
---
-ALTER TABLE `seller`
-  MODIFY `seller_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
@@ -154,19 +139,13 @@ ALTER TABLE `seller`
 --
 ALTER TABLE `message`
   ADD CONSTRAINT `message_to_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
-  ADD CONSTRAINT `message_to_seller` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`seller_id`);
+  ADD CONSTRAINT `message_to_profile` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`);
 
 --
 -- Constraints for table `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `product_to_seller` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`seller_id`);
-
---
--- Constraints for table `seller`
---
-ALTER TABLE `seller`
-  ADD CONSTRAINT `seller_to_profile` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`);
+  ADD CONSTRAINT `product_to_profile` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
