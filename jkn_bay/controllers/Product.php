@@ -18,6 +18,16 @@ class Product extends \jkn_bay\core\Controller{
 		$this->view('Product/indexAdmin', ['product'=>$products]);
  	 }
 
+ 	  public function indexBuyer(){
+
+	 	//Gets all of the products for that profile_id
+	 	$product = new \jkn_bay\models\Product();
+	 	$products = $product->getAll();
+
+	 	//Creates the view with those products
+		$this->view('Product/indexBuyer', ['product'=>$products]);
+ 	 }
+
  	 public function add(){
 		if(isset($_POST['action'])){
 			$profile = new \jkn_bay\models\Profile();
@@ -41,6 +51,16 @@ class Product extends \jkn_bay\core\Controller{
 			$this->view('Product/add');
 		}
 	}
+
+	public function delete($product_id){
+			$product = new \jkn_bay\models\Product();
+			$product = $product->get($product_id);
+			$product->deleteMessages();
+			$product->delete();
+			
+			header('location:/Product/indexAdmin?message=Product Deleted');
+	}
+}
 
 	public function edit($product_id){
 
