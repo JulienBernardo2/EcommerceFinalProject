@@ -7,7 +7,7 @@ class Product extends \jkn_bay\core\Controller{
 
 	 	//Get current SESSION profile id
 		$profile = new \jkn_bay\models\Profile();
-		$profile = $profile->get($_SESSION['username']);
+		$profile = $profile->getProfileId($_SESSION['profile_id']);
 		$profile_id = $profile->profile_id;
 
 		//Gets all of the products for that profile_id
@@ -60,7 +60,7 @@ class Product extends \jkn_bay\core\Controller{
 			
 			header('location:/Product/indexAdmin?message=Product Deleted');
 	}
-}
+
 
 	public function edit($product_id){
 
@@ -68,33 +68,32 @@ class Product extends \jkn_bay\core\Controller{
 		$product = $product->get($product_id);
 		
 		$profile = new \jkn_bay\models\Profile();
-		$profile = $profile->get($_SESSION['username']);
+		$profile = $profile->getProfileId($_SESSION['profile_id']);
+
+		
 		
 		if(isset($_POST['action'])){
 
+			$filename = $this->saveFile($_FILES['image']);
+
+			if($filename){
+				//delete the old picture and then change the picture
+				unlink("images/$product->image");
+				$product->image = $filename;
+			}
 			
 			$product->name = $_POST['name'];
 			$product->description = $_POST['description'];
 			$product->price = $_POST['price'];
 			$product->quantity = $_POST['quantity'];
 			$product->state = $_POST['state'];
-			$product->image = $_POST['image'];
 
-			//$product->update();
+			$product->update();
 
-			//header('location:/Product/indexAdmin/' . $profile_id);
+			header('location:/Product/indexAdmin/' . $profile_id);
 		}else{
 			
 			$this->view('/Product/edit', $product, $profile);
 		}
-	}
-
-	public function delete($product_id){
-			$product = new \jkn_bay\models\Product();
-			$product = $product->get($product_id);
-			$product->deleteMessages();
-			$product->delete();
-			
-			header('location:/Product/indexAdmin?message=Product Deleted');
 	}
 }

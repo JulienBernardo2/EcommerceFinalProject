@@ -43,28 +43,30 @@
   <a href="#">About</a> 
   <a href="#">Profile</a> 
 </div>
+
+
 <div class = "left">
 		<h1 class = "signup">Sign up</h1>
-<form action='' method='post'>
-			<div class="form-group">
-    			<label for="username">Username</label>
-    			<input type="text" class="form-control" id="username" name='username' placeholder="Enter username">
-  			</div>
+		<form action='' method='post'>
+				<div class="form-group">
+	    			<label for="username">Username</label>
+	    			<input type="text" class="form-control" id="username" name='username' placeholder="Enter username">
+	  			</div>
 
-  			<div class="form-group">
-    			<label for="password">Password</label>
-    			<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
-  			</div>
-			<div class="form-group">
-    			<label for="passwordConf">Password Confirmation</label>
-    			<input type="password" class="form-control" id="passwordConf" name="password_confirmation" placeholder="Re-enter Password">
-  			</div>
-  			<div class="form-group">
-    			<label for="first_name">First Name</label>
-    		<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name">
-  			</div>
-  		</div>
-  			<div class = "right">
+	  			<div class="form-group">
+	    			<label for="password">Password</label>
+	    			<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+	  			</div>
+				<div class="form-group">
+	    			<label for="passwordConf">Password Confirmation</label>
+	    			<input type="password" class="form-control" id="passwordConf" name="password_confirmation" placeholder="Re-enter Password">
+	  			</div>
+	  			<div class="form-group">
+	    			<label for="first_name">First Name</label>
+	    		<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name">
+	  			</div>
+</div>
+<div class = "right">
   			<div class="form-group">
     			<label for="last_name">Last Name</label>
     		<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name">
@@ -90,9 +92,8 @@
   			<br>
   			</div>
 				<button type="submit" name='action' value='Register' class="btn btn-secondary">Sign up</button>
-  			<br>
-  		
-  		</div>
+  			<br>		
+</div>
 		</form>
 	</body>
 </div>

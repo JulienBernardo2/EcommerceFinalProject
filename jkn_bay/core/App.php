@@ -3,8 +3,8 @@ namespace jkn_bay\core;
     		   
 class App{
 
-	private $controller = 'Profile';
-	private $method = 'index';
+	private $controller = 'Product';
+	private $method = 'indexBuyer';
 
 
 	public function __construct(){

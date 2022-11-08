@@ -53,4 +53,17 @@ class Product extends \jkn_bay\core\Models{
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Product");
 		return $STMT->fetchAll();
 	}
+
+	public function update(){
+		$SQL = "UPDATE product SET name=:name, description=:description, price=:price, quantity=:quantity, state=:state, image=:image WHERE product_id=:product_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(
+			['name'=>$this->name,
+			 'description'=>$this->description, 
+			 'price'=>$this->price, 
+			 'quantity'=>$this->quantity, 
+			 'state'=>$this->state,
+			 'image'=>$this->image,
+			 'product_id'=>$this->product_id]);
+	}
 }
