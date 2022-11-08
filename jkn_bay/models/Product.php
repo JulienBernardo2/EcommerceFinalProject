@@ -44,4 +44,13 @@ class Product extends \jkn_bay\core\Models{
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Product");
 		return $STMT->fetch();
 	}
+
+	public function getAll(){
+		//get all records from the owner table
+		$SQL = "SELECT * FROM product";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute();//pass any data for the query
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Product");
+		return $STMT->fetchAll();
+	}
 }
