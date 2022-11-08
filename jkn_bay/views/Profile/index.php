@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-	<link rel="stylesheet" href="/css/Profile.css"/>
+	<link rel="stylesheet" href="/style.css"/>
 	<head>
 <?php
 			if(isset($_GET['error'])){ ?>
@@ -31,7 +31,7 @@
 		<title>Log in Page</title>
 
 		<div class="navbar">
-  <a class="active" href="#">Home</a> 
+  <a href ="/Product/indexBuyer" class="active" href="#">Home</a> 
   <a href="#">Search</a> 
   <img src="/jknimage.png" alt="JKN" />
   <a href="#">About</a> 
@@ -78,3 +78,4 @@
 </div>
 </html>
 </html>
+
