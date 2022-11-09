@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2022 at 06:07 PM
+-- Generation Time: Nov 09, 2022 at 02:51 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -41,6 +41,35 @@ CREATE TABLE `message` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `order`
+--
+
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
+  `order_id` int(11) NOT NULL,
+  `profile_id` int(11) NOT NULL,
+  `status` enum('cart','paid','shipped') NOT NULL,
+  `payment_id` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_detail`
+--
+
+DROP TABLE IF EXISTS `order_detail`;
+CREATE TABLE `order_detail` (
+  `order_detail_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `price` decimal(6,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product`
 --
 
@@ -61,9 +90,8 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `profile_id`, `name`, `description`, `price`, `quantity`, `state`, `image`) VALUES
-(7, 17, '1', '1', 1, 1, 'used', '6369357e80325.jpg'),
-(8, 17, 'def', 'fe', 3, 43, 'new', ''),
-(9, 17, 'e', '3', 3, 3, 'used', '63693b22aaaa1.jpg'),
+(8, 17, 'Hello', 'fe', 3, 43, 'new', '636ab1831e7d5.jpg'),
+(9, 17, 'e', '3', 3, 3, 'used', '636ab297dec2a.jpg'),
 (10, 17, '3', '4', 5, 5, 'new', '63693b339e7e8.png');
 
 -- --------------------------------------------------------
@@ -91,7 +119,10 @@ CREATE TABLE `profile` (
 INSERT INTO `profile` (`profile_id`, `username`, `first_name`, `last_name`, `postal_code`, `city`, `password_hash`, `role`) VALUES
 (15, 'seller', 'seller', 'seller', 'seller', 'seller', '$2y$10$tjDKhGh8ZMYXpFqHNh4vk.QJtFy7YaGk4oBTHFnTr96VJsBFxy1m6', 'seller'),
 (16, 'buyer', 'buyer', 'buyer', 'buyer', 'buyer', '$2y$10$xNgbLXetMXrCm3zviwUa0epobXk75MwC2vAjjngBe227CZwMn6hWC', 'buyer'),
-(17, '1', '1', '1', '1', '1', '$2y$10$Z8HVd1MWUTnSWyjhAlwSDuRWARyBoInyWbHnW1fslrXB7NeGZoEE2', 'seller');
+(17, '1', '1', '1', '1', '1', '$2y$10$Z8HVd1MWUTnSWyjhAlwSDuRWARyBoInyWbHnW1fslrXB7NeGZoEE2', 'seller'),
+(18, 'JuLien', '1', '1', '11', '11', '$2y$10$hqUw40FCGeRkiBgf5gP7WuuVKAkUjzkgcGISzqAxIuBX15F7fVef2', 'seller'),
+(19, 'Julienss', 'Natan', 'Husbands', 'u23j32r', 'asdasd', '$2y$10$sL2bCw/IViCdDXefUtfove/cnaZUnCucuHVSgQ2IoVD0kATx.qQ1a', 'seller'),
+(20, 'fh', 'q', 'q', 'q', 'q', '$2y$10$X1yqrG1WShLdNTjw9ZZbwui3.XexnyetJiW4d4we8B/zH9eE2XvUu', 'buyer');
 
 --
 -- Indexes for dumped tables
@@ -104,6 +135,21 @@ ALTER TABLE `message`
   ADD PRIMARY KEY (`message_id`),
   ADD KEY `message_to_product` (`product_id`),
   ADD KEY `message_to_profile` (`profile_id`);
+
+--
+-- Indexes for table `order`
+--
+ALTER TABLE `order`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `order_to_profile` (`profile_id`);
+
+--
+-- Indexes for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  ADD PRIMARY KEY (`order_detail_id`),
+  ADD KEY `order_detail_to_detail` (`order_id`),
+  ADD KEY `order_detail_to_product` (`product_id`);
 
 --
 -- Indexes for table `product`
@@ -130,6 +176,18 @@ ALTER TABLE `message`
   MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `order`
+--
+ALTER TABLE `order`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
@@ -139,7 +197,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
@@ -151,6 +209,19 @@ ALTER TABLE `profile`
 ALTER TABLE `message`
   ADD CONSTRAINT `message_to_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   ADD CONSTRAINT `message_to_profile` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`);
+
+--
+-- Constraints for table `order`
+--
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_to_profile` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`);
+
+--
+-- Constraints for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  ADD CONSTRAINT `order_detail_to_detail` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`),
+  ADD CONSTRAINT `order_detail_to_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
 
 --
 -- Constraints for table `product`
