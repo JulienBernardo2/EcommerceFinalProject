@@ -13,7 +13,7 @@ class Profile extends \jkn_bay\core\Controller{
 				$_SESSION['role'] = $profile->role;
 
 				if($_SESSION['role'] == 'seller'){
-					header('location:/Product/indexAdmin?message=You have been successfully logged in');
+					header('location:/Product/indexSeller?message=You have been successfully logged in');
 				}else{
 					header('location:/Product/indexBuyer?message=You have been successfully logged in');
 				}
@@ -33,10 +33,7 @@ class Profile extends \jkn_bay\core\Controller{
  	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
 
  	 	if ($cart == null) {
- 	 		$cart = new \jkn_bay\models\Order();
- 	 		$cart->profile_id = $_SESSION['profile_id'];
- 	 		$cart->status = 'cart';
- 	 		$cart->order_id = $cart->insert();
+ 	 		$cart = $this->produceCart();
  	 	}
 
  	 	$newProduct = new \jkn_bay\models\Order_detail();
@@ -46,14 +43,59 @@ class Profile extends \jkn_bay\core\Controller{
  	 	$product = new \jkn_bay\models\Product();
  	 	$product = $product->get($product_id);
  	 	$product_price = $product->price;
- 	 	$product_quantity = $product->quantity;
 
 
  	 	$newProduct->price = $product_price;
- 	 	$newProduct->qty = $product_quantity;
+ 	 	$newProduct->qty = 1;
+
  	 	$newProduct->insert();
+ 	 		header('location:/Product/indexBuyer?message=The product was added to your cart');
+ 	 }
 
+ 	 private function produceCart(){
+ 	 	$cart = new \jkn_bay\models\Order();
+ 	 	$cart->profile_id = $_SESSION['profile_id'];
+ 	 	$cart->status = 'cart';
+ 	 	$cart->order_id = $cart->insert();
+ 	 	return $cart;
+ 	 }
+ 	 public function viewCart(){
+ 	 	$cart = new \jkn_bay\models\Order();
+ 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
+ 	 	
+ 	 	if ($cart == null) {
+ 	 		$cart = $this->produceCart();
+ 	 	}
 
+ 	 	$product = new \jkn_bay\models\Order_detail();
+ 	 	$products = $product->getForOrder($cart->order_id);
+
+		$this->view('Profile/cart', $products);
+ 	 }
+
+ 	 public function removeFromCart($order_detail_id){
+ 	 	$product = new \jkn_bay\models\Order_detail();
+ 	 	$product = $product->get($order_detail_id);
+
+ 	 	$order = new \jkn_bay\models\Order();
+ 	 	$order = $order->get($product->order_id);
+ 	 	if($order->profile_id == $_SESSION['profile_id']){
+ 	 		$product->delete();
+ 	 		header('location:/Profile/viewCart?message=The product was deleted from your cart');
+ 	 	}else{
+ 	 		header('location:/Profile/viewCart?error=The product could not be deleted from the cart');
+ 	 	}
+ 	 }
+
+ 	 public function checkout(){
+ 	 	$cart = new \jkn_bay\models\Order();
+ 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
+
+ 	 	$cart->payment_id='somepaymentId';
+ 	 	$cart->status = 'paid';
+ 	 	$cart->update();
+
+ 	 	header('location:/Profile/viewCart?message=Your cart has been checked out');
  	 }
 
 	 public function register(){
@@ -96,7 +138,7 @@ class Profile extends \jkn_bay\core\Controller{
 			if ($profile->role == 'buyer' ) {
 				header('location:/Product/indexBuyer?message=Profile Updated');
 			} else {
-				header('location:/Product/indexAdmin?message=Profile Updated');
+				header('location:/Product/indexSeller?message=Profile Updated');
 			}
 			
 		}else{

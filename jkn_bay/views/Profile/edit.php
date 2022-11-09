@@ -16,6 +16,17 @@
 	<link rel="stylesheet" href="/css/profileEdit.css"/>
 
 	<title>Main Page</title>
+	<div class="navbar">
+		<?php
+			            				echo '
+			                						<a class="nav-link" href ="/Product/indexBuyer">Home</a>
+			                						<a class="nav-link" href ="/Profile/cart">Cart</a>
+	  												<img src="/jknimage.png" alt="JKN" />
+			            							<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+							  						<a class="nav-link" href ="/Profile/logout">Logout</a>
+							  				';
+		?>
+	</div>
 
 	<!--Font-Awesome CSS-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -35,29 +46,6 @@
 			</div>
 	<?php  }
 	?>
-
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-		<div class="navbar-collapse">
-			<ul class="navbar-nav">
-    			<li class="nav-item">
-        			<a class="nav-link" href ="/Product/indexAdmin">Main Page</a>
-    			</li>
-   	        </ul>
-			<ul class="navbar-nav ml-auto">
-    			<?php if(isset($_SESSION['username'])){
-    				echo '	<li class="nav-item">
-        						<a class="nav-link" href ="/Profile/logout">Logout</a>
-    						</li>
-							<li class="nav-item">
-		    					<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-		  					</li>
-		  					<li class="nav-item">
-		    					<a class="nav-link" href ="/Product/add">New Product</a>
-		  					</li>';
-    			} ?>
-   	        </ul>
-		</div>
-	</nav>
 
 <div class="container rounded bg-white mt-5 mb-5">
 	<div class="row">

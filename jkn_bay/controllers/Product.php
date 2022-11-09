@@ -3,7 +3,7 @@ namespace jkn_bay\controllers;
 
 class Product extends \jkn_bay\core\Controller{
 
-	 public function indexAdmin(){
+	 public function indexSeller(){
 
 	 	//Get current SESSION profile id
 		$profile = new \jkn_bay\models\Profile();
@@ -15,8 +15,17 @@ class Product extends \jkn_bay\core\Controller{
 	 	$products = $product->getAllProfile($profile_id);
 
 	 	//Creates the view with those products
-		$this->view('Product/indexAdmin', ['product'=>$products]);
+		$this->view('Product/indexSeller', ['product'=>$products]);
  	 }
+
+ 	 public function search(){
+	 	$product = new \jkn_bay\models\Product();
+
+		$search_val = $_GET['searchbar'];
+
+		$products = $product->getAllSimilar($search_val);
+		$this->view('Product/indexBuyer', ['product'=>$products]);
+	 }
 
  	  public function indexBuyer(){
 
@@ -46,7 +55,7 @@ class Product extends \jkn_bay\core\Controller{
 			$product->image = $filename;
 
 			$product->insert();	
-			header('location:/Product/indexAdmin?message=Product Created');
+			header('location:/Product/indexSeller?message=Product Created');
 		}else{
 			$this->view('Product/add');
 		}
@@ -58,7 +67,7 @@ class Product extends \jkn_bay\core\Controller{
 			$product->deleteMessages();
 			$product->delete();
 			
-			header('location:/Product/indexAdmin?message=Product Deleted');
+			header('location:/Product/indexSeller?message=Product Deleted');
 	}
 
 
@@ -90,7 +99,7 @@ class Product extends \jkn_bay\core\Controller{
 
 			$product->update();
 
-			header('location:/Product/indexAdmin/' . $profile_id);
+			header('location:/Product/indexSeller/' . $profile_id);
 		}else{
 			
 			$this->view('/Product/edit', $product, $profile);

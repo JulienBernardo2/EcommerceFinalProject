@@ -12,13 +12,13 @@
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 			crossorigin="anonymous"></script>
-		
+
 		<!--Font-Awesome CSS-->
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/style2.css"/>
-		
+			<link rel="stylesheet" href="/css/style.css"/>
+
 		<!-- Scripts -->
 			<script type="text/javascript">
             	window.setTimeout(function() {
@@ -27,8 +27,8 @@
                 	});
             	}, 3000);
         	</script>
-		
-		<!-- Message Pop ups -->
+
+        <!-- Message Pop ups -->
 			<?php
 				if(isset($_GET['error'])){ ?>
 					<div class="alert alert-danger" id="alert-message">
@@ -43,51 +43,30 @@
 					</div>
 			<?php  }
 			?>
-		
-		<title>Buyer Page</title>
-		
+
+
+			<title>Seller Page</title>
 	</head>
-	
-	<body>
-	
+		
+	<body>	
+
 		<!-- Nav -->
-			<div class="navbar">
+			<div class ="navbar">
 				<?php if(isset($_SESSION['username'])){
-		        	echo '
-		        		<a class="nav-link" href ="/Product/indexBuyer">Home</a>
-		        		<a class="nav-link" href ="/Profile/viewCart">Cart</a>
-  						<img src="/jknimage.png" alt="JKN" />
-		        		<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+			    	echo '
+			     		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+			            <a class="nav-link" href ="/Product/add">New Product</a>
+	  					<img src="/jknimage.png" alt="JKN" />
+			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
 						<a class="nav-link" href ="/Profile/logout">Logout</a>
 					';
-		        }else{
-		        	echo '
-		        		<a class="nav-link" href ="/Product/indexBuyer">Home</a>
-  						<img src="/jknimage.png" alt="JKN" />
-		        		<a class="nav-link" href ="/Profile/index">Login</a>
-		        		<a class="nav-link" href ="/Profile/register">Sign up</a>
-		        	';
-		        } ?>
+			    }?>	
 			</div>
-
-		<!-- Search for products -->	
-			<form action='/Product/search/' method="get">
-				<div class="input-group rounded">
-					<div class="form-outline">
-						<input type="text" id="searchbar" class="form-control" name="searchbar" placeholder="Search" />
-					</div>
-				  
-				  	<button name="action" class="btn btn-primary">
-				    	<i class="fa fa-search"></i>
-				  	</button>
-				</div>
-			</form>
-
-
+			
 		<!-- Products to dsiplay -->
-			<div id="divMainContainer">
-				<h1>Catalog</h1>
-					
+			<div class="container">
+				<h1>My Products</h1>
+				
 				<?php
 					foreach($data['product'] as $item){
 						echo"
@@ -95,26 +74,30 @@
 							    <div class=product-img>
 									<img src='/images/$item->image' style='max-width:200px;max-height:200px'/>
 							    </div>
-							
+						
 							    <div class='product-info'>
 								    <div class='product-text'>
 										<h1>$item->name</h1>
 										<h4>$item->state</h4>
 										<p>$item->price</p><br>
-							         	<p class='desc'>$item->description</p>
-							         	<p class='desc'>In stock: $item->quantity</p>
-							      	</div>
-							      
-							      	<div class='product-price-btn'>
-							        	<a class='edit-button' href ='/Profile/addToCart/$item->product_id'>
-											<i class='fa fa-cart'></i>Add To Cart
+								        <p class='desc'>$item->description</p>
+								        <p class='desc'>In stock: $item->quantity</p>
+								    </div>
+
+									<div class='product-price-btn'>
+								    	<a class='edit-button' href ='/Product/edit/$item->product_id'>
+											<i class='fa fa-pencil'></i>Edit Product
 										</a>
-							      	</div>
-							    </div>
+								
+								    	<a class='delete-button' href ='/Product/delete/$item->product_id'>
+											<i class='fa fa-trash'></i>Delete Product
+										</a>
+									</div>
+								</div>
 							</div>
 						";
 					}
 				?>
 			</div>
-	</body>
+	</body>		
 </html>

@@ -36,12 +36,8 @@
 		<?php  }
 		?>
 		<div>
-<div class="navbar">
-  <a class="active" href="#">Home</a> 
-  <a href="#">Search</a> 
-  <img src="/jknimage.png" alt="JKN" />
-  <a href="#">About</a> 
-  <a href="#">Profile</a> 
+<div class="navbar"> 
+  <img src="/jknimage.png" alt="JKN" />	
 </div>
 
 

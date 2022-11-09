@@ -24,6 +24,15 @@ class Product extends \jkn_bay\core\Models{
 		return $STMT->fetchAll();
 	}
 
+	public function getAllSimilar($search_val){
+		//get all records from the owner table
+		$SQL = "SELECT * FROM product WHERE name LIKE '%$search_val%'";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute();//pass any data for the query
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Product");
+		return $STMT->fetchAll();
+	}
+
 	public function delete(){
 		$SQL = "DELETE FROM product WHERE product_id=:product_id";
 		$STMT = self::$_connection->prepare($SQL);
