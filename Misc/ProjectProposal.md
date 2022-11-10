@@ -33,7 +33,6 @@
 22. As a seller, I will be able to, edit my products for sale.
 23. As a seller, I will be able to, delete my products for sale.
 24. As a seller, I will be able to, view my history of my sold products.
-25. As a seller, I will be able to, view messages from buyers about products
 26. As a seller, I will be able to, reply to buyers about products
 27. As a seller, i will be able to rate buyers.
 
