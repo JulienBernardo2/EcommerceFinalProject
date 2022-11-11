@@ -44,7 +44,7 @@ class Profile extends \jkn_bay\core\Controller{
  	 	$product = $product->get($product_id);
  	 	$product_price = $product->price;
 
-
+ 	 	
  	 	$newProduct->price = $product_price;
  	 	$newProduct->qty = 1;
 
@@ -90,8 +90,7 @@ class Profile extends \jkn_bay\core\Controller{
  	 public function checkout(){
  	 	$cart = new \jkn_bay\models\Order();
  	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
-
- 	 	$cart->payment_id='somepaymentId';
+ 	 	
  	 	$cart->status = 'paid';
  	 	$cart->update();
 
@@ -106,6 +105,9 @@ class Profile extends \jkn_bay\core\Controller{
 			 		if($profile->get($_POST['username'])){
 			 			header('location: Profile/register?error=The Username already exists, Choose another');
 			 		}else{
+
+			 			$filename = $this->saveFile($_FILES['image']);
+
 			 			$profile->username = $_POST['username'];
 			 			$profile->first_name = $_POST['first_name'];
 			 			$profile->last_name = $_POST['last_name'];
@@ -113,6 +115,7 @@ class Profile extends \jkn_bay\core\Controller{
 			 			$profile->city = $_POST['city'];
 			 			$profile->password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 			 			$profile->role = $_POST['role'];
+						$profile->image = $filename;
 			 			$profile_id =  $profile->insert();
 			 			$_SESSION[$_POST['username']] =  $profile->username;
 						$_SESSION['profile_id'] = $profile_id;
@@ -129,16 +132,27 @@ class Profile extends \jkn_bay\core\Controller{
 		$profile = $profile->getProfileId($_SESSION["profile_id"]); 
 
 		if(isset($_POST['action'])){
+
+			$filename = $this->saveFile($_FILES['image']);
+
+			if($filename){
+				//delete the old picture and then change the picture
+				unlink("images/$profile->image");
+				$profile->image = $filename;
+			}
+
 			$profile->username = $_POST['username'];
 			$profile->first_name = $_POST['first_name'];
 			$profile->last_name = $_POST['last_name'];
 			$profile->postal_code = $_POST['postal_code'];
 			$profile->city = $_POST['city'];
+
 			$profile->update();
+
 			if ($profile->role == 'buyer' ) {
-				header('location:/Product/indexBuyer?message=Profile Updated');
+				//header('location:/Product/indexBuyer?message=Profile Updated');
 			} else {
-				header('location:/Product/indexSeller?message=Profile Updated');
+				//header('location:/Product/indexSeller?message=Profile Updated');
 			}
 			
 		}else{

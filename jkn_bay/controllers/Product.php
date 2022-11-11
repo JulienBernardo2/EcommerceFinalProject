@@ -24,7 +24,31 @@ class Product extends \jkn_bay\core\Controller{
 		$search_val = $_GET['searchbar'];
 
 		$products = $product->getAllSimilar($search_val);
+		if($products == null){
+			header('location:/Product/indexBuyer?error=No products match');
+		}
 		$this->view('Product/indexBuyer', ['product'=>$products]);
+	 }
+
+	 public function filterCategory($category_id){
+		if($category_id == 'None'){
+			$product = new \jkn_bay\models\Product();
+	 		$products = $product->getAll();
+	 	
+	 		$category = new \jkn_bay\models\Category();
+	 		$categorys = $category->getAll();
+
+			$this->view('Product/indexBuyer', ['product'=>$products, 'categorys'=>$categorys]);
+		} else{
+
+			$product = new \jkn_bay\models\Product();
+			$products = $product->getAllCategory($category_id);
+	 	
+	 		$category = new \jkn_bay\models\Category();
+	 		$categorys = $category->getAll();
+
+			$this->view('Product/indexBuyer', ['product'=>$products, 'categorys'=>$categorys]);
+		}
 	 }
 
  	  public function indexBuyer(){
@@ -32,9 +56,12 @@ class Product extends \jkn_bay\core\Controller{
 	 	//Gets all of the products for that profile_id
 	 	$product = new \jkn_bay\models\Product();
 	 	$products = $product->getAll();
+	 	
+	 	$category = new \jkn_bay\models\Category();
+	 	$categorys = $category->getAll();
 
 	 	//Creates the view with those products
-		$this->view('Product/indexBuyer', ['product'=>$products]);
+		$this->view('Product/indexBuyer', ['product'=>$products, 'categorys'=>$categorys]);
  	 }
 
  	 public function add(){
@@ -52,18 +79,33 @@ class Product extends \jkn_bay\core\Controller{
 			$product->price = $_POST['price'];
 			$product->quantity = $_POST['quantity'];
 			$product->state = $_POST['state'];
+			$product->category_id = $_POST['category'];
 			$product->image = $filename;
 
 			$product->insert();	
 			header('location:/Product/indexSeller?message=Product Created');
 		}else{
-			$this->view('Product/add');
+
+	 		$category = new \jkn_bay\models\Category();
+	 		$categorys = $category->getAll();
+
+			$this->view('Product/add', ['categorys'=>$categorys]);
 		}
 	}
 
 	public function delete($product_id){
 			$product = new \jkn_bay\models\Product();
 			$product = $product->get($product_id);
+
+			$order = new \jkn_bay\models\Order();
+			$order = $order->getForProduct($product_id);
+
+			$order_detail = new \jkn_bay\models\Order_detail();
+			$order_detail= $order_detail->getOrderForOrder($order_id);
+
+			$order_detail->delete();
+			$order->delete();
+
 			$product->deleteMessages();
 			$product->delete();
 			
@@ -79,7 +121,8 @@ class Product extends \jkn_bay\core\Controller{
 		$profile = new \jkn_bay\models\Profile();
 		$profile = $profile->getProfileId($_SESSION['profile_id']);
 
-		
+		$category = new \jkn_bay\models\Category();
+	 	$categorys = $category->getAll();
 		
 		if(isset($_POST['action'])){
 
@@ -96,13 +139,14 @@ class Product extends \jkn_bay\core\Controller{
 			$product->price = $_POST['price'];
 			$product->quantity = $_POST['quantity'];
 			$product->state = $_POST['state'];
+			$product->category_id= $_POST['category'];
 
 			$product->update();
 
 			header('location:/Product/indexSeller/' . $profile_id);
 		}else{
-			
-			$this->view('/Product/edit', $product, $profile);
+
+			$this->view('/Product/edit', ['product'=>$product, 'categorys'=>$categorys]);
 		}
 	}
 }

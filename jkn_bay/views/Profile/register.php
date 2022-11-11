@@ -43,7 +43,7 @@
 
 <div class = "left">
 		<h1 class = "signup">Sign up</h1>
-		<form action='' method='post'>
+		<form action='' method='post' enctype="multipart/form-data">
 				<div class="form-group">
 	    			<label for="username">Username</label>
 	    			<input type="text" class="form-control" id="username" name='username' placeholder="Enter username">
@@ -84,13 +84,25 @@
   			<input type="radio" id="role_sell" name="role" value="seller">
 			<label for="role_sell">Seller</label>
 
+			<br><label for="image_preview">Profile Pic</label>
+			<input type="file" name="image" id="image" />
+    		<img id='image_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px"/><br>
+
   			<br>
   			<br>
   			</div>
 				<button type="submit" name='action' value='Register' class="btn btn-secondary">Sign up</button>
   			<br>		
-</div>
+		</div>
 		</form>
+		<script>
+			image.onchange = evt => {
+		  		const [file] = image.files
+		  	if (file) {
+		    	image_preview.src = URL.createObjectURL(file)
+		 	 	}
+			}
+		</script>	
 	</body>
 </div>
 </html>

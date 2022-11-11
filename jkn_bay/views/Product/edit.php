@@ -83,30 +83,45 @@
 								<form action='' method='post' enctype="multipart/form-data">
 									<div class="form-group">
 										<label for="name">Name</label>
-										<input type="text" class="form-control" id="name" name='name' value="<?= $data->name ?>">
+										<input type="text" class="form-control" id="name" name='name' value="<?= $data['product']->name ?>">
 									</div>
 
 									<div class="form-group">
 										<label for="description">Description</label>
-										<input type="text" class="form-control" id="description" name="description" value="<?= $data->description ?>">
+										<input type="text" class="form-control" id="description" name="description" value="<?= $data['product']->description ?>">
 									</div>
 							</div>
 
 							<div class = "right">
 								<div class="form-group">
 									<label for="price">Price</label>
-									<input type="text" class="form-control" id="price" name="price" value="<?= $data->price ?>">
+									<input type="text" class="form-control" id="price" name="price" value="<?= $data['product']->price ?>">
 								</div>
 
 								<div class="form-group">
 									<label for="quantity">Quantity</label>
-									<input type="text" class="form-control" id="quantity" name="quantity" value="<?= $data->quantity ?>">
+									<input type="text" class="form-control" id="quantity" name="quantity" value="<?= $data['product']->quantity ?>">
 								</div>
 
 								<div class="form-group">
 									<label for="state">State</label>
-									<input type="text" class="form-control" id="state" name="state"value="<?= $data->state ?>">
+									<input type="text" class="form-control" id="state" name="state"value="<?= $data['product']->state ?>">
 								</div>
+
+								<div class="form-group">
+						    			<label> Category:
+										<select name='category' id='category' value=''>
+												<option selected>None</option>
+												<?php
+													foreach ($data['categorys'] as $category){
+														echo "	
+																<option id='category' value='$category->category_id'>$category->nicename</option>";
+
+												}
+												?>
+											</select>
+									</label>
+						    	</div>
 
 								<div class="form-group">
 									<label>Image:<input type="file" name="image" id="image" /></label><img id='image_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px" /><br>
@@ -114,6 +129,7 @@
 
 								<button type="submit" name='action' value='Register' class="btn btn-secondary">Save Changes</button>
 							</div>
+
 						</form>
 			    	</div>
 
@@ -127,7 +143,7 @@
 		  			}
 				}
 
-				file = "<?= $data->image ?>";
+				file = "<?= $data['product']->image ?>";
 				if (file != "") {
 				document.getElementById("image_preview").src = "/images/" + file;
 				}

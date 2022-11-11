@@ -22,7 +22,7 @@ class Profile extends \jkn_bay\core\Models{
 	}
 
 	public function insert(){
-		$SQL = "INSERT INTO profile(username, first_name, last_name, postal_code, city, password_hash, role) VALUES (:username, :first_name, :last_name, :postal_code, :city, :password_hash, :role)";
+		$SQL = "INSERT INTO profile(username, first_name, last_name, postal_code, city, password_hash, role, image) VALUES (:username, :first_name, :last_name, :postal_code, :city, :password_hash, :role, :image)";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(
 			['username'=>$this->username,
@@ -31,13 +31,14 @@ class Profile extends \jkn_bay\core\Models{
 			 'postal_code'=>$this->postal_code, 
 			 'city'=>$this->city, 
 			 'password_hash'=>$this->password_hash,
-			 'role'=>$this->role]);
+			 'role'=>$this->role,
+			 'image'=>$this->image]);
 		$profile_id = self::$_connection->lastInsertId();
 		return $profile_id;
 	}
 
 	public function update(){
-		$SQL = "UPDATE profile SET username=:username, first_name=:first_name, last_name=:last_name, postal_code=:postal_code, city=:city WHERE profile_id=:profile_id";
+		$SQL = "UPDATE profile SET username=:username, first_name=:first_name, last_name=:last_name, postal_code=:postal_code, city=:city, image=:image WHERE profile_id=:profile_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(
 			['username'=>$this->username,
@@ -45,6 +46,7 @@ class Profile extends \jkn_bay\core\Models{
 			 'last_name'=>$this->last_name, 
 			 'postal_code'=>$this->postal_code, 
 			 'city'=>$this->city,
+			 'image'=>$this->image,
 			 'profile_id'=>$this->profile_id]);
 	}
 }

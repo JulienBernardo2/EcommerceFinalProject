@@ -3,33 +3,42 @@
 	<!-- Jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	<!-- Bootstrap CSS --> 
+	 <!--Bootstrap CSS --> 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/
 	bootstrap.min.css" integrity="sha384-Vkoo8×4CGsO3+Hhxv8T/
-	Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
 
 	<!-- Bootstrap JS -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
+	
+	<!--Font-Awesome CSS-->
+	 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
-	<link rel="stylesheet" href="/css/profileEdit.css"/>
+	<link rel="stylesheet" href="/css/editProfile.css"/>
 
 	<title>Main Page</title>
-	<div class="navbar">
-		<?php
-			            				echo '
-			                						<a class="nav-link" href ="/Product/indexBuyer">Home</a>
-			                						<a class="nav-link" href ="/Profile/cart">Cart</a>
-	  												<img src="/jknimage.png" alt="JKN" />
-			            							<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-							  						<a class="nav-link" href ="/Profile/logout">Logout</a>
-							  				';
-		?>
-	</div>
+		<div class="navbar">
+				<?php if(isset($_SESSION['username'])){
+		        	echo '
+		        		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+		        		<a class="nav-link" href ="/Profile/viewCart">Cart</a>
+  						<img src="/jknimage.png" alt="JKN" />
+		        		<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a class="nav-link" href ="/Profile/logout">Logout</a>
+					';
+		        }else{
+		        	echo '
+		        		<a class="nav-link" href ="/Product/indexBuyer">Home</a>
+  						<img src="/jknimage.png" alt="JKN" />
+		        		<a class="nav-link" href ="/Profile/index">Login</a>
+		        		<a class="nav-link" href ="/Profile/register">Sign up</a>
+		        	';
+		        } ?>
+			</div>
 
-	<!--Font-Awesome CSS-->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
 	<?php
@@ -47,20 +56,11 @@
 	<?php  }
 	?>
 
-<div class="container rounded bg-white mt-5 mb-5">
-	<div class="row">
-		<div class="col-md-3 border-right">
-    		<div class="d-flex flex-column align-items-center text-center p-3 py-5">
-    		</div>
-		</div>
 
 
-		<div class="col-md-5 border-right">
+
+		<div class="col-md-5">
     		<div class="p-3 py-5">
-        		<div class="d-flex justify-content-between align-items-center mb-3">
-            	<h4 class="text-right">Profile Settings</h4>
-        		</div>
-
 				<div class = "left">
 					<h1 class = "signup">Edit Profile</h1>
 					<form action='' method='post'>
@@ -90,11 +90,32 @@
 						<label for="city">City</label>
 						<input type="text" class="form-control" id="city" name="city"value="<?= $data->city ?>">
 					</div>
-					<button type="submit" name='action' value='Register' class="btn btn-secondary">Save Changes</button>
+
+					<div class="form-group">
+						<label>Profile Image:<input type="file" name="image" id="image" />
+						</label><img id='image_preview' src='/images/blank.jpg' style="min-width:200px;min-height:200px" /><br>
+					</div>
+
+					<button type="submit" name='action' class="btn btn-primary">Save Changes</button>
 					<br>		
 				</div>
 			</form>
     	</div>
 	</div>
+
+		<!-- Display Image -->
+			<script>
+				image.onchange = evt => {
+		  		const [file] = image.files
+		  		if (file) {
+		    		image_preview.src = URL.createObjectURL(file)
+		  			}
+				}
+
+				file = "<?= $data->image ?>";
+				if (file != "") {
+				document.getElementById("image_preview").src = "/images/" + file;
+				}
+			</script>
 </body>
 </html>

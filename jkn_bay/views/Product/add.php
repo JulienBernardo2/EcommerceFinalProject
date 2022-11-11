@@ -12,6 +12,8 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
+
+		<link rel="stylesheet" href="/css/addProduct.css"/>
 		
 		<title>Add Product</title>
 	</head>
@@ -30,42 +32,81 @@
 				</div>
 		<?php  }
 		?>
+
+			<!-- Nav -->
+			<div class ="navbar">
+				<?php if(isset($_SESSION['username'])){
+			    	echo '
+			     		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+			            <a class="nav-link" href ="/Product/add">New Product</a>
+	  					<img src="/jknimage.png" alt="JKN" />
+			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a class="nav-link" href ="/Profile/logout">Logout</a>
+					';
+			    }?>	
+			</div>
+
+
 		
 		<h1>Add your Product</h1>
+		<div class="col-md-5">
+    		<div class="p-3 py-5">
+				<div class = "left">
+					<form action='' method='post' enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="name">Name: </label>
+				    		<input type="text" class="form-group" id="name" name='name'>
+				    	</div>
 
-		<form action='' method='post' enctype="multipart/form-data">
-			<label for="name">Name</label>
-    		<input type="text" class="form-control" id="name" name='name'>
-    		<br>
+				    	<div class="form-group">
+				    		<label for="desc">Description: </label>
+				    		<input type="text" class="form-group" id="desc" name='description'>
+				    	</div>
 
-    		<label for="desc">Description</label>
-    		<input type="text" class="form-control" id="desc" name='description'>
-    		<br>
+				    	<div class="form-group">
+			    			<label for="price">Price: </label>
+			    			<input type="number" class="form-group" id="price" name='price'>
+						</div>
 
-    		<label for="price">Price</label>
-    		<input type="number" class="form-control" id="price" name='price'>
-			<br>
+						<div class="form-group">
+							<label for="quantity">Quantity in Stock: </label>
+			    			<input type="text" class="form-group" id="quantity" name='quantity'>
+			    		</div>
 
-			<label for="quantity">Quantity in Stock</label>
-    		<input type="text" class="form-control" id="quantity" name='quantity'>
-    		<br>
+			    		<div class="form-group">
+				    		<label> Filter by Category:
+									<select name='category' id='category' onchange='changeURL(this)'>
+										<option selected>None</option>
+										<?php
+											foreach ($data['categorys'] as $category){
+												echo "	
+														<option id='category' value='$category->category_id'>$category->nicename</option>";
 
-			<p>Condition</p>
-    		<input type="radio" id="state_new" name="state" value="new">
-			<label for="state_new">New</label>
-  			<input type="radio" id="state_used" name="state" value="used">
-			<label for="state_used">Used</label>
-  			<br>
-			
-			<label for="image_preview">Image</label>
-			<input type="file" name="image" id="image" />
-    		<img id='image_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px"/><br>
-  			
-  			<button type="submit" name="action" class="btn btn-primary">Add your new Product</button>
-		</form> 
+										}
+										?>
+									</select>
+							</label>
+				    	</div>
 
-		<a id="backBtn" href='/Product/indexAdmin'>Back</a>
-
+				    	<div class="form-group">
+							<p>Condition</p>
+				    		<input type="radio" id="state_new" name="state" value="new">
+							<label for="state_new">New</label>
+				  			<input type="radio" id="state_used" name="state" value="used">
+							<label for="state_used">Used</label>
+				  		</div>
+						
+						<div class="form-group">
+							<label for="image_preview">Image</label>
+							<input type="file" name="image" id="image" />
+				    		<img id='image_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px"/><br>
+				    	</div>
+			  			
+			  			<button type="submit" name="action" class="btn btn-success">Add your new Product</button>
+					</form>
+				</div>
+			</div>
+		</div>
 		<script>
 			image.onchange = evt => {
 		  		const [file] = image.files
