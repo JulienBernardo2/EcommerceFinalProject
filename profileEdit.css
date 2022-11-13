@@ -1,0 +1,83 @@
+body{
+	background-color: lightblue;
+}
+
+img{
+   width: 8%;
+    height: auto;
+}
+
+.col-md-5{
+	border-radius: 5%;
+	background-color: whitesmoke;
+	margin-left: 28%;
+}
+
+.btn-primary{
+	background-color: green;
+	margin-left: 35%;
+	padding: 4%;
+}
+
+.form-group{
+    font-size: 20px;
+}
+
+/***************************************Nav Design ********************************************/
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+.navbar{
+  	background: #272727;
+	font-family: "Montserrat", sans-serif;
+  	position: absolute;
+  	width: 100%;
+  	padding-left: 10%;
+}
+
+.navbar a {
+  color: #f6f4e6;
+  text-decoration: none;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar a:hover {
+  color: #fddb3a;
+}
+
+.navbar .dot {
+  width: 6px;
+  height: 6px;
+  background: #fddb3a;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar a:nth-child(1):hover ~ .dot {
+  transform: translateX(-19300%);
+  transition: all 0.2s ease-in-out;
+  opacity: 5;
+}
+
+.navbar a:nth-child(2):hover ~ .dot {
+  transform: translateX(-14100%);
+  transition: all 0.2s ease-in-out;
+  opacity: 1;
+}
+
+.navbar a:nth-child(4):hover ~ .dot {
+  transform: translateX(-5700%);
+  transition: all 0.2s ease-in-out;
+  opacity: 1;
+}
+
+.navbar a:nth-child(5):hover ~ .dot {
+  transform: translateX(-1800%);
+  transition: all 0.2s ease-in-out;
+  opacity: 1;
+}
