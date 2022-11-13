@@ -32,39 +32,39 @@ class Profile extends \jkn_bay\core\Controller{
  	 	$cart = new \jkn_bay\models\Order();
  	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
 
- 	 	if ($cart == null) {
- 	 		$cart = $this->produceCart();
- 	 	}
-
- 	 	$newProduct = new \jkn_bay\models\Order_detail();
- 	 	$newProduct->order_id = $cart->order_id;
- 	 	$newProduct->product_id = $product_id;
-
  	 	$product = new \jkn_bay\models\Product();
  	 	$product = $product->get($product_id);
- 	 	$product_price = $product->price;
 
+ 	 	if ($cart == null) {
+ 	 		$cart = new \jkn_bay\models\Order();
+	 	 	$cart->profile_id = $_SESSION['profile_id'];
+	 	 	$cart->status = 'cart';
+	 	 	$cart->order_id = $cart->insert();
+ 	 	}
+
+ 		$newProduct = new \jkn_bay\models\Order_detail();
+ 		$newProduct->order_id = $cart->order_id;
+ 		$newProduct->product_id = $product_id;
+ 	 		
+ 		$product_price = $product->price;
  	 	
- 	 	$newProduct->price = $product_price;
- 	 	$newProduct->qty = 1;
+ 		$newProduct->price = $product_price;
+ 		$newProduct->qty = 1;
 
- 	 	$newProduct->insert();
- 	 		header('location:/Product/indexBuyer?message=The product was added to your cart');
+ 		$newProduct->insert();
+ 		header('location:/Product/indexBuyer?message=The product was added to your cart');
+ 	 	
  	 }
 
- 	 private function produceCart(){
- 	 	$cart = new \jkn_bay\models\Order();
- 	 	$cart->profile_id = $_SESSION['profile_id'];
- 	 	$cart->status = 'cart';
- 	 	$cart->order_id = $cart->insert();
- 	 	return $cart;
- 	 }
  	 public function viewCart(){
  	 	$cart = new \jkn_bay\models\Order();
  	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
  	 	
  	 	if ($cart == null) {
- 	 		$cart = $this->produceCart();
+ 	 		$cart = new \jkn_bay\models\Order();
+	 	 	$cart->profile_id = $_SESSION['profile_id'];
+	 	 	$cart->status = 'cart';
+	 	 	$cart->order_id = $cart->insert();
  	 	}
 
  	 	$product = new \jkn_bay\models\Order_detail();
@@ -150,9 +150,9 @@ class Profile extends \jkn_bay\core\Controller{
 			$profile->update();
 
 			if ($profile->role == 'buyer' ) {
-				//header('location:/Product/indexBuyer?message=Profile Updated');
+				header('location:/Product/indexBuyer?message=Profile Updated');
 			} else {
-				//header('location:/Product/indexSeller?message=Profile Updated');
+				header('location:/Product/indexSeller?message=Profile Updated');
 			}
 			
 		}else{

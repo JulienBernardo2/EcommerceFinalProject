@@ -10,6 +10,7 @@ class Order extends \jkn_bay\core\Models{
 			['profile_id'=>$this->profile_id, 
 			 'status'=>$this->status]);
 		$this->order_id = self::$_connection->lastInsertId();
+		return $this->order_id;
 	}
 
 	public function delete(){
@@ -34,15 +35,6 @@ class Order extends \jkn_bay\core\Models{
 		$STMT->execute(['order_id'=>$order_id]);//pass any data for the query
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order");
 		return $STMT->fetch();
-	}
-
-	public function getForProduct($product_id){
-		//get all records from the owner table
-		$SQL = "SELECT * FROM `order` WHERE product_id = :product_id";
-		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['product_id'=>$product_id]);//pass any data for the query
-		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order");
-		return $STMT->fetchAll();
 	}
 
 	public function getAll(){

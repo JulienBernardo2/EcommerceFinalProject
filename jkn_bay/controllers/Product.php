@@ -97,15 +97,9 @@ class Product extends \jkn_bay\core\Controller{
 			$product = new \jkn_bay\models\Product();
 			$product = $product->get($product_id);
 
-			$order = new \jkn_bay\models\Order();
-			$order = $order->getForProduct($product_id);
-
 			$order_detail = new \jkn_bay\models\Order_detail();
-			$order_detail= $order_detail->getOrderForOrder($order_id);
-
-			$order_detail->delete();
-			$order->delete();
-
+			$order_detail= $order_detail->getForProduct($product_id);
+			$order_detail->deleteProductDetail();		
 			$product->deleteMessages();
 			$product->delete();
 			

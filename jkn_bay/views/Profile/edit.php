@@ -20,9 +20,9 @@
 
 	<title>Main Page</title>
 		<div class="navbar">
-				<?php if(isset($_SESSION['username'])){
+				<?php if($_SESSION['role'] == 'buyer'){
 		        	echo '
-		        		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+		        		<a class="nav-link" href ="/Product/indexBuyer">Home</a>
 		        		<a class="nav-link" href ="/Profile/viewCart">Cart</a>
   						<img src="/jknimage.png" alt="JKN" />
 		        		<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
@@ -30,10 +30,11 @@
 					';
 		        }else{
 		        	echo '
-		        		<a class="nav-link" href ="/Product/indexBuyer">Home</a>
+		        		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+			            <a class="nav-link" href ="/Product/add">New Product</a>
   						<img src="/jknimage.png" alt="JKN" />
-		        		<a class="nav-link" href ="/Profile/index">Login</a>
-		        		<a class="nav-link" href ="/Profile/register">Sign up</a>
+		        		<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a class="nav-link" href ="/Profile/logout">Logout</a>
 		        	';
 		        } ?>
 			</div>
@@ -63,7 +64,7 @@
     		<div class="p-3 py-5">
 				<div class = "left">
 					<h1 class = "signup">Edit Profile</h1>
-					<form action='' method='post'>
+					<form action='' method='post' enctype="multipart/form-data">
 						<div class="form-group">
 							<label for="username">Username</label>
 							<input type="text" class="form-control" id="username" name='username' value="<?= $data->username ?>">

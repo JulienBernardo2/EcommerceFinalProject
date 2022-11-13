@@ -105,13 +105,13 @@
 
 								<div class="form-group">
 									<label for="state">State</label>
-									<input type="text" class="form-control" id="state" name="state"value="<?= $data['product']->state ?>">
+									<input type="text" class="form-control" id="state" name="state" value="<?= $data['product']->state ?>">
 								</div>
 
 								<div class="form-group">
 						    			<label> Category:
 										<select name='category' id='category' value=''>
-												<option selected>None</option>
+												<option selected value="<?= $data['product']->category_id ?>"></option>
 												<?php
 													foreach ($data['categorys'] as $category){
 														echo "	

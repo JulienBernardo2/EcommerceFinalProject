@@ -36,7 +36,7 @@
 						const lastVal = myArray.pop();
 						const select = document.getElementById('category');
 								
-							if(lastVal == "None" || (lastVal =="")){
+							if(lastVal == "None" || (lastVal =="" || (lastVal != "1") || (lastVal != "2") || (lastVal != "3") || (lastVal != "4"))){
 							} else{
 								select.value = lastVal;
 							}
