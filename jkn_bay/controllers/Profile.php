@@ -3,165 +3,212 @@ namespace jkn_bay\controllers;
 
 class Profile extends \jkn_bay\core\Controller{
 
-	 public function index(){
+	//Allows people to login to JKN_Bay
+	public function index(){
+		
+		//Check if the person has clicked on the "Login" button
 		if(isset($_POST['action'])){
+			
+			//Gets the profile which the person has entered
 			$profile = new \jkn_bay\models\Profile();
 			$profile = $profile->get($_POST['username']);
+
+			//If the password matches the saved password in the database then create a session
 			if(password_verify($_POST['password'], $profile->password_hash)){
 				$_SESSION['username'] = $profile->username;
 				$_SESSION['profile_id'] = $profile->profile_id;
 				$_SESSION['role'] = $profile->role;
 
+				//Checks which main page to create depending on the profile role
 				if($_SESSION['role'] == 'seller'){
 					header('location:/Product/indexSeller?message=You have been successfully logged in');
 				}else{
 					header('location:/Product/indexBuyer?message=You have been successfully logged in');
 				}
+
 			}else{
+				//The person has inputted the wrong password
 				header('location:/Profile/index?error=Incorrect username or password');
 			}
-
 		}else{
 			$this->view('Profile/index');
 		}
- 	 }
+ 	}
 
- 	 public function addToCart($product_id){
- 	 	//what is the goal?
- 	 	//make a cart for the profile
- 	 	$cart = new \jkn_bay\models\Order();
- 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
+ 	//Allows sellers or buyers to logout
+ 	public function logout(){
+		
+		//Destorys the current session
+		session_destroy();
+		header('location:/Product/indexBuyer?message=You\'ve been successfully logged out');
+	}
 
- 	 	$product = new \jkn_bay\models\Product();
- 	 	$product = $product->get($product_id);
+ 	//Allows people to create a profile
+ 	public function register(){
+		
+		//Checks if the person has clicked the "Create profile" button
+		if(isset($_POST['action'])){
 
- 	 	if ($cart == null) {
- 	 		$cart = new \jkn_bay\models\Order();
-	 	 	$cart->profile_id = $_SESSION['profile_id'];
-	 	 	$cart->status = 'cart';
-	 	 	$cart->order_id = $cart->insert();
- 	 	}
-
- 		$newProduct = new \jkn_bay\models\Order_detail();
- 		$newProduct->order_id = $cart->order_id;
- 		$newProduct->product_id = $product_id;
- 	 		
- 		$product_price = $product->price;
- 	 	
- 		$newProduct->price = $product_price;
- 		$newProduct->qty = 1;
-
- 		$newProduct->insert();
- 		header('location:/Product/indexBuyer?message=The product was added to your cart');
- 	 	
- 	 }
-
- 	 public function viewCart(){
- 	 	$cart = new \jkn_bay\models\Order();
- 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
- 	 	
- 	 	if ($cart == null) {
- 	 		$cart = new \jkn_bay\models\Order();
-	 	 	$cart->profile_id = $_SESSION['profile_id'];
-	 	 	$cart->status = 'cart';
-	 	 	$cart->order_id = $cart->insert();
- 	 	}
-
- 	 	$product = new \jkn_bay\models\Order_detail();
- 	 	$products = $product->getForOrder($cart->order_id);
-
-		$this->view('Profile/cart', $products);
- 	 }
-
- 	 public function removeFromCart($order_detail_id){
- 	 	$product = new \jkn_bay\models\Order_detail();
- 	 	$product = $product->get($order_detail_id);
-
- 	 	$order = new \jkn_bay\models\Order();
- 	 	$order = $order->get($product->order_id);
- 	 	if($order->profile_id == $_SESSION['profile_id']){
- 	 		$product->delete();
- 	 		header('location:/Profile/viewCart?message=The product was deleted from your cart');
- 	 	}else{
- 	 		header('location:/Profile/viewCart?error=The product could not be deleted from the cart');
- 	 	}
- 	 }
-
- 	 public function checkout(){
- 	 	$cart = new \jkn_bay\models\Order();
- 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
- 	 	
- 	 	$cart->status = 'paid';
- 	 	$cart->update();
-
- 	 	header('location:/Profile/viewCart?message=Your cart has been checked out');
- 	 }
-
-	 public function register(){
-		 if(isset($_POST['action'])){
+			//Check if the inputted password matches the password confirmation input 
 			if($_POST['password'] == $_POST['password_confirmation']){
-			 		$profile = new \jkn_bay\models\Profile();
+			 	
+			 	//Creates the profile
+			 	$profile = new \jkn_bay\models\Profile();
 
-			 		if($profile->get($_POST['username'])){
-			 			header('location: Profile/register?error=The Username already exists, Choose another');
-			 		}else{
+			 	//Checks if the username is already taken
+			 	if($profile->get($_POST['username'])){
+			 		header('location: Profile/register?error=The Username already exists, Choose another');
+			 	}else{
 
-			 			$filename = $this->saveFile($_FILES['image']);
+			 		//Sets the inputted values to the new profile
+			 		$filename = $this->saveFile($_FILES['image']);
+			 		$profile->username = $_POST['username'];
+			 		$profile->first_name = $_POST['first_name'];
+			 		$profile->last_name = $_POST['last_name'];
+			 		$profile->postal_code = $_POST['postal_code'];
+			 		$profile->city = $_POST['city'];
+			 		$profile->password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+			 		$profile->role = $_POST['role'];
+					$profile->image = $filename;
+			 		
+			 		//Creates the profile and sets it to the current session
+			 		$profile_id =  $profile->insert();
 
-			 			$profile->username = $_POST['username'];
-			 			$profile->first_name = $_POST['first_name'];
-			 			$profile->last_name = $_POST['last_name'];
-			 			$profile->postal_code = $_POST['postal_code'];
-			 			$profile->city = $_POST['city'];
-			 			$profile->password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-			 			$profile->role = $_POST['role'];
-						$profile->image = $filename;
-			 			$profile_id =  $profile->insert();
-			 			$_SESSION[$_POST['username']] =  $profile->username;
-						$_SESSION['profile_id'] = $profile_id;
-						header('location:/Profile/index?message=Your profile is set up, login when ready');
-			 		}
+					header('location:/Profile/index?message=Your profile is set up, login when ready');
+			 	}
+			} else{
+				header('location:/Profile/register?error=The passwords do not match');
 			} 	 	
-		 }else{
-		 	$this->view('Profile/register');
-		 }
+		}else{
+			$this->view('Profile/register');
+		}
 	 }
-	
-	public function edit(){
+
+	 //Allows sellers or buyers to edit their profile
+	 public function edit(){
+		
+		//Gets the profile for the current session
 		$profile = new \jkn_bay\models\Profile;
 		$profile = $profile->getProfileId($_SESSION["profile_id"]); 
 
+		//Checks if the seller or buyer has clicked on the "Edit Profile" button
 		if(isset($_POST['action'])){
 
+			//Deletes the old profile picture and changes it with the new one
 			$filename = $this->saveFile($_FILES['image']);
-
 			if($filename){
-				//delete the old picture and then change the picture
 				unlink("images/$profile->image");
 				$profile->image = $filename;
 			}
 
+
+			//Sets all of the values from the form inputs for the profile
 			$profile->username = $_POST['username'];
 			$profile->first_name = $_POST['first_name'];
 			$profile->last_name = $_POST['last_name'];
 			$profile->postal_code = $_POST['postal_code'];
 			$profile->city = $_POST['city'];
 
+			//updates the profile
 			$profile->update();
 
+			//Checks which page to go back to depending on the role of the current session
 			if ($profile->role == 'buyer' ) {
 				header('location:/Product/indexBuyer?message=Profile Updated');
 			} else {
 				header('location:/Product/indexSeller?message=Profile Updated');
 			}
-			
 		}else{
 			$this->view('Profile/edit', $profile);
 		}	
 	}
 
-	public function logout(){
-		session_destroy();
-		header('location:/Product/indexBuyer?message=You\'ve been successfully logged out');
-	}
+	//Allows buyers to add products to their cart
+	public function addToCart($product_id){
+ 	 	
+ 	 	//Gets the cart for the buyer
+ 	 	$cart = new \jkn_bay\models\Order();
+ 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
+
+ 	 	//Gets the product that the buyer wants to add
+ 	 	$product = new \jkn_bay\models\Product();
+ 	 	$product = $product->get($product_id);
+
+ 	 	//Checks if their is a cart created for the buyer and if not then creates it
+ 	 	if ($cart == null) {
+ 	 		$cart = new \jkn_bay\models\Order();
+	 	 	$cart->profile_id = $_SESSION['profile_id'];
+	 	 	$cart->status = 'cart';
+	 	 	$cart->order_id = $cart->insert();
+ 	 	}
+
+ 	 	//Creates the order detail for the buyer
+ 		$newProduct = new \jkn_bay\models\Order_detail();
+ 		
+ 		//Sets all of the values for the order detail
+ 		$newProduct->order_id = $cart->order_id;
+ 		$newProduct->product_id = $product_id;
+ 		$newProduct->price = $product->price;
+ 		$newProduct->qty = 1;
+
+ 		//Creates the order detail
+ 		$newProduct->insert();
+ 		header('location:/Product/indexBuyer?message=The product was added to your cart');
+ 	}
+
+ 	//Allows buyers to view their cart
+ 	public function viewCart(){
+
+ 		//Gets the cart for the buyer
+ 	 	$cart = new \jkn_bay\models\Order();
+ 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
+ 	 	
+ 	 	//Checks if their is a cart created for that buyer and if not then creates it
+ 	 	if ($cart == null) {
+ 	 		$cart = new \jkn_bay\models\Order();
+	 	 	$cart->profile_id = $_SESSION['profile_id'];
+	 	 	$cart->status = 'cart';
+	 	 	$cart->order_id = $cart->insert();
+ 	 	}
+
+ 	 	//Gets all of the products for that cart
+ 	 	$product = new \jkn_bay\models\Order_detail();
+ 	 	$products = $product->getForOrder($cart->order_id);
+
+		$this->view('Profile/cart', $products);
+ 	}
+
+ 	//Allows buyers to delete products from their cart
+  	public function removeFromCart($order_detail_id){
+ 	 	
+ 	 	//gets the order detail for the current buyer 
+ 	 	$product = new \jkn_bay\models\Order_detail();
+ 	 	$product = $product->get($order_detail_id);
+
+ 	 	//Gets the order for that order_detail
+ 	 	$order = new \jkn_bay\models\Order();
+ 	 	$order = $order->get($product->order_id);
+
+ 	 	//Checks if the order profile matches the current profile logged in
+ 	 	if($order->profile_id == $_SESSION['profile_id']){
+ 	 		$product->delete();
+ 	 		header('location:/Profile/viewCart?message=The product was deleted from your cart');
+ 	 	}else{
+ 	 		header('location:/Profile/viewCart?error=The product could not be deleted from the cart');
+ 	 	}
+ 	}
+
+ 	//Allows buyers to checkout their cart
+ 	public function checkout(){
+
+ 		//Gets the cart for the buyer
+ 	 	$cart = new \jkn_bay\models\Order();
+ 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
+ 	 	
+ 	 	//Updates the status of the cart
+ 	 	$cart->status = 'paid';
+ 	 	$cart->update();
+
+ 	 	header('location:/Profile/viewCart?message=Your cart has been checked out');
+ 	}
 }
