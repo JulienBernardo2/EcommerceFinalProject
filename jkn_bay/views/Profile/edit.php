@@ -16,28 +16,28 @@
 	<!--Font-Awesome CSS-->
 	 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
-	<link rel="stylesheet" href="/css/editProfile.css"/>
+	<link rel="stylesheet" href="/css/profileEdit.css"/>
 
 	<title>Main Page</title>
-		<div class="navbar">
+		<nav class="navbar">
 				<?php if($_SESSION['role'] == 'buyer'){
 		        	echo '
-		        		<a class="nav-link" href ="/Product/indexBuyer">Home</a>
-		        		<a class="nav-link" href ="/Profile/viewCart">Cart</a>
-  						<img src="/jknimage.png" alt="JKN" />
-		        		<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-						<a class="nav-link" href ="/Profile/logout">Logout</a>
+		        		<a href ="/Product/indexBuyer">Home</a>
+		        		<a href ="/Profile/viewCart">Cart</a>
+		        		<a href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a href ="/Profile/logout">Logout</a>
 					';
 		        }else{
 		        	echo '
-		        		<a class="nav-link" href ="/Product/indexSeller">Home</a>
-			            <a class="nav-link" href ="/Product/add">New Product</a>
-  						<img src="/jknimage.png" alt="JKN" />
-		        		<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-						<a class="nav-link" href ="/Profile/logout">Logout</a>
+		        		<a href ="/Product/indexSeller">Home</a>
+			            <a href ="/Product/add">New Product</a>
+			            <img src="/jknimage.png" alt="JKN" />
+		        		<a href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a href ="/Profile/logout">Logout</a>
 		        	';
 		        } ?>
-			</div>
+		        <div class="dot"></div>
+			</nav>
 
 
 </head>
@@ -59,7 +59,7 @@
 
 
 
-
+	<br><br><br><br><br><br><br>
 		<div class="col-md-5">
     		<div class="p-3 py-5">
 				<div class = "left">
