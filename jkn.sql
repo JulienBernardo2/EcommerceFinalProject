@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2022 at 02:51 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Generation Time: Nov 14, 2022 at 04:34 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,8 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `jkn`
 --
-CREATE DATABASE IF NOT EXISTS `jkn` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `jkn`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `category_id` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `nicename` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`category_id`, `name`, `nicename`) VALUES
+(1, 'CLOTHES', 'Clothes'),
+(2, 'SHOES', 'Shoes'),
+(3, 'TECH', 'Technology'),
+(4, 'BOOK', 'Book');
 
 -- --------------------------------------------------------
 
@@ -29,7 +49,6 @@ USE `jkn`;
 -- Table structure for table `message`
 --
 
-DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `message_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -44,13 +63,22 @@ CREATE TABLE `message` (
 -- Table structure for table `order`
 --
 
-DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `order_id` int(11) NOT NULL,
   `profile_id` int(11) NOT NULL,
-  `status` enum('cart','paid','shipped') NOT NULL,
-  `payment_id` varchar(50) DEFAULT NULL
+  `status` enum('cart','paid','shipped') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`order_id`, `profile_id`, `status`) VALUES
+(11, 30, 'cart'),
+(22, 21, 'paid'),
+(23, 21, 'cart'),
+(24, 34, 'paid'),
+(25, 34, 'cart');
 
 -- --------------------------------------------------------
 
@@ -58,7 +86,6 @@ CREATE TABLE `order` (
 -- Table structure for table `order_detail`
 --
 
-DROP TABLE IF EXISTS `order_detail`;
 CREATE TABLE `order_detail` (
   `order_detail_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
@@ -67,21 +94,28 @@ CREATE TABLE `order_detail` (
   `price` decimal(6,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `order_detail`
+--
+
+INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `qty`, `price`) VALUES
+(128, 23, 33, 1, '20');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `product`
 --
 
-DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
   `profile_id` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `description` varchar(30) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `description` varchar(200) NOT NULL,
   `price` float NOT NULL,
   `quantity` int(11) NOT NULL,
   `state` enum('used','new') NOT NULL,
+  `category_id` int(11) DEFAULT NULL,
   `image` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -89,10 +123,12 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`product_id`, `profile_id`, `name`, `description`, `price`, `quantity`, `state`, `image`) VALUES
-(8, 17, 'Hello', 'fe', 3, 43, 'new', '636ab1831e7d5.jpg'),
-(9, 17, 'e', '3', 3, 3, 'used', '636ab297dec2a.jpg'),
-(10, 17, '3', '4', 5, 5, 'new', '63693b339e7e8.png');
+INSERT INTO `product` (`product_id`, `profile_id`, `name`, `description`, `price`, `quantity`, `state`, `category_id`, `image`) VALUES
+(18, 22, 'Jordan 1 Fearless', 'This AJ 1 is composed of a white patent leather upper with red and university blue overlays', 532, 3, 'new', 2, '6371452841d9f.png'),
+(33, 22, 'Coding for Dummies', 'Helps with php, html, and css', 20, 3, 'new', 4, '6371972b2857d.jpg'),
+(34, 22, 'Lakers Jersey', 'Authentic Los Angeles Lakers j', 100, 2, 'new', 1, '637199c5abe22.jpg'),
+(51, 22, 'Air Force 1 Off Whites', 'Designed by Bruce Kilgore and introduced in 1982, the Air Force 1 was the first ever basketball shoe to feature Nike Air technology', 1100, 1, 'new', 2, '6371c15f392f4.png'),
+(53, 22, 'Test', '1', 1, 2, 'used', NULL, '6372590b134e9.jpg');
 
 -- --------------------------------------------------------
 
@@ -100,7 +136,6 @@ INSERT INTO `product` (`product_id`, `profile_id`, `name`, `description`, `price
 -- Table structure for table `profile`
 --
 
-DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
   `profile_id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
@@ -109,24 +144,29 @@ CREATE TABLE `profile` (
   `postal_code` varchar(20) NOT NULL,
   `city` varchar(15) NOT NULL,
   `password_hash` varchar(72) NOT NULL,
-  `role` enum('buyer','seller') NOT NULL DEFAULT 'seller'
+  `role` enum('buyer','seller') NOT NULL DEFAULT 'seller',
+  `image` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `profile`
 --
 
-INSERT INTO `profile` (`profile_id`, `username`, `first_name`, `last_name`, `postal_code`, `city`, `password_hash`, `role`) VALUES
-(15, 'seller', 'seller', 'seller', 'seller', 'seller', '$2y$10$tjDKhGh8ZMYXpFqHNh4vk.QJtFy7YaGk4oBTHFnTr96VJsBFxy1m6', 'seller'),
-(16, 'buyer', 'buyer', 'buyer', 'buyer', 'buyer', '$2y$10$xNgbLXetMXrCm3zviwUa0epobXk75MwC2vAjjngBe227CZwMn6hWC', 'buyer'),
-(17, '1', '1', '1', '1', '1', '$2y$10$Z8HVd1MWUTnSWyjhAlwSDuRWARyBoInyWbHnW1fslrXB7NeGZoEE2', 'seller'),
-(18, 'JuLien', '1', '1', '11', '11', '$2y$10$hqUw40FCGeRkiBgf5gP7WuuVKAkUjzkgcGISzqAxIuBX15F7fVef2', 'seller'),
-(19, 'Julienss', 'Natan', 'Husbands', 'u23j32r', 'asdasd', '$2y$10$sL2bCw/IViCdDXefUtfove/cnaZUnCucuHVSgQ2IoVD0kATx.qQ1a', 'seller'),
-(20, 'fh', 'q', 'q', 'q', 'q', '$2y$10$X1yqrG1WShLdNTjw9ZZbwui3.XexnyetJiW4d4we8B/zH9eE2XvUu', 'buyer');
+INSERT INTO `profile` (`profile_id`, `username`, `first_name`, `last_name`, `postal_code`, `city`, `password_hash`, `role`, `image`) VALUES
+(21, 'Mia', 'Mia', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$TDBPkz/zpzkyRPt9L5KHnuX2qKZ2qt49kzkKS6lzj0GttbSowgto2', 'buyer', '637198ab659d6.jpg'),
+(22, 'Julien', 'Julien', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$SaYMZEBEQG0Zxo/4ft9pVOBPm5iYAQD.XRergI6EbnP7WA3wnOsTO', 'seller', '6371cccd3881d.png'),
+(30, 'Olivia', 'Julien', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$6KYxHkCqiGSuj5d7caoDDuaVEwr4G6enOJUZt4WcP5a4KJXCIparu', 'buyer', '636ff197b5e08.jpg'),
+(34, 'Test1', 'Julien', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$LXddkAc0pQ1gKYKswBxoae9HFQWfoWOHDjGAsU/8IeUY.5iXH3Yxu', 'buyer', '6372584de916d.png');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`category_id`);
 
 --
 -- Indexes for table `message`
@@ -148,6 +188,7 @@ ALTER TABLE `order`
 --
 ALTER TABLE `order_detail`
   ADD PRIMARY KEY (`order_detail_id`),
+  ADD UNIQUE KEY `order_id` (`order_id`,`product_id`),
   ADD KEY `order_detail_to_detail` (`order_id`),
   ADD KEY `order_detail_to_product` (`product_id`);
 
@@ -156,7 +197,8 @@ ALTER TABLE `order_detail`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`product_id`),
-  ADD KEY `product_to_profile` (`profile_id`);
+  ADD KEY `product_to_profile` (`profile_id`),
+  ADD KEY `product_to_category` (`category_id`);
 
 --
 -- Indexes for table `profile`
@@ -170,6 +212,12 @@ ALTER TABLE `profile`
 --
 
 --
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
@@ -179,25 +227,25 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Constraints for dumped tables
@@ -227,6 +275,7 @@ ALTER TABLE `order_detail`
 -- Constraints for table `product`
 --
 ALTER TABLE `product`
+  ADD CONSTRAINT `product_to_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`),
   ADD CONSTRAINT `product_to_profile` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`profile_id`);
 COMMIT;
 
