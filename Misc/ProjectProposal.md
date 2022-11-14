@@ -17,24 +17,25 @@
 4. As a buyer or seller, I will be able to, edit my profile.
 5. As a buyer, I will be able to, view my order history.
 8. As a buyer, I will be able to, contact the seller regarding their products.
-9. As a buyer, I will be able to, view replies from the seller regarding their product.
-10. As a buyer, I will be able to, add products to my cart.
-11. As a buyer, I will be able to, view details about the product on the catalog.
-12. As a buyer, I will be able to, view my cart.
-13. As a buyer, I will be able to, edit quantities in my cart.
-14. As a buyer, I will be able to, delete products from my cart.
-15. As a buyer, I will be able to, checkout products in my cart. 
-16. As a buyer, I will be able to, input a discount code for my cart.
-17. As a buyer, I will be able to rate products.
-18. As a buyer I will be able to rate sellers.
-19. As a buyer, I will be able to, view seller profiles.
-20. As a buyer or person, i will be able to filter by category.
-21. As a seller, I will be able to, view all of my products.
-22. As a seller, I will be able to, add products to the catalog.
-23. As a seller, I will be able to, edit my products for sale.
-24. As a seller, I will be able to, delete my products for sale.
-25. As a seller, I will be able to, view my history of my sold products.
-26. As a seller, I will be able to, reply to buyers about products
+9. As a buyer or seller, I will be able to, view my messages and replies.
+10. As a buyer or seller, I will be able to, delete my messages.
+11. As a buyer, I will be able to, add products to my cart.
+12. As a buyer, I will be able to, view details about the product on the catalog.
+13. As a buyer, I will be able to, view my cart.
+14. As a buyer, I will be able to, edit quantities in my cart.
+15. As a buyer, I will be able to, delete products from my cart.
+16. As a buyer, I will be able to, checkout products in my cart. 
+17. As a buyer, I will be able to, input a discount code for my cart.
+18. As a buyer, I will be able to rate products.
+19. As a buyer I will be able to rate sellers.
+20. As a buyer, I will be able to, view seller profiles.
+21. As a buyer or person, i will be able to filter by category.
+22. As a seller, I will be able to, view all of my products.
+23. As a seller, I will be able to, add products to the catalog.
+24. As a seller, I will be able to, edit my products for sale.
+25. As a seller, I will be able to, delete my products for sale.
+26. As a seller, I will be able to, view my history of my sold products.
+27. As a seller, I will be able to, reply to buyers about products
 
 Have to do but dont count : 
 <br/>As a seller, I will be able to, log out.
