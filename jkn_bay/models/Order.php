@@ -53,7 +53,7 @@ class Order extends \jkn_bay\core\Models{
 	public function findProfileCart($profile_id){
 		$SQL = "SELECT * FROM `order` WHERE profile_id=:profile_id && status=:status";
 		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['profile_id'=>$profile_id, 'status'=>'cart']);//pass any data for the query
+		$STMT->execute(['profile_id'=>$profile_id, 'status'=>'cart']);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order");
 		return $STMT->fetch();
 	}

@@ -18,6 +18,7 @@
 
 		<!-- CSS Styles -->
 			<link rel="stylesheet" href="/css/indexBuyer.css"/>
+			<link rel="stylesheet" href="/css/nav.css"/>
 		
 		<!-- Scripts -->
 			<!-- Timeout the message -->
@@ -38,8 +39,8 @@
 							const lastVal = myArray.pop();
 							const select = document.getElementById('category');
 							
-								if(lastVal == "None" || (lastVal =="")){
-									
+								if(lastVal == "None" || lastVal =="" || (lastVal!= 1 && lastVal!= 2 && lastVal!= 3 && lastVal!= 4)){
+
 								} else{
 									select.value = lastVal;
 								}
@@ -104,18 +105,21 @@
 			</div>
 		
 		<!-- Search for products -->	
+		<div class='search'>
 			<form action='/Product/search/' method="get">
 				<div class="input-group rounded">
 					<div class="form-outline">
 						<input type="text" id="searchbar" class="form-control" name="searchbar" placeholder="Search" />
 					</div>
 				  
-				  	<button name="action" class="btn btn-primary">
+				  	<button name="action" class="btn btn-primary" id="searchIcon">
 				    	<i class="fa fa-search"></i>
 				  	</button>
 				</div>
 			</form>
+		</div>
 
+		<div class='filters'>
 		<label> Filter by Category:
 				<select name='category' id='category' onchange='changeURL(this)'>
 					<option selected>None</option>
@@ -128,6 +132,7 @@
 					?>
 				</select>
 			</label><br>
+		</div>
 
 		<?php
 					foreach($data['product'] as $item)
@@ -137,58 +142,57 @@
 			 			$profile = $profile->getUsername($item->product_id);
 						echo"
 								<div id='container'>	
-	
-								<div class='product-details'>
-									
-								<h1>$item->name</h1>
-								<button href ='/Product/addRating/$item->product_id' class='btn1' name='action'>
-							   <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-arrow-up' viewBox='0 0 16 16'>
-							  <path fill-rule='evenodd' d='M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z'/>
-							</svg>
-							 </button>
-							 <button class='btn2'>
-							   <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-arrow-down' viewBox='0 0 16 16'>
-							  <path fill-rule='evenodd' d='M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z'/>
-							</svg>
-							</button>
-							<p class = 'ratingNum'> </p>
+									<div class='product-details'>					
+										<h1>$item->name</h1>
+								
+										<button href ='/Product/addRating/$item->product_id' class='btn1' name='action'>
+							   				<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-arrow-up' viewBox='0 0 16 16'>
+							  					<path fill-rule='evenodd' d='M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z'/>
+											</svg>
+							 			</button>
 							 
-										<button class='btn'>
-							   <span class='buy'>Contact Seller</span>
-							 </button>
-							<div class='control2'>
-								
-							<a class='btn' href=/Profile/addToCart/$item->product_id'>
-								<span class='price'>$item->price</span>
-							   	
-							   	<span class='shopping-cart'><i class='fa fa-shopping-cart' aria-hidden='true'></i></span>
-							   <span class='buy'>Add to Cart</span>
-							 </a>
-								
-							</div>
+							 			<button class='btn2'>
+							   				<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-arrow-down' viewBox='0 0 16 16'>
+							  					<path fill-rule='evenodd' d='M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z'/>
+											</svg>
+										</button>
+							
+										<p class = 'ratingNum'>Test</p>
+							 			
+										<span class='desc'>$item->description</span>
 										
-							</div>
+										
+										<button class='btn'>
+							   				<span class='buy'>Contact Seller</span>
+							 			</button>
+							
+										
+										<div class='control2'>
+												<a class='btn' href='/Profile/addToCart/$item->product_id'>
+							   					<span class='shopping-cart'><i class='fa fa-shopping-cart' aria-hidden='true'></i></span>
+							   					<span class='buy'>Add to Cart</span>
+							 				</a>
+										</div>
+									</div>
 								
-							<div class='product-image'>
+									<div class='product-image'>
+										<img src='/images/$item->image' alt=''>
 								
-								<img src='/images/$item->image' alt=''>
-								
-							<div class='info'>
-								<h2>Description</h2>
-								<ul>
-									<li><strong>State : </strong>$item->state </li>
-									<li><strong>Quantity : </strong>$item->quantity</li>
-									<li><strong>Description: </strong>$item->description</li>
-									<li><strong>Seller: </strong>$profile->username</li>
-									
-								</ul>
-							</div>
-							</div>
-							</div>
-														";
-												}
-											?>
-							    <br><br><br><br><br><br><br>	
+										<div class='info'>
+											<h2>Details</h2>
+											
+											<ul>
+												<li><strong>Quality: </strong>$item->state </li>
+												<li><strong>In stock: </strong>$item->quantity</li>
+												<li><strong>Price: </strong>$$item->price</li>
+												<li><strong>Seller: </strong>$profile->username</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							";
+							}
+			?>	
 							</div>
 	</body>
 </html>

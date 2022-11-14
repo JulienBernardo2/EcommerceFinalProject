@@ -1,6 +1,5 @@
 <html>
 	<head>
-	
 		<!-- Jquery -->
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -13,9 +12,9 @@
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 			crossorigin="anonymous"></script>
-
+		
 		<!--Font-Awesome CSS-->
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- CSS Styles -->
 			<link rel="stylesheet" href="/css/profileEdit.css"/>
@@ -28,6 +27,38 @@
 	                	});
 	            	}, 3000);
 	        	</script>
+
+	    <!-- Set the state of the product -->
+	        	<script type="text/javascript">
+					$(document).ready(
+						function(){
+							var stateOfProduct = "<?= $data['product']->state ?>";
+								
+								if(stateOfProduct == 'new'){
+									const state = document.getElementById('state_new');
+									state.checked = true;
+								} else if(stateOfProduct == 'used'){
+									const state = document.getElementById('state_used');
+									state.checked = true;
+								}
+
+								var categoryOfProduct = "<?= $data['product']->category_id ?>";
+								var category = document.getElementById('category');
+							
+								if(categoryOfProduct == null){
+									category.value = 'None';
+								} else if(categoryOfProduct == '1'){
+									category.value = '1';
+								} else if(categoryOfProduct == '2'){
+									category.value = '2';
+								} else if(categoryOfProduct == '3'){
+									category.value = '3';
+								} else if(categoryOfProduct == '4'){
+									category.value = '4';
+								} 
+							}
+						);
+				</script>
 
 		<!-- Message Pop ups -->
 				<?php
@@ -103,15 +134,17 @@
 									<input type="text" class="form-control" id="quantity" name="quantity" value="<?= $data['product']->quantity ?>">
 								</div>
 
-								<div class="form-group">
-									<label for="state">State</label>
-									<input type="text" class="form-control" id="state" name="state" value="<?= $data['product']->state ?>">
-								</div>
-
+								<div class="form-group" id='states'>
+									<p>Condition</p>
+						    		<input type="radio" id="state_new" name="state" value="new">
+									<label for="state_new">New</label>
+						  			<input type="radio" id="state_used" name="state" value="used">
+									<label for="state_used">Used</label>
+				  				</div>
 								<div class="form-group">
 						    			<label> Category:
 										<select name='category' id='category' value=''>
-												<option selected value="<?= $data['product']->category_id ?>"></option>
+												<option>None</option>
 												<?php
 													foreach ($data['categorys'] as $category){
 														echo "	

@@ -84,6 +84,7 @@ class Profile extends \jkn_bay\core\Controller{
 		}
 	 }
 
+	 #[\jkn_bay\filters\Login]
 	 //Allows sellers or buyers to edit their profile
 	 public function edit(){
 		
@@ -123,6 +124,7 @@ class Profile extends \jkn_bay\core\Controller{
 		}	
 	}
 
+	#[\jkn_bay\filters\Login]
 	//Allows buyers to add products to their cart
 	public function addToCart($product_id){
  	 	
@@ -142,20 +144,44 @@ class Profile extends \jkn_bay\core\Controller{
 	 	 	$cart->order_id = $cart->insert();
  	 	}
 
- 	 	//Creates the order detail for the buyer
- 		$newProduct = new \jkn_bay\models\Order_detail();
- 		
- 		//Sets all of the values for the order detail
- 		$newProduct->order_id = $cart->order_id;
- 		$newProduct->product_id = $product_id;
- 		$newProduct->price = $product->price;
- 		$newProduct->qty = 1;
+ 	 	$product_order_detail = new \jkn_bay\models\Order_detail();
+ 	 	$product_order_detail = $product_order_detail->getProductForOrder($product->product_id);
 
- 		//Creates the order detail
- 		$newProduct->insert();
- 		header('location:/Product/indexBuyer?message=The product was added to your cart');
+ 	 	//Checks if the product is already in the cart, and if the quantity is to much to add
+ 	 	if($product_order_detail != null){
+ 	 		if($product_order_detail->qty >= $product->quantity){
+ 	 			header('location:/Product/indexBuyer?error=Maximum quantity reached');	
+ 	 		} else{
+ 	 			//Creates the order detail for the buyer
+	 		$newProduct = new \jkn_bay\models\Order_detail();
+	 		
+	 		//Sets all of the values for the order detail
+	 		$newProduct->order_id = $cart->order_id;
+	 		$newProduct->product_id = $product_id;
+	 		$newProduct->price = $product->price;
+	 		$newProduct->qty = 1;
+
+	 		//Creates the order detail
+	 		$newProduct->insert();
+	 		header('location:/Product/indexBuyer?message=The product was added to your cart');
+ 	 		}
+ 	 	}else{
+	 		//Creates the order detail for the buyer
+	 		$newProduct = new \jkn_bay\models\Order_detail();
+	 		
+	 		//Sets all of the values for the order detail
+	 		$newProduct->order_id = $cart->order_id;
+	 		$newProduct->product_id = $product_id;
+	 		$newProduct->price = $product->price;
+	 		$newProduct->qty = 1;
+
+	 		//Creates the order detail
+	 		$newProduct->insert();
+	 		header('location:/Product/indexBuyer?message=The product was added to your cart');
+	 	}
  	}
 
+ 	#[\jkn_bay\filters\Login]
  	//Allows buyers to view their cart
  	public function viewCart(){
 
@@ -178,6 +204,7 @@ class Profile extends \jkn_bay\core\Controller{
 		$this->view('Profile/cart', $products);
  	}
 
+ 	#[\jkn_bay\filters\Login]
  	//Allows buyers to delete products from their cart
   	public function removeFromCart($order_detail_id){
  	 	
@@ -198,6 +225,7 @@ class Profile extends \jkn_bay\core\Controller{
  	 	}
  	}
 
+ 	#[\jkn_bay\filters\Login]
  	//Allows buyers to checkout their cart
  	public function checkout(){
 

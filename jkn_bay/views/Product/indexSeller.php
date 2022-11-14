@@ -17,7 +17,8 @@
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/style.css"/>
+			<link rel="stylesheet" href="/css/nav.css"/>
+			<link rel="stylesheet" href="/css/indexSeller.css"/>
 
 		<!-- Scripts -->
 			<script type="text/javascript">
@@ -55,49 +56,66 @@
 				<?php if(isset($_SESSION['username'])){
 			    	echo '
 			     		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+			            <a class="nav-link" href ="/Messages/index">Messages</a>
 			            <a class="nav-link" href ="/Product/add">New Product</a>
 	  					<img src="/jknimage.png" alt="JKN" />
 			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a class="nav-link" href ="/Profile/history">History</a>
 						<a class="nav-link" href ="/Profile/logout">Logout</a>
 					';
 			    }?>	
 			</div>
 			
-		<!-- Products to dsiplay -->
-			<div class="container">
-				<h1>My Products</h1>
-				
-				<?php
-					foreach($data['product'] as $item){
-						echo"
-							<div class='wrapper'>
-							    <div class=product-img>
-									<img src='/images/$item->image' style='max-width:200px;max-height:200px'/>
-							    </div>
-						
-							    <div class='product-info'>
-								    <div class='product-text'>
-										<h1>$item->name</h1>
-										<h4>$item->state</h4>
-										<p>$item->price</p><br>
-								        <p class='desc'>$item->description</p>
-								        <p class='desc'>In stock: $item->quantity</p>
-								    </div>
+		<!-- Title of page -->
+		
+			<div class="title">
+				<h1 class="display">My Products</h1>
+			</div>
+		<div>
+			<?php
+					foreach($data['product'] as $item)
 
-									<div class='product-price-btn'>
-								    	<a class='edit-button' href ='/Product/edit/$item->product_id'>
-											<i class='fa fa-pencil'></i>Edit Product
-										</a>
+					{
+						echo"
+								<div id='container'>	
+									<div class='product-details'>					
+										<h1>$item->name</h1>
+							 			
+										<span class='desc'>$item->description</span	>
+										
+											<div class='controls'>
+													<a class='btn' href='/Product/edit/$item->product_id'>
+								   					<span class='shopping-cart'><i class='fa-duotone fa-pencil' aria-hidden='true'></i></span>
+								   					<span class='buy'>Edit</span>
+								 				</a>
+											</div>
+
+											<div class='controls'>
+													<a class='btn' href='/Product/delete/$item->product_id'>
+								   					<span class='shopping-cart'><i class='fa fa-trash' aria-hidden='true'></i></span>
+								   					<span class='buy'>Delete</span>
+								 				</a>
+											</div>
+
+									</div>
 								
-								    	<a class='delete-button' href ='/Product/delete/$item->product_id'>
-											<i class='fa fa-trash'></i>Delete Product
-										</a>
+									<div class='product-image'>
+										<img src='/images/$item->image' alt=''>
+								
+										<div class='info'>
+											<h2>Details</h2>
+											
+											<ul>
+												<li><strong>Quality: </strong>$item->state </li>
+												<li><strong>In stock: </strong>$item->quantity</li>
+												<li><strong>Price: </strong>$$item->price</li>
+											</ul>
+										</div>
 									</div>
 								</div>
-							</div>
-						";
-					}
-				?>
+							";
+							}
+			?>	
 			</div>
 	</body>		
 </html>

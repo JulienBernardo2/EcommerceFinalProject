@@ -1,21 +1,33 @@
 <!doctype html>
 <html lang="en">
 	<link rel="stylesheet" href="/css/login.css"/>
+
 	<head>
-<?php
-			if(isset($_GET['error'])){ ?>
-				<div class="alert alert-danger alert-dismissible">
-  					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  					<?= $_GET['error'] ?>
-				</div>
-		<?php  }
-			if(isset($_GET['message'])){ ?>
-				<div class="alert alert-success alert-dismissible">
-  					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  					<?= $_GET['message'] ?>
-				</div>
-		<?php  }
-		?>
+
+		<!-- Scripts -->
+			<script type="text/javascript">
+            	window.setTimeout(function() {
+                	$("#alert-message").fadeTo(500, 0).slideUp(500, function(){
+                    	$(this).remove(); 
+                	});
+            	}, 3000);
+        	</script>
+
+        <!-- Message Pop ups -->
+			<?php
+				if(isset($_GET['error'])){ ?>
+					<div class="alert alert-danger" id="alert-message">
+  						<a href="#" id='alert-message' class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  						<?= $_GET['error'] ?>
+					</div>
+			<?php  }
+				if(isset($_GET['message'])){ ?>
+					<div class="alert alert-success" id="alert-message">
+  						<a href="#"  class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  						<?= $_GET['message'] ?>
+					</div>
+			<?php  }
+			?>
 		<!-- Jquery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -30,15 +42,12 @@
 		crossorigin="anonymous"></script>
 		<title>Log in Page</title>
 
-		<div class="navbar">
-  <img src="/jknimage.png" alt="JKN" />
-</div>
 	</head>
 	
 	<body>
 		
 
-		<div>
+		<div id="page">
 			<div class="description">
   				<h1 class="title" >Welcome to JKN-Bay</h1>
   				<p>
@@ -50,7 +59,7 @@
 
 			<h1>Log-In</h1>
 		
-<div class ="line">
+			<div class ="line">
   			</div>
 		<form action='' method='post'>
 			<div class="form-group1">

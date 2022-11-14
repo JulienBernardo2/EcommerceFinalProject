@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en">
-	<link rel="stylesheet" href="/css/style2.css"/>
+	<link rel="stylesheet" href="/css/cart.css"/>
 	<head>
-<?php
+
+		<?php
 			if(isset($_GET['error'])){ ?>
 				<div class="alert alert-danger alert-dismissible">
   					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

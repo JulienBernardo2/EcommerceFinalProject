@@ -38,9 +38,11 @@
 				<?php if(isset($_SESSION['username'])){
 			    	echo '
 			     		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+			            <a class="nav-link" href ="/Messages/index">Messages</a>
 			            <a class="nav-link" href ="/Product/add">New Product</a>
 	  					<img src="/jknimage.png" alt="JKN" />
 			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a class="nav-link" href ="/Profile/history">History</a>
 						<a class="nav-link" href ="/Profile/logout">Logout</a>
 					';
 			    }?>	

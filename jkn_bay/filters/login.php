@@ -5,8 +5,10 @@ namespace jkn_bay\filters;
 class Login extends \jkn_bay\core\AccessFilter{
 
 	public function execute(){
-		if(!isset($_SESSION['user_id'])){
-			header('location:/User/login?error=You must login to use these features!');
+		if(!isset($_SESSION['profile_id'])){
+			header('location:/Profile/index?error=You must login to use these features!');
 			return true;
 		}
+		return false;
+	}
 }

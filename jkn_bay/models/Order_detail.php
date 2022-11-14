@@ -69,4 +69,13 @@ class Order_detail extends \jkn_bay\core\Models{
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order_detail");
 		return $STMT->fetch();
 	}
+
+	//Gets the specified order detail based on the product_id and order_id
+	public function getProductForOrder($product_id){
+		$SQL = "SELECT * FROM order_detail JOIN `order` ON `order`.order_id = order_detail.order_id WHERE product_id=:product_id && `order`.profile_id =:profile_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['product_id'=>$product_id, 'profile_id'=>$_SESSION['profile_id']]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order_detail");
+		return $STMT->fetch();
+	}
 }

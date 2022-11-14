@@ -3,6 +3,11 @@ namespace jkn_bay\models;
 
 class Product extends \jkn_bay\core\Models{
 
+
+	//Checks if inputs are correct
+	#[\jkn_bay\validators\Name]
+	public $name;
+
 	//Creates a product
 	public function insert(){
 		$SQL = "INSERT INTO product (profile_id, name, description, price, quantity, category_id, state, image) VALUES (:profile_id, :name, :description, :price, :quantity, :category_id, :state, :image)";

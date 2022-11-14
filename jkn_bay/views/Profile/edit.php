@@ -16,50 +16,55 @@
 	<!--Font-Awesome CSS-->
 	 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
-	<link rel="stylesheet" href="/css/profileEdit.css"/>
+	<link rel="stylesheet" href="/css/editProfile.css"/>
 
+	<!-- Scripts -->
+			<script type="text/javascript">
+            	window.setTimeout(function() {
+                	$("#alert-message").fadeTo(500, 0).slideUp(500, function(){
+                    	$(this).remove(); 
+                	});
+            	}, 3000);
+        	</script>
+<!-- Message Pop ups -->
+			<?php
+				if(isset($_GET['error'])){ ?>
+					<div class="alert alert-danger" id="alert-message">
+  						<a href="#" id='alert-message' class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  						<?= $_GET['error'] ?>
+					</div>
+			<?php  }
+				if(isset($_GET['message'])){ ?>
+					<div class="alert alert-success" id="alert-message">
+  						<a href="#"  class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  						<?= $_GET['message'] ?>
+					</div>
+			<?php  }
+			?>
 	<title>Main Page</title>
-		<nav class="navbar">
+		<div class="navbar">
 				<?php if($_SESSION['role'] == 'buyer'){
 		        	echo '
-		        		<a href ="/Product/indexBuyer">Home</a>
-		        		<a href ="/Profile/viewCart">Cart</a>
-		        		<a href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-						<a href ="/Profile/logout">Logout</a>
+		        		<a class="nav-link" href ="/Product/indexBuyer">Home</a>
+		        		<a class="nav-link" href ="/Profile/viewCart">Cart</a>
+  						<img src="/jknimage.png" alt="JKN" />
+		        		<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a class="nav-link" href ="/Profile/logout">Logout</a>
 					';
 		        }else{
 		        	echo '
-		        		<a href ="/Product/indexSeller">Home</a>
-			            <a href ="/Product/add">New Product</a>
-			            <img src="/jknimage.png" alt="JKN" />
-		        		<a href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-						<a href ="/Profile/logout">Logout</a>
+		        		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+			            <a class="nav-link" href ="/Product/add">New Product</a>
+  						<img src="/jknimage.png" alt="JKN" />
+		        		<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a class="nav-link" href ="/Profile/logout">Logout</a>
 		        	';
 		        } ?>
-		        <div class="dot"></div>
-			</nav>
+			</div>
 
 
 </head>
 <body>
-	<?php
-		if(isset($_GET['error'])){ ?>
-			<div class="alert alert-danger alert-dismissible">
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<?= $_GET['error'] ?>
-			</div>
-	<?php  }
-		if(isset($_GET['message'])){ ?>
-			<div class="alert alert-success alert-dismissible">
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<?= $_GET['message'] ?>
-			</div>
-	<?php  }
-	?>
-
-
-
-	<br><br><br><br><br><br><br>
 		<div class="col-md-5">
     		<div class="p-3 py-5">
 				<div class = "left">

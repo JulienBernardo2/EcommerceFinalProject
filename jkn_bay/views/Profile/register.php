@@ -16,25 +16,35 @@
 		crossorigin="anonymous"></script>
 
 		<title>Register a new user</title>
+		<!-- Scripts -->
+			<script type="text/javascript">
+            	window.setTimeout(function() {
+                	$("#alert-message").fadeTo(500, 0).slideUp(500, function(){
+                    	$(this).remove(); 
+                	});
+            	}, 3000);
+        	</script>
 
+     <!-- Message Pop ups -->
+			<?php
+				if(isset($_GET['error'])){ ?>
+					<div class="alert alert-danger" id="alert-message">
+  						<a href="#" id='alert-message' class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  						<?= $_GET['error'] ?>
+					</div>
+			<?php  }
+				if(isset($_GET['message'])){ ?>
+					<div class="alert alert-success" id="alert-message">
+  						<a href="#"  class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  						<?= $_GET['message'] ?>
+					</div>
+			<?php  }
+			?>
 	
 	</head>
 
 	<body>
-		<?php
-			if(isset($_GET['error'])){ ?>
-				<div class="alert alert-danger alert-dismissible">
-  					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  					<?= $_GET['error'] ?>
-				</div>
-		<?php  }
-			if(isset($_GET['message'])){ ?>
-				<div class="alert alert-success alert-dismissible">
-  					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  					<?= $_GET['message'] ?>
-				</div>
-		<?php  }
-		?>
+
 		<div>
 <div class="navbar"> 
   <img src="/jknimage.png" alt="JKN" />	

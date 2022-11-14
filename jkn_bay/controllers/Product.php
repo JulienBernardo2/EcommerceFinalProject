@@ -3,6 +3,7 @@ namespace jkn_bay\controllers;
 
 class Product extends \jkn_bay\core\Controller{
 
+	#[\jkn_bay\filters\Login]
 	//Creates the seller page with their products
 	public function indexSeller(){
 		
@@ -13,6 +14,7 @@ class Product extends \jkn_bay\core\Controller{
 		$this->view('Product/indexSeller', ['product'=>$products]);
  	}
 
+ 	#[\jkn_bay\filters\Login]
  	//Allows sellers to add products to the catalog
  	public function add(){
 		
@@ -57,6 +59,7 @@ class Product extends \jkn_bay\core\Controller{
 		}
 	}
 
+	#[\jkn_bay\filters\Login]
 	//Allows sellers to edit their products
 	public function edit($product_id){
 
@@ -81,8 +84,20 @@ class Product extends \jkn_bay\core\Controller{
 			$product->description = $_POST['description'];
 			$product->price = $_POST['price'];
 			$product->quantity = $_POST['quantity'];
-			$product->state = $_POST['state'];
-			$product->category_id= $_POST['category'];
+			
+			//Checks if seller selected the state of their object
+			if($_POST['state'] == null){
+				header('location:/Product/add?error=Please choose the state');
+			} else{
+				$product->state = $_POST['state'];
+			}
+
+			//Checks if the seller put a category or not
+			if($_POST['category'] == 'None'){
+				$product->category_id = null;
+			} else{
+				$product->category_id = $_POST['category'];
+			}
 
 			//Updates the product
 			$product->update();
@@ -98,6 +113,7 @@ class Product extends \jkn_bay\core\Controller{
 		}
 	}
 
+	#[\jkn_bay\filters\Login]
 	//Allows seller to delete his product
 	public function delete($product_id){
 			
@@ -143,14 +159,28 @@ class Product extends \jkn_bay\core\Controller{
 		//Gets the value from the search box
 	 	$search_val = $_GET['searchbar'];
 
+	 	//Check if person or buyer input search box values
+	 	if($search_val == null){
+	 		header('location:/Product/indexBuyer?error=Please enter the value that you are searching for');
+	 	}
 	 	//Gets all of the products related to the search box value
 	 	$product = new \jkn_bay\models\Product();
 		$products = $product->getAllSimilar($search_val);
+
+
+		//Gets all of the profiles related to the search box value
+	 	$profile = new \jkn_bay\models\Profile();
+		$profiles = $profile->getAllSimilar($search_val);
 
 		//Sends an error that no products matched the search box value
 		if($products == null){
 			header('location:/Product/indexBuyer?error=No products match');
 		}
+
+		//Sends an error that no profiles matched the search box value
+		// if($profiles == null){
+		// 	header('location:/Product/indexBuyer?error=No profiles match');
+		// }
 
 		//Gets all of the categorys for the catalog
 	 	$category = new \jkn_bay\models\Category();
