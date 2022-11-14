@@ -11,7 +11,7 @@
   We plan on creating a biding market place website.
   Our website will implement the following features:
   
-1. As a person or buyer, I will be able to, search for products or sellers.
+1. As a person or buyer, I will be able to, search for products.
 2. As a person or buyer, I will be able to, see all products as a catalog.
 3. As a buyer, i will be able to get a discount code when i create my profile
 4. As a buyer or seller, I will be able to, edit my profile.
@@ -22,7 +22,6 @@
 11. As a buyer, I will be able to, add products to my cart.
 12. As a buyer, I will be able to, view details about the product on the catalog.
 13. As a buyer, I will be able to, view my cart.
-14. As a buyer, I will be able to, edit quantities in my cart.
 15. As a buyer, I will be able to, delete products from my cart.
 16. As a buyer, I will be able to, checkout products in my cart. 
 17. As a buyer, I will be able to, input a discount code for my cart.
