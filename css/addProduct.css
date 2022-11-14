@@ -1,0 +1,31 @@
+body{
+	background-color: lightblue;
+}
+
+h1{
+	margin-left: 39%;
+	margin-top: 1%;
+}
+
+img{
+	width: 8%;
+}
+
+.col-md-5{
+	border-radius: 5%;
+	background-color: whitesmoke;
+	margin-left: 28%;
+}
+
+.btn-primary{
+	margin-left: 25%;
+	padding-left: 5%;
+	padding-right: 5%;
+}
+.btn-success{
+	margin-left: 30%;
+}
+
+.form-group{
+    font-size: 20px;
+}
