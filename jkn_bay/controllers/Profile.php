@@ -146,7 +146,6 @@ class Profile extends \jkn_bay\core\Controller{
 
  	 	$product_order_detail = new \jkn_bay\models\Order_detail();
  	 	$product_order_detail = $product_order_detail->getProductForOrder($product->product_id);
-
  	 	//Checks if the product is already in the cart, and if the quantity is to much to add
  	 	if($product_order_detail != null){
  	 		if($product_order_detail->qty >= $product->quantity){
@@ -233,29 +232,29 @@ class Profile extends \jkn_bay\core\Controller{
  	 	$cart = new \jkn_bay\models\Order();
  	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
  	 	
- 	 	// $order_detail = new \jkn_bay\models\Order_detail();
- 	 	// $order_detail = $order_detail->getForOrder($cart->order_id);
+ 	 	$order_detail = new \jkn_bay\models\Order_detail();
+ 	 	$order_detail = $order_detail->getForOrder($cart->order_id);
 
- 	 	// $products_to_change = new \jkn_bay\models\Product();
- 	 	// $products_to_change = $products_to_change->getForOrderProducts($cart->order_id);
+ 	 	$products_to_change = new \jkn_bay\models\Product();
+ 	 	$products_to_change = $products_to_change->getForOrderProducts($cart->order_id);
 
 
- 	 	//var_dump($order_detail);
- 	 	//var_dump($products_to_change);
+ 	 	var_dump($order_detail);
+ 	 	var_dump($products_to_change);
 
- 	 	// foreach($products_to_change as $order_details){
- 	 	// 	foreach($products_to_change as $products){
- 	 	// 		if($order_details->product_id == $products->product_id){
- 	 	// 			$products->subtract($products->product_id, $order_details->qty);
- 	 	// 			var_dump($products->quantity);
- 	 	// 		}
- 	 	// 	}
- 	 	// }
+ 	 	foreach($products_to_change as $order_details){
+ 	 		foreach($products_to_change as $products){
+ 	 			if($order_details->product_id == $products->product_id){
+ 	 				$products->subtract($products->product_id, $order_details->qty);
+ 	 				var_dump($products->quantity);
+ 	 			}
+ 	 		}
+ 	 	}
 
- 	 	$cart->status = 'paid';
+ 	 	//$cart->status = 'paid';
 
- 	 	$cart->update();
- 	 	header('location:/Profile/viewCart?message=Your cart has been checked out');
+ 	 	//$cart->update();
+ 	 	//header('location:/Profile/viewCart?message=Your cart has been checked out');
  	}
 
  	#[\jkn_bay\filters\Login]
