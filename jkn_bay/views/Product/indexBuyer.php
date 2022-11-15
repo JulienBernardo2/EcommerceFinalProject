@@ -17,7 +17,7 @@
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/indexBuyer.css"/>
+			<link rel="stylesheet" href="/css/indexBuyers.css"/>
 			<link rel="stylesheet" href="/css/nav.css"/>
 		
 		<!-- Scripts -->
@@ -50,7 +50,7 @@
 			<!-- Get the name of the filtered category -->	
 	        	<script type="text/javascript">
 	        		function changeURL(category_name){
-	        			let url = location.href; 
+	        			//let url = location.href; 
 	        			location.href = "/Product/filterCategory/"+ category_name.value;	
 	        		}
 	        	</script>
@@ -81,14 +81,19 @@
 		        	echo '
 		        		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-  						<img src="/jknimage.png" alt="JKN" />
+		        		<a  href ="/Profile/viewMessages">Messages</a>
+  						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+		        		<a  href ="/Profile/orderHistory">History</a>
 						<a  href ="/Profile/logout">Logout</a>
 					';
 		        }else{
 		        	echo '
 		        		<a  href ="/Product/indexBuyer">Home</a>
+		        		<a  href =""></a>
+		        		<a  href =""></a>
   						<img src="/jknimage.png" alt="JKN" />
+		        		<a  href =""></a>
 		        		<a  href ="/Profile/index">Login</a>
 		        		<a href ="/Profile/register">Sign up</a>
 		        	';
@@ -136,29 +141,11 @@
 
 		<?php
 					foreach($data['product'] as $item)
-
 					{	
-			 			$profile = new \jkn_bay\models\Product();
-			 			$profile = $profile->getUsername($item->product_id);
 						echo"
 								<div id='container'>	
 									<div class='product-details'>					
 										<h1>$item->name</h1>
-								
-										<button href ='/Product/addRating/$item->product_id' class='btn1' name='action'>
-							   				<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-arrow-up' viewBox='0 0 16 16'>
-							  					<path fill-rule='evenodd' d='M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z'/>
-											</svg>
-							 			</button>
-							 
-							 			<button class='btn2'>
-							   				<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-arrow-down' viewBox='0 0 16 16'>
-							  					<path fill-rule='evenodd' d='M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z'/>
-											</svg>
-										</button>
-							
-										<p class = 'ratingNum'>Test</p>
-							 			
 										<span class='desc'>$item->description</span>
 										
 										
@@ -185,7 +172,7 @@
 												<li><strong>Quality: </strong>$item->state </li>
 												<li><strong>In stock: </strong>$item->quantity</li>
 												<li><strong>Price: </strong>$$item->price</li>
-												<li><strong>Seller: </strong>$profile->username</li>
+												<li><strong>Seller: </strong>$item->username</li>
 											</ul>
 										</div>
 									</div>

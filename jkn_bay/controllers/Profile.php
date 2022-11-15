@@ -153,17 +153,17 @@ class Profile extends \jkn_bay\core\Controller{
  	 			header('location:/Product/indexBuyer?error=Maximum quantity reached');	
  	 		} else{
  	 			//Creates the order detail for the buyer
-	 		$newProduct = new \jkn_bay\models\Order_detail();
-	 		
-	 		//Sets all of the values for the order detail
-	 		$newProduct->order_id = $cart->order_id;
-	 		$newProduct->product_id = $product_id;
-	 		$newProduct->price = $product->price;
-	 		$newProduct->qty = 1;
+		 		$newProduct = new \jkn_bay\models\Order_detail();
+		 		
+		 		//Sets all of the values for the order detail
+		 		$newProduct->order_id = $cart->order_id;
+		 		$newProduct->product_id = $product_id;
+		 		$newProduct->price = $product->price;
+		 		$newProduct->qty = 1;
 
-	 		//Creates the order detail
-	 		$newProduct->insert();
-	 		header('location:/Product/indexBuyer?message=The product was added to your cart');
+		 		//Creates the order detail
+		 		$newProduct->insert();
+		 		header('location:/Product/indexBuyer?message=The product was added to your cart');
  	 		}
  	 	}else{
 	 		//Creates the order detail for the buyer
@@ -233,10 +233,49 @@ class Profile extends \jkn_bay\core\Controller{
  	 	$cart = new \jkn_bay\models\Order();
  	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
  	 	
- 	 	//Updates the status of the cart
- 	 	$cart->status = 'paid';
- 	 	$cart->update();
+ 	 	// $order_detail = new \jkn_bay\models\Order_detail();
+ 	 	// $order_detail = $order_detail->getForOrder($cart->order_id);
 
+ 	 	// $products_to_change = new \jkn_bay\models\Product();
+ 	 	// $products_to_change = $products_to_change->getForOrderProducts($cart->order_id);
+
+
+ 	 	//var_dump($order_detail);
+ 	 	//var_dump($products_to_change);
+
+ 	 	// foreach($products_to_change as $order_details){
+ 	 	// 	foreach($products_to_change as $products){
+ 	 	// 		if($order_details->product_id == $products->product_id){
+ 	 	// 			$products->subtract($products->product_id, $order_details->qty);
+ 	 	// 			var_dump($products->quantity);
+ 	 	// 		}
+ 	 	// 	}
+ 	 	// }
+
+ 	 	$cart->status = 'paid';
+
+ 	 	$cart->update();
  	 	header('location:/Profile/viewCart?message=Your cart has been checked out');
  	}
+
+ 	#[\jkn_bay\filters\Login]
+ 	//Allows buyers to check their orders
+ 	public function orderHistory(){
+
+ 		//Gets the every order and order_detail for the buyer
+ 	 	$order = new \jkn_bay\models\Order_detail();
+ 	 	$orders = $order->findProfileCartPaid($_SESSION['profile_id']);
+
+ 	 	$this->view('Profile/orderHistory', ['order'=>$orders]);
+ 	 }
+
+ 	#[\jkn_bay\filters\Login]
+ 	//Allows sellers to check their sold products
+ 	public function soldHistory(){
+
+ 		//Gets the every order and order_detail for the buyer
+ 	 	$product = new \jkn_bay\models\Order_detail();
+ 	 	$products = $product-> getAllProductsSoldForSeller($_SESSION['profile_id']);
+ 	 	$this->view('Profile/soldHistory', ['product'=>$products]);
+ 	 }
 }

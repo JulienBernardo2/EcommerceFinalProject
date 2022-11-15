@@ -57,4 +57,13 @@ class Order extends \jkn_bay\core\Models{
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order");
 		return $STMT->fetch();
 	}
+
+	//Gets the order for the specific profile which have a paid status
+	public function findProfileCartPaid($profile_id){
+		$SQL = "SELECT * FROM `order` WHERE profile_id=:profile_id && status=:status";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['profile_id'=>$profile_id, 'status'=>'paid']);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order");
+		return $STMT->fetchAll();
+	}
 }

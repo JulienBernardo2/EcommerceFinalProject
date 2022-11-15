@@ -53,7 +53,7 @@ class Order_detail extends \jkn_bay\core\Models{
 	//Gets the specified order detail based on the order_id
 	public function getForOrder($order_id){
 		//get all records from the owner table
-		$SQL = "SELECT order_detail.order_detail_id, order_detail.qty, product.* FROM order_detail JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = :order_id";
+		$SQL = "SELECT order_detail.order_detail_id, order_detail.order_id, order_detail.qty, product.* FROM order_detail JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = :order_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['order_id'=>$order_id]);//pass any data for the query
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order");
@@ -77,5 +77,29 @@ class Order_detail extends \jkn_bay\core\Models{
 		$STMT->execute(['product_id'=>$product_id, 'profile_id'=>$_SESSION['profile_id']]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order_detail");
 		return $STMT->fetch();
+	}
+
+	//Gets everything from order and product for the specific profile which have a paid status
+	public function findProfileCartPaid($profile_id){
+		$SQL = "SELECT `order`.*, product.image, product.name, order_detail.* FROM order_detail 
+				JOIN `order` ON order_detail.order_id=`order`.order_id 
+				JOIN product ON order_detail.product_id=product.product_id  
+				WHERE `order`.profile_id=:profile_id && status=:status";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['profile_id'=>$profile_id, 'status'=>'paid']);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order_detail");
+		return $STMT->fetchAll();
+	}
+
+	//Gets everything from order and product for the specific profile which have a paid status
+	public function getAllProductsSoldForSeller($profile_id){
+		$SQL = "SELECT `order`.*, product.image, product.name, order_detail.* FROM order_detail 
+				JOIN `order` ON order_detail.order_id=`order`.order_id 
+				JOIN product ON order_detail.product_id=product.product_id  
+				WHERE product.profile_id=:profile_id && `order`.status=:status";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['profile_id'=>$profile_id, 'status'=>'paid']);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order_detail");
+		return $STMT->fetchAll();
 	}
 }

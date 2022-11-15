@@ -2,12 +2,7 @@
 namespace jkn_bay\models;
 
 class Product extends \jkn_bay\core\Models{
-
-
-	//Checks if inputs are correct
-	#[\jkn_bay\validators\Name]
-	public $name;
-
+	
 	//Creates a product
 	public function insert(){
 		$SQL = "INSERT INTO product (profile_id, name, description, price, quantity, category_id, state, image) VALUES (:profile_id, :name, :description, :price, :quantity, :category_id, :state, :image)";
@@ -35,6 +30,15 @@ class Product extends \jkn_bay\core\Models{
 			 'state'=>$this->state,
 			 'category_id'=>$this->category_id,
 			 'image'=>$this->image,
+			 'product_id'=>$this->product_id]);
+	}
+
+	//Updates a product quantity
+	public function subtract($product_id, $quantity){
+		$SQL = "UPDATE product SET quantity=-:quantity WHERE product_id=:product_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(
+			['quantity'=>$this->quantity,
 			 'product_id'=>$this->product_id]);
 	}
 
@@ -75,7 +79,7 @@ class Product extends \jkn_bay\core\Models{
 	//Gets all of the products
 	public function getAll(){
 		//get all records from the owner table
-		$SQL = "SELECT * FROM product";
+		$SQL = "SELECT product.*, profile.username FROM product INNER JOIN profile on product.profile_id = profile.profile_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute();//pass any data for the query
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Product");
@@ -91,9 +95,8 @@ class Product extends \jkn_bay\core\Models{
 		return $STMT->fetchAll();
 	}
 
-	//Gets all of the products for an order
+	//Gets all of the products for an order based on the category
 	public function getForOrder($category_name){
-		//get all records from the owner table
 		$SQL = "SELECT * FROM product JOIN category ON product.category_id = category.category_id WHERE category.nicename = :category_name AND category.category_id = product.category_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['product_id'=>$product_id]);//pass any data for the query
@@ -103,8 +106,8 @@ class Product extends \jkn_bay\core\Models{
 
 	//Gets all of the products for a category
 	public function getAllCategory($category_id){
-		//get all records from the owner table
-		$SQL = "SELECT * FROM product WHERE category_id =:category_id";
+		//$SQL = "SELECT * FROM product WHERE category_id =:category_id";
+		$SQL = "SELECT product.*, profile.username FROM profile JOIN product ON profile.profile_id = product.profile_id WHERE category_id=:category_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['category_id'=>$category_id]);//pass any data for the query
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Product");

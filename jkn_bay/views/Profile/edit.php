@@ -14,9 +14,9 @@
 	crossorigin="anonymous"></script>
 	
 	<!--Font-Awesome CSS-->
-	 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
 
-	<link rel="stylesheet" href="/css/editProfile.css"/>
+	<link rel="stylesheet" href="/css/profileEdits.css"/>
 
 	<!-- Scripts -->
 			<script type="text/javascript">
@@ -26,7 +26,7 @@
                 	});
             	}, 3000);
         	</script>
-<!-- Message Pop ups -->
+	<!-- Message Pop ups -->
 			<?php
 				if(isset($_GET['error'])){ ?>
 					<div class="alert alert-danger" id="alert-message">
@@ -41,34 +41,40 @@
 					</div>
 			<?php  }
 			?>
-	<title>Main Page</title>
-		<div class="navbar">
+	<title>Profile Edit</title>
+		<div class='navbar'>
 				<?php if($_SESSION['role'] == 'buyer'){
 		        	echo '
-		        		<a class="nav-link" href ="/Product/indexBuyer">Home</a>
-		        		<a class="nav-link" href ="/Profile/viewCart">Cart</a>
-  						<img src="/jknimage.png" alt="JKN" />
-		        		<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-						<a class="nav-link" href ="/Profile/logout">Logout</a>
+		        		<a class="active" href ="/Product/indexBuyer">Home</a>
+		        		<a  href ="/Profile/viewCart">Cart</a>
+		        		<a  href ="/Profile/viewMessages">Messages</a>
+  						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
+		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+		        		<a  href ="/Profile/orderHistory">History</a>
+						<a  href ="/Profile/logout">Logout</a>
 					';
 		        }else{
 		        	echo '
 		        		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+			            <a class="nav-link" href ="/Messages/index">Messages</a>
 			            <a class="nav-link" href ="/Product/add">New Product</a>
-  						<img src="/jknimage.png" alt="JKN" />
-		        		<a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+	  					<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
+			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a class="nav-link" href ="/Profile/soldHistory">History</a>
 						<a class="nav-link" href ="/Profile/logout">Logout</a>
 		        	';
 		        } ?>
-			</div>
+		</div>
 
 
 </head>
 <body>
+
+	<h1 class = "signup">Edit Profile</h1>
+	<div class="everything">
 		<div class="col-md-5">
     		<div class="p-3 py-5">
 				<div class = "left">
-					<h1 class = "signup">Edit Profile</h1>
 					<form action='' method='post' enctype="multipart/form-data">
 						<div class="form-group">
 							<label for="username">Username</label>
@@ -99,7 +105,7 @@
 
 					<div class="form-group">
 						<label>Profile Image:<input type="file" name="image" id="image" />
-						</label><img id='image_preview' src='/images/blank.jpg' style="min-width:200px;min-height:200px" /><br>
+						</label><img id='image_preview' src='/images/blank.jpg' style="max-width:200px;max-height: 200px" /><br>
 					</div>
 
 					<button type="submit" name='action' class="btn btn-primary">Save Changes</button>
@@ -108,6 +114,7 @@
 			</form>
     	</div>
 	</div>
+</div>
 
 		<!-- Display Image -->
 			<script>
