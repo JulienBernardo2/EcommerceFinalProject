@@ -56,7 +56,7 @@
 			    	echo '
 			     		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-		        		<a  href ="/Message/index">Messages</a>
+		        		<a  href ="/Profile/viewMessages">Messages</a>
   						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
 		        		<a  href ="/Profile/orderHistory">History</a>
@@ -65,52 +65,14 @@
 			    }?>	
 			</div>
 
-		<h1 class='title'>My Orders</h1>	
+		<h1 class='title'>My Messages</h1>	
 
 		<div class="order">
 		<?php
-						$order_id = 0;
-						foreach($data['order'] as $item){
-							if($order_id != $item->order_id){
-									echo "
-											<div class='container'>
-		    									<article class='card'>
-		        									<div class='card-body'>
-		            									<h6>Order ID: $item->order_id</h6>
-		            									
-		            									<article class='card1'>
-								                		
-								                		<div class='card-body row'>
-								                    		<div class='card-body row'>
-								                    			<div class='col'> <strong>Status:</strong><br>$item->status</div>
-								                    			<div class='col'> <strong>Date:</strong><br>$item->date</div>
-								                			</div>
-								                		</div>
-								            	</article>
-								            	<hr style='display:inline-block'>
-									        	<ul class='row'>
-									";
-								}
-								echo "
-												
-									            <ol class='col-md-4'>
-												<figure class='itemside'>
-							                        <div class='aside'><img src='/images/$item->image' class='img-sm border' style='max-width: 200px; max-height: 200px;'></div>
-							                        <figcaption class='info align-self-center'>
-							                            <p class='title'>$item->name</p> <span class='text-muted'>$$item->price ($item->qty)</span>
-							                        </figcaption>
-							                    </figure>
-									 				</ol>
-									 											               
-								";
-								$order_id = $item->order_id;
-								echo "
-							          		</ul>
-						 						</hr>
-				        					</div>
-
-							    			</article>
-										</div><br> 	
+						foreach($data as $item){
+							echo "
+									<p>Message: $item->message</p>
+									<p>Date: $item->date_time</p>
 								";
 						}
 		?>

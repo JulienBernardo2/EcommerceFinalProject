@@ -68,12 +68,19 @@ class Profile extends \jkn_bay\core\Controller{
 			 		$profile->postal_code = $_POST['postal_code'];
 			 		$profile->city = $_POST['city'];
 			 		$profile->password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-			 		$profile->role = $_POST['role'];
+			 		$profile->role = $_POST['role'];		
 					$profile->image = $filename;
-			 		
-			 		//Creates the profile and sets it to the current session
-			 		$profile_id =  $profile->insert();
 
+			 		//Creates the profile and sets it to the current session
+			 		$profile =  $profile->insert();
+			 		
+			 		$new_profile = new \jkn_bay\models\Profile();
+			 		$new_profile = $new_profile->getProfileId($profile);
+
+			 		if($new_profile->role == 'buyer'){
+			 			$message = new \jkn_bay\models\Message();
+			 			$message = $this->createDiscountMessage($new_profile->profile_id);
+			 		}
 					header('location:/Profile/index?message=Your profile is set up, login when ready');
 			 	}
 			} else{
@@ -146,6 +153,7 @@ class Profile extends \jkn_bay\core\Controller{
 
  	 	$product_order_detail = new \jkn_bay\models\Order_detail();
  	 	$product_order_detail = $product_order_detail->getProductForOrder($product->product_id);
+
  	 	//Checks if the product is already in the cart, and if the quantity is to much to add
  	 	if($product_order_detail != null){
  	 		if($product_order_detail->qty >= $product->quantity){
@@ -236,25 +244,31 @@ class Profile extends \jkn_bay\core\Controller{
  	 	$order_detail = $order_detail->getForOrder($cart->order_id);
 
  	 	$products_to_change = new \jkn_bay\models\Product();
- 	 	$products_to_change = $products_to_change->getForOrderProducts($cart->order_id);
-
+ 	 	$products_to_change = $products_to_change->productsToChangeQuantity($cart->order_id);
 
  	 	var_dump($order_detail);
+ 	 	echo'<br>';
+ 	 	echo'<br>';
+ 	 	echo'<br>';
  	 	var_dump($products_to_change);
 
- 	 	foreach($products_to_change as $order_details){
- 	 		foreach($products_to_change as $products){
- 	 			if($order_details->product_id == $products->product_id){
- 	 				$products->subtract($products->product_id, $order_details->qty);
- 	 				var_dump($products->quantity);
- 	 			}
- 	 		}
+ 	 	 foreach($order_detail as $order_details){
+ 	 	 	foreach($products_to_change as $products){
+ 	 	  		if($order_details->product_id == $products->product_id){
+	 	  			$products->subtract($products->product_id, $order_details->qty);
+		 			if($products->quantity == 0){
+ 		 						$products->status = 'sold';
+ 	 	  						$products->updateStatus();	
+ 	 	  			}
+		 		} 
+ 	 	  	}
  	 	}
+ 	 	 
 
- 	 	//$cart->status = 'paid';
+ 	 	// $cart->status = 'paid';
 
- 	 	//$cart->update();
- 	 	//header('location:/Profile/viewCart?message=Your cart has been checked out');
+ 	 	// $cart->update();
+ 	 	// header('location:/Profile/viewCart?message=Your cart has been checked out');
  	}
 
  	#[\jkn_bay\filters\Login]
@@ -262,7 +276,7 @@ class Profile extends \jkn_bay\core\Controller{
  	public function orderHistory(){
 
  		//Gets the every order and order_detail for the buyer
- 	 	$order = new \jkn_bay\models\Order_detail();
+ 	 	$order = new \jkn_bay\models\Order();
  	 	$orders = $order->findProfileCartPaid($_SESSION['profile_id']);
 
  	 	$this->view('Profile/orderHistory', ['order'=>$orders]);
@@ -271,10 +285,64 @@ class Profile extends \jkn_bay\core\Controller{
  	#[\jkn_bay\filters\Login]
  	//Allows sellers to check their sold products
  	public function soldHistory(){
-
  		//Gets the every order and order_detail for the buyer
- 	 	$product = new \jkn_bay\models\Order_detail();
- 	 	$products = $product-> getAllProductsSoldForSeller($_SESSION['profile_id']);
- 	 	$this->view('Profile/soldHistory', ['product'=>$products]);
- 	 }
+ 	 	$order = new \jkn_bay\models\Order();
+ 	 	$orders = $order->findProductsPaid($_SESSION['profile_id']);
+ 	 	$this->view('Profile/soldHistory', ['order'=>$orders]);
+ 	}
+
+	private function createDiscountMessage($profile_id){
+		$message = new \jkn_bay\models\Message();
+		$message->profile_id = $profile_id;
+		
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $charactersLength = strlen($characters);
+	    $randomString = '';
+	    for ($i = 0; $i < 5; $i++) {
+	        $randomString .= $characters[rand(0, $charactersLength - 1)];
+	    }
+
+		$message->message = 'Welcome to JKN Bay, here is your discount code: ' . $randomString; 
+		$message->flag = 'discount';
+		$message->insert();
+
+		$message = new \jkn_bay\models\Message();
+		$message = $message->getDiscountMessage($profile_id);
+		
+		$discount_code = new \jkn_bay\models\Discount();
+	    $discount_code->profile_id = $profile_id;
+	    $discount_code->message_id = $message->message_id;
+	    $discount_code->code = password_hash($randomString, PASSWORD_DEFAULT);
+	    $discount_code->insert();
+	}
+	
+	public function applyDiscount($profile_id){
+		$discount = new \jkn_bay\models\Discount();
+		$discount = $discount->get($profile_id);
+		
+		//Gets the cart for the buyer
+ 	 	$cart = new \jkn_bay\models\Order();
+ 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
+
+ 	 	$order_detail = new \jkn_bay\models\Order_detail();
+ 	 	$order_detail = $order_detail->getForOrder($cart->order_id);
+
+
+		if(isset($_POST['action'])){
+			if($order_detail == null){
+ 	 			header('location:/Profile/viewCart?error=Please add items to your cart');
+ 	 		}else{
+ 	 			if(password_verify($_POST['code'], $discount->code)){	
+					$discount->delete();
+					$message = new \jkn_bay\models\Message();
+					$message = $message->get($discount->message_id);
+					$message->delete();
+					header('location:/Profile/viewCart?message=Your discount code was applied');
+				} else{
+					header('location:/Profile/viewCart?error=Your discount code has already been used');
+				}
+ 	 		}
+			
+		}
+	}
 }

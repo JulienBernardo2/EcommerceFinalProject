@@ -76,7 +76,8 @@
 					foreach($data['product'] as $item)
 
 					{
-						echo"
+						if($item->status == 'selling'){
+							echo"
 								<div id='container'>	
 									<div class='product-details'>					
 										<h1>$item->name</h1>
@@ -115,6 +116,7 @@
 								</div>
 							";
 							}
+						}
 			?>	
 			</div>
 	</body>		

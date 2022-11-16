@@ -69,37 +69,51 @@
 
 		<div class="order">
 		<?php
-						foreach($data['product'] as $product)
-						{	
-								echo"
-								<div class='container'>
-    								<article class='card'>
-        							<div class='card-body'>
-            						<h6>Order ID: $product->order_id</h6>
-            						<article class='card1'>
-						                <div class='card-body row'>
-						                    <div class='card-body row'>
-						                    <div class='col'> <strong>Status:</strong><br>$product->status</div>
-						                    <div class='col'> <strong>Date:</strong><br>$product->date</div>
-						                </div>
-						                </div>
-						            </article>
-						            <hr style='display:inline-block'>
-							        	<ul class='row'>
-							                <ol class='col-md-4'>
-							                <figure class='itemside'>
-							                        <div class='aside'><img src='/images/$product->image' class='img-sm border' style='max-width: 200px; max-height: 200px;'></div>
+						$order_id = 0;
+						foreach($data['order'] as $item){
+							if($order_id != $item->order_id){
+									echo "
+											<div class='container'>
+		    									<article class='card'>
+		        									<div class='card-body'>
+		            									<h6>Order ID: $item->order_id</h6>
+		            									
+		            									<article class='card1'>
+								                		
+								                		<div class='card-body row'>
+								                    		<div class='card-body row'>
+								                    			<div class='col'> <strong>Status:</strong><br>$item->status</div>
+								                    			<div class='col'> <strong>Date:</strong><br>$item->date</div>
+								                    			<div class='col'> <strong>Buyer:</strong><br>$item->username</div>
+								                			</div>
+								                		</div>
+								            	</article>
+								            	<hr style='display:inline-block'>
+									        	<ul class='row'>
+									";
+								}
+								echo "
+												
+									            <ol class='col-md-4'>
+												<figure class='itemside'>
+							                        <div class='aside'><img src='/images/$item->image' class='img-sm border' style='max-width: 200px; max-height: 200px;'></div>
 							                        <figcaption class='info align-self-center'>
-							                            <p class='title'>$product->name</p> <span class='text-muted'>$$product->price ($product->qty)</span>
+							                            <p class='title'>$item->name</p> <span class='text-muted'>$$item->price ($item->qty)</span>
 							                        </figcaption>
 							                    </figure>
-							                </ol>
-							           	</ul>
-						 			</hr>
-				        			</div>
+									 				</ol>
+									 											               
+								";
+								$order_id = $item->order_id;
+								echo "
+							          		</ul>
+						 						</hr>
+				        					</div>
+
 							    			</article>
-										</div><br>";
-						}	
+										</div><br> 	
+								";
+						}
 		?>
 	</div>
 	</body>		

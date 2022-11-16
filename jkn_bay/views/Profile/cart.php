@@ -9,6 +9,24 @@
                 	});
             	}, 3000);
         	</script>
+
+        	<script type="text/javascript">
+					$(document).ready(
+						function(){
+							const button = document.getElementById('apply');
+
+							let elementClicked = false;
+
+							button.addEventListener('click', function handleClick() {
+  								if (elementClicked) {
+    								const sum = document.getElementById('sum');
+    								sum = 
+  								}
+  								elementClicked = true;
+							}
+						}
+						);
+				</script>
 <!-- Message Pop ups -->
 			<?php
 				if(isset($_GET['error'])){ ?>
@@ -41,7 +59,7 @@
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		
-		<link rel="stylesheet" href="/css/carts.css"/>
+		<link rel="stylesheet" href="/css/cart.css"/>
 		
 		<title>Home</title>
 
@@ -50,7 +68,7 @@
 			    	echo '
 			     		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-		        		<a  href ="/Profile/viewMessages">Messages</a>
+		        		<a  href ="/Message/index">Messages</a>
   						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
 		        		<a  href ="/Profile/orderHistory">History</a>
@@ -80,7 +98,14 @@
 							$sum += $item->qty * $item->price;
 					}
 				?>
-				<tr><th colspan=4>Sub Total<th><?= $sum ?></th><th><a href='/Profile/checkout/' class='btn btn-success'>Checkout</a></th></tr>
+				<tr><th colspan=3>Sub Total
+						<th class='discount'>Discount code: 
+							<form action="/Profile/applyDiscount/<?= $_SESSION['profile_id'] ?>" method='post'>
+								<input type="text" class="form-control" name='code' style='max-width: 200px;'>
+								<button type="submit" name='action' id='apply' class="btn btn-success">Apply</button></th>
+							</form>
+						<th id="sum"><?= $sum ?></th>
+						<th><a href='/Profile/checkout/' class='btn btn-success'>Checkout</a></th></tr>
 		</table>
 	</div>
 </div>

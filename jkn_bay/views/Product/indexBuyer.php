@@ -81,7 +81,7 @@
 		        	echo '
 		        		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-		        		<a  href ="/Profile/viewMessages">Messages</a>
+		        		<a  href ="/Message/index">Messages</a>
   						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
 		        		<a  href ="/Profile/orderHistory">History</a>
@@ -142,7 +142,8 @@
 		<?php
 					foreach($data['product'] as $item)
 					{	
-						echo"
+						if($item->status == 'selling'){
+							echo"
 								<div id='container'>	
 									<div class='product-details'>					
 										<h1>$item->name</h1>
@@ -179,6 +180,11 @@
 								</div>
 							";
 							}
+						 else{
+							continue;
+						}
+				}
+						
 			?>	
 							</div>
 	</body>
