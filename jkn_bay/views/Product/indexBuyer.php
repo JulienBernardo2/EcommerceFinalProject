@@ -49,8 +49,7 @@
 				</script>
 			<!-- Get the name of the filtered category -->	
 	        	<script type="text/javascript">
-	        		function changeURL(category_name){
-	        			//let url = location.href; 
+	        		function changeURL(category_name){ 
 	        			location.href = "/Product/filterCategory/"+ category_name.value;	
 	        		}
 	        	</script>

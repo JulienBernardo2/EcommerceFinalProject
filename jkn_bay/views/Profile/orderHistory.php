@@ -83,6 +83,7 @@
 								                		<div class='card-body row'>
 								                    		<div class='card-body row'>
 								                    			<div class='col'> <strong>Status:</strong><br>$item->status</div>
+								                    			<div class='col'> <strong>Date:</strong><br>$item->total</div>
 								                    			<div class='col'> <strong>Date:</strong><br>$item->date</div>
 								                			</div>
 								                		</div>
@@ -97,7 +98,7 @@
 												<figure class='itemside'>
 							                        <div class='aside'><img src='/images/$item->image' class='img-sm border' style='max-width: 200px; max-height: 200px;'></div>
 							                        <figcaption class='info align-self-center'>
-							                            <p class='title'>$item->name</p> <span class='text-muted'>$$item->price ($item->qty)</span>
+							                            <p class='title'>$item->name</p> <span class='text-muted'>($item->qty)</span>
 							                        </figcaption>
 							                    </figure>
 									 				</ol>

@@ -16,10 +16,11 @@ class Order extends \jkn_bay\core\Models{
 
 	//Updates the order
 	public function update(){
-		$SQL = "UPDATE `order` SET status=:status WHERE order_id=:order_id";
+		$SQL = "UPDATE `order` SET status=:status, total=:total WHERE order_id=:order_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(
 			['status'=>$this->status,
+			 'total'=>$this->total,
 			 'order_id'=>$this->order_id]);
 	}
 

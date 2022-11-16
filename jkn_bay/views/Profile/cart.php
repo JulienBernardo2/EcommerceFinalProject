@@ -1,47 +1,7 @@
 <!doctype html>
 <html lang="en">
 	<head>
-	<!-- Scripts -->
-			<script type="text/javascript">
-            	window.setTimeout(function() {
-                	$("#alert-message").fadeTo(500, 0).slideUp(500, function(){
-                    	$(this).remove(); 
-                	});
-            	}, 3000);
-        	</script>
 
-        	<script type="text/javascript">
-					$(document).ready(
-						function(){
-							const button = document.getElementById('apply');
-
-							let elementClicked = false;
-
-							button.addEventListener('click', function handleClick() {
-  								if (elementClicked) {
-    								const sum = document.getElementById('sum');
-    								sum = 
-  								}
-  								elementClicked = true;
-							}
-						}
-						);
-				</script>
-<!-- Message Pop ups -->
-			<?php
-				if(isset($_GET['error'])){ ?>
-					<div class="alert alert-danger" id="alert-message">
-  						<a href="#" id='alert-message' class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  						<?= $_GET['error'] ?>
-					</div>
-			<?php  }
-				if(isset($_GET['message'])){ ?>
-					<div class="alert alert-success" id="alert-message">
-  						<a href="#"  class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  						<?= $_GET['message'] ?>
-					</div>
-			<?php  }
-			?>
 		<!-- Jquery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -62,6 +22,30 @@
 		<link rel="stylesheet" href="/css/cart.css"/>
 		
 		<title>Home</title>
+		<!-- Scripts -->
+			<script type="text/javascript">
+            	window.setTimeout(function() {
+                	$("#alert-message").fadeTo(500, 0).slideUp(500, function(){
+                    	$(this).remove(); 
+                	});
+            	}, 3000);
+        	</script>
+        	
+		<!-- Message Pop ups -->
+			<?php
+				if(isset($_GET['error'])){ ?>
+					<div class="alert alert-danger" id="alert-message">
+  						<a href="#" id='alert-message' class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  						<?= $_GET['error'] ?>
+					</div>
+			<?php  }
+				if(isset($_GET['message'])){ ?>
+					<div class="alert alert-success" id="alert-message">
+  						<a href="#"  class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  						<?= $_GET['message'] ?>
+					</div>
+			<?php  }
+			?>
 
 		<div class="navbar">
 		<?php {
@@ -87,24 +71,22 @@
 		<table class="table table-striped">
 			<tr><th></th><th>Name</th><th>Quantity</th><th>Unit Price</th><th>Product Price</th><th>Actions</th></tr>
 				<?php
-					$sum = 0;
 
-					foreach($data as $item)
-					{
-						echo"
-								<tr><td id='image'><img src='/images/$item->image' style='max-width: 150px; max-height: 150px;'></td><td>$item->name</td><td>$item->qty</td><td>$item->price</td><td>" . $item->qty * $item->price . "</td><td>
+					foreach($data['product'] as $item)
+					{	echo"	
+								<tr><td id='image'><img src='/images/$item->image' style='max-width: 150px; max-height: 150px;'></td><td>$item->name</td><td>$item->qty</td><td>$item->price</td><td>" . 
+									$item->qty * $item->price . "</td><td>
 								<a href='/Profile/removeFromCart/$item->order_detail_id' class='btn btn-danger'>Delete</a></td>
 							";
-							$sum += $item->qty * $item->price;
 					}
 				?>
 				<tr><th colspan=3>Sub Total
 						<th class='discount'>Discount code: 
 							<form action="/Profile/applyDiscount/<?= $_SESSION['profile_id'] ?>" method='post'>
 								<input type="text" class="form-control" name='code' style='max-width: 200px;'>
-								<button type="submit" name='action' id='apply' class="btn btn-success">Apply</button></th>
+								<button type="submit" name='action' id='action' class="btn btn-success">Apply</button></th>
 							</form>
-						<th id="sum"><?= $sum ?></th>
+						<th id="sum"><?= $data['cart']->total ?></th>
 						<th><a href='/Profile/checkout/' class='btn btn-success'>Checkout</a></th></tr>
 		</table>
 	</div>

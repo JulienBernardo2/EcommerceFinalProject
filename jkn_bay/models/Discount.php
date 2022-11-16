@@ -13,6 +13,15 @@ class Discount extends \jkn_bay\core\Models{
 			 'code'=>$this->code]);
 	}
 
+	//Updates the discount status
+	public function update(){
+		$SQL = "UPDATE discount SET status=:status WHERE discount_id=:discount_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(
+			['status'=>$this->status,
+			 'discount_id'=>$this->discount_id]);
+	}
+
 	//Deletes a specified product
 	public function delete(){
 		$SQL = "DELETE FROM discount WHERE discount_id=:discount_id";
