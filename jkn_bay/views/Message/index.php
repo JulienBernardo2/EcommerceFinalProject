@@ -17,7 +17,7 @@
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/orderHistory.css"/>
+			<link rel="stylesheet" href="/css/messageView.css"/>
 
 		<!-- Scripts -->
 			<script type="text/javascript">
@@ -52,17 +52,28 @@
 
 		<!-- Nav -->
 			<div class ="navbar">
-				<?php if(isset($_SESSION['username'])){
-			    	echo '
-			     		<a class="active" href ="/Product/indexBuyer">Home</a>
+				<?php 
+				if($_SESSION['role'] == 'buyer'){
+		        	echo '
+		        		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-		        		<a  href ="/Profile/viewMessages">Messages</a>
+		        		<a  href ="/Message/index">Messages</a>
   						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
 		        		<a  href ="/Profile/orderHistory">History</a>
 						<a  href ="/Profile/logout">Logout</a>
 					';
-			    }?>	
+		        }else{
+		        	echo '
+		        		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+			            <a class="nav-link" href ="/Message/index">Messages</a>
+			            <a class="nav-link" href ="/Product/add">New Product</a>
+	  					<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
+			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a class="nav-link" href ="/Profile/soldHistory">History</a>
+						<a class="nav-link" href ="/Profile/logout">Logout</a>
+		        	';
+		        } ?>
 			</div>
 
 		<h1 class='title'>My Messages</h1>	

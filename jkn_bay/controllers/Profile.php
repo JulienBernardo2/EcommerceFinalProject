@@ -284,29 +284,23 @@ class Profile extends \jkn_bay\core\Controller{
  	 	$cart = new \jkn_bay\models\Order();
  	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
  	 	
- 	 	// $order_detail = new \jkn_bay\models\Order_detail();
- 	 	// $order_detail = $order_detail->getForOrder($cart->order_id);
+ 	 	$order_detail = new \jkn_bay\models\Order_detail();
+ 	 	$order_detail = $order_detail->getForOrder($cart->order_id);
 
- 	 	// $products_to_change = new \jkn_bay\models\Product();
- 	 	// $products_to_change = $products_to_change->productsToChangeQuantity($cart->order_id);
+ 	 	$products_to_change = new \jkn_bay\models\Product();
+ 	 	$products_to_change = $products_to_change->productsToChangeQuantity($cart->order_id);
 
- 	 	// var_dump($order_detail);
- 	 	// echo'<br>';
- 	 	// echo'<br>';
- 	 	// echo'<br>';
- 	 	// var_dump($products_to_change);
-
- 	 	//  foreach($order_detail as $order_details){
- 	 	//  	foreach($products_to_change as $products){
- 	 	//   		if($order_details->product_id == $products->product_id){
-	 	//   			$products->subtract($products->product_id, $order_details->qty);
-		//  			if($products->quantity == 0){
- 		//  						$products->status = 'sold';
- 	 	//   						$products->updateStatus();	
- 	 	//   			}
-		//  		} 
- 	 	//   	}
- 	 	// }
+ 	 	 foreach($order_detail as $order_details){
+ 	 	 	foreach($products_to_change as $products){
+ 	 	  		if($order_details->product_id == $products->product_id){
+	 	  			$products->subtract($products->product_id, $order_details->qty);
+		 			if($products->quantity == 0){
+ 		 						$products->status = 'sold';
+ 	 	  						$products->updateStatus();	
+ 	 	  			}
+		 		} 
+ 	 	  	}
+ 	 	}
 	 	 
 	 	$discount = new \jkn_bay\models\Discount();
 		$discount = $discount->get($_SESSION['profile_id']);

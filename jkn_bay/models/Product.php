@@ -2,9 +2,13 @@
 namespace jkn_bay\models;
 
 class Product extends \jkn_bay\core\Models{
-	
+
+		
+	#[\jkn_bay\validators\NonEmpty]
+	public $name;
+
 	//Creates a product
-	public function insert(){
+	protected function insert(){
 		$SQL = "INSERT INTO product (profile_id, name, description, price, quantity, category_id, state, image) VALUES (:profile_id, :name, :description, :price, :quantity, :category_id, :state, :image)";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(
@@ -50,6 +54,7 @@ class Product extends \jkn_bay\core\Models{
 		$STMT->execute(
 			['quantity'=>$quantity,
 			 'product_id'=>$product_id]);
+		$this->quantity -= $quantity;
 	}
 
 
