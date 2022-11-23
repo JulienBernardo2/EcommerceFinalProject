@@ -16,9 +16,12 @@
 		<!--Font-Awesome CSS-->
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+			<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 		<!-- CSS Styles -->
 			<link rel="stylesheet" href="/css/indexBuyer.css"/>
 			<link rel="stylesheet" href="/css/nav.css"/>
+			<link rel="stylesheet" href="/css/viewSeller.css"/>
 		
 		<!-- Scripts -->
 			<!-- Timeout the message -->
@@ -47,12 +50,7 @@
 							}
 						);
 				</script>
-			<!-- Get the name of the filtered category -->	
-	        	<script type="text/javascript">
-	        		function changeURL(category_name){ 
-	        			location.href = "/Product/filterCategory/"+ category_name.value;	
-	        		}
-	        	</script>
+
 		
 		<!-- Message Pop ups -->
 			<?php
@@ -70,7 +68,7 @@
 			<?php  }
 			?>
 		
-		<title>Buyer Page</title>
+		<title>View Seller</title>
 		
 		<!-- Nav -->
 			<div class="navbar">
@@ -80,77 +78,54 @@
 		        	echo '
 		        		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-		        		<a  href ="/Message/index">Messages</a>
-  						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
+  						<img src="/jknimage.png" alt="JKN" />
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-		        		<a  href ="/Profile/orderHistory">History</a>
 						<a  href ="/Profile/logout">Logout</a>
 					';
 		        }else{
 		        	echo '
 		        		<a  href ="/Product/indexBuyer">Home</a>
-		        		<a  href =""></a>
-		        		<a  href =""></a>
   						<img src="/jknimage.png" alt="JKN" />
-		        		<a  href =""></a>
 		        		<a  href ="/Profile/index">Login</a>
 		        		<a href ="/Profile/register">Sign up</a>
 		        	';
 		        } ?>
 			</div>	
 	</header>
-	
-	<body>
-		
-		<!-- Title of page -->
-		<div>
-			<div class="title">
-				<h1 class="display">Catelog</h1>
-			</div>
-		
-		<!-- Search for products -->	
-		<div class='search'>
-			<form action='/Product/search/' method="get">
-				<div class="input-group rounded">
-					<div class="form-outline">
-						<input type="text" id="searchbar" class="form-control" name="searchbar" placeholder="Search" />
-					</div>
-				  
-				  	<button name="action" class="btn btn-primary" id="searchIcon">
-				    	<i class="fa fa-search"></i>
-				  	</button>
-				</div>
-			</form>
-		</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 
-		<div class='filters'>
-		<label> Filter by Category:
-				<select name='category' id='category' onchange='changeURL(this)'>
-					<option selected>None</option>
-					<?php
-						foreach ($data['categorys'] as $category){
-							echo "	
-									<option id='category' value='$category->category_id'>$category->nicename</option>";
+	<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div id = "profileMenu" class=" border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" style ="width: 200px; height: 200px;" src="/images/<?= $data['profile']->image?>"><span class="firstName"><?=$data['profile']->first_name?></span><span class="text-black-50"><?=$data['profile']->last_name?></span><span> </span></div>
+            <div class="mt-5 text-center"><a href = '/Profile/contactSeller/<?=$data['profile']->profile_id?>' class="btn btn-primary profile-button" type="button"><i class='fas fa-comment'></i> Contact Seller</a>
+            </div>
+        </div>
+        <div class="col-md-3">
 
-					}
-					?>
-				</select>
-			</label><br>
-		</div>
+                    <h4 class="text-right">Products</h4>
+                    <?php
+                    foreach($data['products'] as $item){
 
-		<?php
-					foreach($data['product'] as $item)
-					{	
-						if($item->status == 'selling'){
-							echo"
+						echo"
+				
 								<div id='container'>	
 									<div class='product-details'>					
 										<h1>$item->name</h1>
+								
+									
+							
+										<p class = 'ratingNum'>Test</p>
+							 			
 										<span class='desc'>$item->description</span>
 										
 										
-										<a href='/Profile/viewSeller/$item->profile_id' class='btn'>
-							   				<span class='buy'>View Seller</span>
+										<a href='/Profile/contactSeller/$item->profile_id/$item->product_id' class='btn'>
+							   				<span class='buy'>Contact Seller about product</span>
 							 			</a>
 							
 										
@@ -172,19 +147,24 @@
 												<li><strong>Quality: </strong>$item->state </li>
 												<li><strong>In stock: </strong>$item->quantity</li>
 												<li><strong>Price: </strong>$$item->price</li>
-												<li><strong>Seller: </strong>$item->username</li>
 											</ul>
 										</div>
 									</div>
 								</div>
 							";
-							}
-						 else{
-							continue;
-						}
-				}
-						
-			?>	
-							</div>
-	</body>
-</html>
+			}
+
+			?>
+                
+                    
+                
+                   
+          
+   
+  
+               
+        
+    
+</div>
+</div>
+</div>

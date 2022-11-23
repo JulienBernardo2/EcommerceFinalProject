@@ -393,4 +393,43 @@ class Profile extends \jkn_bay\core\Controller{
 			
 		}
 	}
+
+	#[\jkn_bay\filters\Login]
+ 	public function viewSeller($profile_id){
+
+		$profile = new \jkn_bay\models\Profile();
+		$profile = $profile->getProfileId($profile_id);
+
+ 		$product = new \jkn_bay\models\Product();
+	 	$products = $product->getAllProfile($profile_id);
+
+	 	$this->view('Profile/viewSeller', ['products'=>$products, 'profile'=>$profile]);
+
+ 	}
+
+#[\jkn_bay\filters\Login]
+ 	public function contactSeller($profile_id, $product_id){
+
+ 		if(isset($_POST['action'])){
+ 			$message = new \jkn_bay\models\Message();
+		$message->message = $_POST['enter_message'];
+		$message->sender_id = $_SESSION['profile_id'];
+		$message->receiver_id = $profile_id;
+		$message->product_id = $product_id;
+		$message->insert();
+
+		header('location:/Profile/viewSeller/ '. $profile_id . '?message=Your message was sent');
+
+ 		}
+
+else{
+		$profile = new \jkn_bay\models\Profile();
+		$profile = $profile->getProfileId($profile_id);
+
+	 	$product = new \jkn_bay\models\Product();
+	 	$products = $product->get($product_id);
+
+	 	$this->view('Profile/contactSeller', ['product'=>$products, 'profile'=>$profile]);
+}
+ 	}
 }

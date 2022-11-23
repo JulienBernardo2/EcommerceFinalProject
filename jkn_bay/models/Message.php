@@ -4,14 +4,15 @@ namespace jkn_bay\models;
 class Message extends \jkn_bay\core\Models{
 
 	//Create discounts
-	public function insert(){
-		$SQL = "INSERT INTO message(profile_id, message, flag) VALUES (:profile_id, :message, :flag)";
-		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(
-			['profile_id'=>$this->profile_id,
-			 'message'=>$this->message,	
-			 'flag'=>$this->flag]);
-	}
+    public function insert(){
+        $SQL = "INSERT INTO message(sender_id, `text`, receiver_id, product_id) VALUES (:sender_id, :text,  :receiver_id, :product_id)";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(
+            ['receiver_id'=>$this->receiver_id,
+             'text'=>$this->message,
+              'sender_id'=>$this->sender_id,
+            'product_id'=>$this->product_id]);
+    }
 
 	//Gets all the messages based for a profile
 	public function getAllProfile($profile_id){
