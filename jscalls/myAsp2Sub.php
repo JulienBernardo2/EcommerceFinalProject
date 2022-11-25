@@ -12,7 +12,7 @@ $test2 = substr(strstr($q, 'O'), strlen('O'));
 $test = strstr($q, ' S', true);
 
 
-$test3++;
+$test3--;
 
 echo "
 
