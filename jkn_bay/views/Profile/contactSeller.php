@@ -78,13 +78,19 @@
 		        	echo '
 		        		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-  						<img src="/jknimage.png" alt="JKN" />
-		     						<a  href ="/Profile/logout">Logout</a>
+		        		<a  href ="/Message/index">Messages</a>
+  						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
+		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+		        		<a  href ="/Profile/orderHistory">History</a>
+						<a  href ="/Profile/logout">Logout</a>
 					';
 		        }else{
 		        	echo '
 		        		<a  href ="/Product/indexBuyer">Home</a>
+		        		<a  href =""></a>
+		        		<a  href =""></a>
   						<img src="/jknimage.png" alt="JKN" />
+		        		<a  href =""></a>
 		        		<a  href ="/Profile/index">Login</a>
 		        		<a href ="/Profile/register">Sign up</a>
 		        	';

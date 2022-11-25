@@ -148,4 +148,11 @@ class Product extends \jkn_bay\core\Models{
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Product");
 		return $STMT->fetchAll();
 	}
+
+	public function addRatingData($product_id, $rating){
+		$SQL ="UPDATE product SET rating=:rating WHERE product_id = $product_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['rating'=>$rating]);
+		
+	}
 }

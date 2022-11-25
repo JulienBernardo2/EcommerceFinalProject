@@ -78,14 +78,19 @@
 		        	echo '
 		        		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-  						<img src="/jknimage.png" alt="JKN" />
+		        		<a  href ="/Message/index">Messages</a>
+  						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+		        		<a  href ="/Profile/orderHistory">History</a>
 						<a  href ="/Profile/logout">Logout</a>
 					';
 		        }else{
 		        	echo '
 		        		<a  href ="/Product/indexBuyer">Home</a>
+		        		<a  href =""></a>
+		        		<a  href =""></a>
   						<img src="/jknimage.png" alt="JKN" />
+		        		<a  href =""></a>
 		        		<a  href ="/Profile/index">Login</a>
 		        		<a href ="/Profile/register">Sign up</a>
 		        	';
@@ -102,8 +107,7 @@
     <div class="row">
         <div id = "profileMenu" class=" border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" style ="width: 200px; height: 200px;" src="/images/<?= $data['profile']->image?>"><span class="firstName"><?=$data['profile']->first_name?></span><span class="text-black-50"><?=$data['profile']->last_name?></span><span> </span></div>
-            <div class="mt-5 text-center"><a href = '/Profile/contactSeller/<?=$data['profile']->profile_id?>' class="btn btn-primary profile-button" type="button"><i class='fas fa-comment'></i> Contact Seller</a>
-            </div>
+           
         </div>
         <div class="col-md-3">
 

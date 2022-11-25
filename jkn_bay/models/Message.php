@@ -5,20 +5,20 @@ class Message extends \jkn_bay\core\Models{
 
 	//Create discounts
     public function insert(){
-        $SQL = "INSERT INTO message(sender_id, `text`, receiver_id, product_id) VALUES (:sender_id, :text,  :receiver_id, :product_id)";
+        $SQL = "INSERT INTO message(sender_id, message, receiver_id, product_id) VALUES (:sender_id, :message,  :receiver_id, :product_id)";
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(
             ['receiver_id'=>$this->receiver_id,
-             'text'=>$this->message,
+             'message'=>$this->message,
               'sender_id'=>$this->sender_id,
             'product_id'=>$this->product_id]);
     }
 
 	//Gets all the messages based for a profile
 	public function getAllProfile($profile_id){
-		$SQL = "SELECT * FROM message WHERE profile_id = :profile_id";
+		$SQL = "SELECT * FROM message WHERE sender_id = :sender_id";
 		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['profile_id'=>$profile_id]);
+		$STMT->execute(['sender_id'=>$profile_id]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Message");
 		return $STMT->fetchAll();
 	}

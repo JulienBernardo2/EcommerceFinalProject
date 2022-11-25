@@ -432,4 +432,16 @@ else{
 	 	$this->view('Profile/contactSeller', ['product'=>$products, 'profile'=>$profile]);
 }
  	}
+
+ 	public function addRating($product_id, $rating, $bool){
+
+	
+			$product = new \jkn_bay\models\Product();
+			$product = $product->get($product_id);	
+			$product->addRatingData($product_id, $rating);
+ 			
+			header('location:/Profile/orderHistory?message=' . $product_id . "/" . $bool);
+
+		
+	}
 }
