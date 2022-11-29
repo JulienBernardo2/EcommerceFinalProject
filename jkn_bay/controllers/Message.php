@@ -4,6 +4,7 @@ namespace jkn_bay\controllers;
 class Message extends \jkn_bay\core\Controller{
 
 	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Buyer]
 	public function indexBuyerMes(){
 		$message = new \jkn_bay\models\Message();
 
@@ -14,6 +15,7 @@ class Message extends \jkn_bay\core\Controller{
 	}
 
 	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Seller]
 	public function indexSellerMes(){
 		$message = new \jkn_bay\models\Message();
 
@@ -23,6 +25,7 @@ class Message extends \jkn_bay\core\Controller{
 	}
 
 	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Buyer]
  	public function contactSeller($profile_id, $product_id){
  		$message = new \jkn_bay\models\Message();
 		$messages = $message->getSender($_SESSION['profile_id']);
@@ -61,6 +64,7 @@ class Message extends \jkn_bay\core\Controller{
  	}
 
 	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Seller]
 	public function reply($message, $message_id, $product_id, $profile_id){
 
 			$message = new \jkn_bay\models\Message();

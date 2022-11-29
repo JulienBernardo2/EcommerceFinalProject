@@ -2,10 +2,21 @@
 namespace jkn_bay\models;
 
 class Product extends \jkn_bay\core\Models{
-
 		
 	#[\jkn_bay\validators\NonEmpty]
 	public $name;
+
+	#[\jkn_bay\validators\NonEmpty]
+	public $description;
+
+	#[\jkn_bay\validators\NonEmpty]
+	public $price;
+
+	#[\jkn_bay\validators\NonEmpty]
+	public $quantity;
+
+	#[\jkn_bay\validators\NonEmpty]
+	public $image;
 
 	//Creates a product
 	protected function insert(){

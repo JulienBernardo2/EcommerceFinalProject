@@ -132,6 +132,7 @@ class Profile extends \jkn_bay\core\Controller{
 	}
 
 	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Buyer]
 	//Allows buyers to add products to their cart
 	public function addToCart($product_id){
  	 	
@@ -198,6 +199,7 @@ class Profile extends \jkn_bay\core\Controller{
  	}
 
  	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Buyer]
  	//Allows buyers to view their cart
  	public function viewCart(){
 
@@ -240,6 +242,7 @@ class Profile extends \jkn_bay\core\Controller{
 	 	}
 
  	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Buyer]
  	//Allows buyers to delete products from their cart
   	public function removeFromCart($order_detail_id){
  	 	
@@ -277,6 +280,7 @@ class Profile extends \jkn_bay\core\Controller{
 
 
  	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Buyer]
  	//Allows buyers to checkout their cart
  	public function checkout(){
 
@@ -324,6 +328,7 @@ class Profile extends \jkn_bay\core\Controller{
  	}
 
  	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Buyer]
  	//Allows buyers to check their orders
  	public function orderHistory(){
 
@@ -370,6 +375,9 @@ class Profile extends \jkn_bay\core\Controller{
 	    $discount_code->insert();
 	}
 	
+
+	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Buyer]
 	public function applyDiscount($profile_id){
 		$discount = new \jkn_bay\models\Discount();
 		$discount = $discount->get($profile_id);
@@ -401,6 +409,7 @@ class Profile extends \jkn_bay\core\Controller{
 	}
 
 	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Buyer]
  	public function viewSeller($profile_id){
 
 		$profile = new \jkn_bay\models\Profile();

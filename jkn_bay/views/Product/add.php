@@ -67,12 +67,12 @@
 
 				    	<div class="form-group">
 			    			<label for="price">Price: </label>
-			    			<input type="number" class="form-group" id="price" name='price'>
+			    			<input type="number" step='0.01' class="form-group" id="price" name='price'>
 						</div>
 
 						<div class="form-group">
 							<label for="quantity">Quantity in Stock: </label>
-			    			<input type="text" class="form-group" id="quantity" name='quantity'>
+			    			<input type="number" class="form-group" id="quantity" name='quantity'>
 			    		</div>
 
 			    		<div class="form-group">

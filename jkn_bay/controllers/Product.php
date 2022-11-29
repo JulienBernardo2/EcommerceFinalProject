@@ -4,6 +4,7 @@ namespace jkn_bay\controllers;
 class Product extends \jkn_bay\core\Controller{
 
 	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Seller]
 	//Creates the seller page with their products
 	public function indexSeller(){
 		
@@ -15,6 +16,7 @@ class Product extends \jkn_bay\core\Controller{
  	}
 
  	#[\jkn_bay\filters\Login]
+ 	#[\jkn_bay\filters\Seller]
  	//Allows sellers to add products to the catalog
  	public function add(){
 		
@@ -60,6 +62,7 @@ class Product extends \jkn_bay\core\Controller{
 	}
 
 	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Seller]
 	//Allows sellers to edit their products
 	public function edit($product_id){
 
@@ -114,6 +117,7 @@ class Product extends \jkn_bay\core\Controller{
 	}
 
 	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Seller]
 	//Allows seller to delete his product
 	public function delete($product_id){
 			
