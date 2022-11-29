@@ -17,7 +17,7 @@
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/soldHistory.css"/>
+			<link rel="stylesheet" href="/css/messageView.css"/>
 
 		<!-- Scripts -->
 			<script type="text/javascript">
@@ -52,67 +52,77 @@
 
 		<!-- Nav -->
 			<div class ="navbar">
-				<?php if(isset($_SESSION['username'])){
-			    	echo '
-			     		<a class="nav-link" href ="/Product/indexSeller">Home</a>
-			            <a class="nav-link" href ="/Messages/indexSellerMes">Messages</a>
-			            <a class="nav-link" href ="/Product/add">New Product</a>
-	  					<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
-			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-						<a class="nav-link" href ="/Profile/soldHistory">History</a>
-						<a class="nav-link" href ="/Profile/logout">Logout</a>
+				<?php
+				echo '
+		        		<a class="active" href ="/Product/indexBuyer">Home</a>
+		        		<a  href ="/Profile/viewCart">Cart</a>
+		        		<a  href ="/Message/indexBuyerMes">Messages</a>
+  						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
+		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+		        		<a  href ="/Profile/orderHistory">History</a>
+						<a  href ="/Profile/logout">Logout</a>
 					';
-			    }?>	
+		        ?>
 			</div>
 
-		<h1 class='title'>My Sold Products</h1>	
+		<h1 class='title'>My Messages</h1>	
 
 		<div class="order">
 		<?php
-						$order_id = 0;
-						foreach($data['order'] as $item){
-							if($order_id != $item->order_id){
-									echo "
+
+						foreach($data['discountM'] as $item){
+							echo "
 											<div class='container'>
 		    									<article class='card'>
 		        									<div class='card-body'>
-		            									<h6>Order ID: $item->order_id</h6>
+		            									<h6>Discount</h6>
 		            									
 		            									<article class='card1'>
 								                		
 								                		<div class='card-body row'>
 								                    		<div class='card-body row'>
-								                    			<div class='col'> <strong>Status:</strong><br>$item->status</div>
-								                    			<div class='col'> <strong>Date:</strong><br>$item->date</div>
-								                    			<div class='col'> <strong>Buyer:</strong><br>$item->username</div>
+								                    			<div class='col'> <strong>Message:</strong><br>$item->message</div>
+								                    			<div class='col'> <strong>Date and Time:</strong><br>$item->date_time</div>
 								                			</div>
 								                		</div>
 								            	</article>
 								            	<hr style='display:inline-block'>
 									        	<ul class='row'>
-									";
-								}
-								echo "
-												
-									            <ol class='col-md-4'>
-												<figure class='itemside'>
-							                        <div class='aside'><img src='/images/$item->image' class='img-sm border' style='max-width: 200px; max-height: 200px;'></div>
-							                        <figcaption class='info align-self-center'>
-							                            <p class='title'>$item->name</p> <span class='text-muted'>$$item->price ($item->qty)</span>
-							                        </figcaption>
-							                    </figure>
-									 				</ol>
-									 											               
-								";
-								$order_id = $item->order_id;
-								echo "
-							          		</ul>
+									        	</ul>
 						 						</hr>
 				        					</div>
 
 							    			</article>
 										</div><br> 	
-								";
+									";
+						}
+
+						foreach($data['messages'] as $item){
+							echo "
+											<div class='container'>
+		    									<article class='card'>
+		        									<div class='card-body'>
+		            									<h6>Product: $item->name</h6>
+		            									
+		            									<article class='card1'>
+								                		
+								                		<div class='card-body row'>
+								                    		<div class='card-body row'>
+								                    			<div class='col'> <strong>Message:</strong><br>$item->message</div>
+								                    			<div class='col'> <strong>Date:</strong><br>$item->date_time</div>
+								                    			<div class='col'> <strong>Sent to:</strong><br>$item->username</div>
+								                			</div>
+								                		</div>
+								            	</article>
+								            	<hr style='display:inline-block'>
+									        	<ul class='row'>
+									        	</ul>
+						 						</hr>
+				        					</div>
+
+							    			</article>
+										</div><br> 	
+									";
 						}
 		?>
 	</div>

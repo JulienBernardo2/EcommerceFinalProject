@@ -32,24 +32,6 @@
 	                	});
 	            	}, 3000);
 	        	</script>
-			
-			<!-- Set the name of category -->
-	        	<script type="text/javascript">
-					$(document).ready(
-						function(){
-							const url = window.location.href;
-							const myArray = url.split("/");
-							const lastVal = myArray.pop();
-							const select = document.getElementById('category');
-							
-								if(lastVal == "None" || lastVal =="" || (lastVal!= 1 && lastVal!= 2 && lastVal!= 3 && lastVal!= 4)){
-
-								} else{
-									select.value = lastVal;
-								}
-							}
-						);
-				</script>
 
 		
 		<!-- Message Pop ups -->
@@ -70,39 +52,23 @@
 		
 		<title>View Seller</title>
 		
-		<!-- Nav -->
+		
+	</header>
+<!-- Nav -->
 			<div class="navbar">
-				<?php 
-				
-				if(isset($_SESSION['username'])){
-		        	echo '
-		        		<a class="active" href ="/Product/indexBuyer">Home</a>
+				<?php {
+			    	echo '
+			     		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-		        		<a  href ="/Message/index">Messages</a>
+		        		<a  href ="/Message/indexBuyerMes">Messages</a>
   						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
 		        		<a  href ="/Profile/orderHistory">History</a>
 						<a  href ="/Profile/logout">Logout</a>
 					';
-		        }else{
-		        	echo '
-		        		<a  href ="/Product/indexBuyer">Home</a>
-		        		<a  href =""></a>
-		        		<a  href =""></a>
-  						<img src="/jknimage.png" alt="JKN" />
-		        		<a  href =""></a>
-		        		<a  href ="/Profile/index">Login</a>
-		        		<a href ="/Profile/register">Sign up</a>
-		        	';
-		        } ?>
-			</div>	
-	</header>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-
+			    }?>	
+			</div>
+			
 	<div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div id = "profileMenu" class=" border-right">

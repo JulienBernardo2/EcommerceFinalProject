@@ -20,100 +20,6 @@
 			<link rel="stylesheet" href="/css/orderHistory.css"/>
 
 		<!-- Scripts -->
-
-		<script>
-function toggle(button, id) {
-
-$concat1 = id + " P";
-  const xhttp = new XMLHttpRequest();
-  xhttp.onload = function() {
-    document.getElementById($concat1).innerHTML =
-    this.responseText;
-  }
- 
- 
-  if(button.name == "ONN"){
-
-  xhttp.open("GET", "/jscalls/buttonOff.php?q=" + id);
-  xhttp.send();
-	toggle2(button, id);
-
-}
-else{
-
-	 xhttp.open("GET", "/jscalls/buttonOn.php?q=" + id);
-  xhttp.send();
-toggle2(button, id);
-
-}
-}
-
-</script>
-
-
-<script>
-function toggle2(button2, id2) {
-	
-$concat2 = id2 + " R";
-  const xhttp2 = new XMLHttpRequest();
-  xhttp2.onload = function() {
-    document.getElementById($concat2).innerHTML =
-    this.responseText;
-  }
-
-
-  if(button2.name == "ONN"){
-
-  	$oldRating = document.getElementById("myRating "+ id2).value = document.getElementById("myRating " + id2).innerText;
-	$test = $concat2 + $oldRating;
-
-
-  xhttp2.open("GET", "/jscalls/myAsp.php?q=" + $test);
-  xhttp2.send();
-
-toggle3(button2, $oldRating, id2);
-
-}
-else{
-	$oldRating = document.getElementById("myRating "+ id2).value = document.getElementById("myRating " + id2).innerText;
-  	$test = $concat2 + $oldRating;
-
-
- xhttp2.open("GET", "/jscalls/myAspSub.php?q=" + $test);
-  xhttp2.send();
-
-  toggle3(button2, $oldRating, id2);
-}
-}
-</script>
-
-
-<script>
-function toggle3(button3, oldRating3, id3) {
-	
-$concat3 = id3 + " S";
-  const xhttp3 = new XMLHttpRequest();
-  xhttp3.onload = function() {
-    document.getElementById($concat3).innerHTML =
-    this.responseText;
-  }
-
-
-if(button3.name == "ONN"){
-  $mixture = $concat3 + oldRating3 + button3.name;
-  xhttp3.open("GET", "/jscalls/myAsp2.php?q=" + $mixture);
-  xhttp3.send();
-}
-else{
-
-$mixture = $concat3 + oldRating3 + button3.name;
-  xhttp3.open("GET", "/jscalls/myAsp2Sub.php?q=" + $mixture);
-  xhttp3.send();
-
-}
-}
-</script>
-
 			<script type="text/javascript">
             	window.setTimeout(function() {
                 	$("#alert-message").fadeTo(500, 0).slideUp(500, function(){
@@ -150,7 +56,7 @@ $mixture = $concat3 + oldRating3 + button3.name;
 			    	echo '
 			     		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-		        		<a  href ="/Message/index">Messages</a>
+		        		<a  href ="/Message/indexBuyerMes">Messages</a>
   						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
 		        		<a  href ="/Profile/orderHistory">History</a>
@@ -163,30 +69,10 @@ $mixture = $concat3 + oldRating3 + button3.name;
 
 		<div class="order">
 		<?php
-
-
-						
-									
-
-		
 						$order_id = 0;
-						 $new_count = 0;
-						$count = 1;
+						$check = false;
 						foreach($data['order'] as $item){
-
-
-							if($order_id != $item->order_id){
-$rate = "<div id = '$item->product_id P'>
-	<button id = 'myBtn' type='button' class='fa fa-thumbs-o-up btn1' name= 'ONN' onclick='javascript:toggle(this, $item->product_id);'></button>
-</div>";
-
-if($_GET['message'] == "$item->product_id/NN"){
-
-							$rate = "<div id = '$item->product_id P'>
-	<button id = 'myBtnOff' type='button' class='fa fa-thumbs-up btn2' name= 'OFF' onclick='javascript:toggle(this, $item->product_id);'></button>
-</div>";
-}
-
+							if($order_id != $item->order_id && $check == false){
 									echo "
 											<div class='container'>
 		    									<article class='card'>
@@ -198,63 +84,43 @@ if($_GET['message'] == "$item->product_id/NN"){
 								                		<div class='card-body row'>
 								                    		<div class='card-body row'>
 								                    			<div class='col'> <strong>Status:</strong><br>$item->status</div>
-								                    			<div class='col'> <strong>Total:</strong><br>$item->total</div>
+								                    			<div class='col'> <strong>Total:</strong><br>$$item->total</div>
 								                    			<div class='col'> <strong>Date:</strong><br>$item->date</div>
-								                    			<div class='col'> <strong>Leave Rating:</strong><br><div class = 'totalRating' id = '$item->product_id R'>
-<a id ='myRating $item->product_id'> $item->rating </a>
-
-</div>
-
-$rate
-
-<div id = '$item->product_id S'>
-<a href ='/Profile/addRating/$item->product_id/$item->rating/FF' class=' btn btn-success btnSave' name='upvote'> Save
- </a>
-</div>
-
 								                			</div>
 								                		</div>
 								            	</article>
 								            	<hr style='display:inline-block'>
 									        	<ul class='row'>
 									";
-									$count++;
-								}
+									$check = true;
+							}
 								echo "
-												
 									            <ol class='col-md-4'>
 												<figure class='itemside'>
 							                        <div class='aside'><img src='/images/$item->image' class='img-sm border' style='max-width: 200px; max-height: 200px;'></div>
 							                        <figcaption class='info align-self-center'>
 							                            <p class='title'>$item->name</p> 
-							                            <span class='text-muted'>($item->qty)</span>
+							                            <span>($item->qty)</span>
 							                        </figcaption>
 							                    </figure>
 									 				</ol>
+									 				
 									 											               
 								";
 								$order_id = $item->order_id;
-								if($count >= $new_count){
-									echo "
-							          		</ul>
-						 						</hr>
-				        					</div>
 
-							    			</article>
-										</div><br> 	
-									";
-								}
-						}
-						if($count == 1){
-									echo "
-							          		</ul>
-						 						</hr>
-				        					</div>
+								if($check){
+									echo '
+										</ul>
+							 						</hr>
+					        					</div>
 
-							    			</article>
-										</div><br> 	
-									";
+								    			</article>
+											</div><br> 
+									';
+									$check = false;
 								}
+						}	
 		?>
 	</div>
 	</body>		

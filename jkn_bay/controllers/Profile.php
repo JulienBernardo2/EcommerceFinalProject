@@ -287,7 +287,10 @@ class Profile extends \jkn_bay\core\Controller{
  	 	$order_detail = new \jkn_bay\models\Order_detail();
  	 	$order_detail = $order_detail->getForOrder($cart->order_id);
 
- 	 	$products_to_change = new \jkn_bay\models\Product();
+ 	 	if($order_detail == null){
+ 	 		header('location:/Profile/viewCart?error=Cart empty');
+ 	 	} else{
+ 	 		$products_to_change = new \jkn_bay\models\Product();
  	 	$products_to_change = $products_to_change->productsToChangeQuantity($cart->order_id);
 
  	 	 foreach($order_detail as $order_details){
@@ -316,6 +319,8 @@ class Profile extends \jkn_bay\core\Controller{
 
  	 	 $cart->update();
  	 	 header('location:/Profile/viewCart?message=Your cart has been checked out');
+ 	 	}
+ 	 	
  	}
 
  	#[\jkn_bay\filters\Login]
@@ -325,7 +330,7 @@ class Profile extends \jkn_bay\core\Controller{
  		//Gets the every order and order_detail for the buyer
  	 	$order = new \jkn_bay\models\Order();
  	 	$orders = $order->findProfileCartPaid($_SESSION['profile_id']);
-
+ 	 	
  	 	$this->view('Profile/orderHistory', ['order'=>$orders]);
  	 }
 
@@ -351,11 +356,12 @@ class Profile extends \jkn_bay\core\Controller{
 
 		$message->message = 'Welcome to JKN Bay, here is your discount code: ' . $randomString; 
 		$message->flag = 'discount';
-		$message->insert();
+		$message->receiver_id = $profile_id;
+		$message->insertDiscount();
 
 		$message = new \jkn_bay\models\Message();
 		$message = $message->getDiscountMessage($profile_id);
-		
+		var_dump($message);
 		$discount_code = new \jkn_bay\models\Discount();
 	    $discount_code->profile_id = $profile_id;
 	    $discount_code->message_id = $message->message_id;
@@ -406,42 +412,4 @@ class Profile extends \jkn_bay\core\Controller{
 	 	$this->view('Profile/viewSeller', ['products'=>$products, 'profile'=>$profile]);
 
  	}
-
-#[\jkn_bay\filters\Login]
- 	public function contactSeller($profile_id, $product_id){
-
- 		if(isset($_POST['action'])){
- 			$message = new \jkn_bay\models\Message();
-		$message->message = $_POST['enter_message'];
-		$message->sender_id = $_SESSION['profile_id'];
-		$message->receiver_id = $profile_id;
-		$message->product_id = $product_id;
-		$message->insert();
-
-		header('location:/Profile/viewSeller/ '. $profile_id . '?message=Your message was sent');
-
- 		}
-
-else{
-		$profile = new \jkn_bay\models\Profile();
-		$profile = $profile->getProfileId($profile_id);
-
-	 	$product = new \jkn_bay\models\Product();
-	 	$products = $product->get($product_id);
-
-	 	$this->view('Profile/contactSeller', ['product'=>$products, 'profile'=>$profile]);
-}
- 	}
-
- 	public function addRating($product_id, $rating, $bool){
-
-	
-			$product = new \jkn_bay\models\Product();
-			$product = $product->get($product_id);	
-			$product->addRatingData($product_id, $rating);
- 			
-			header('location:/Profile/orderHistory?message=' . $product_id . "/" . $bool);
-
-		
-	}
 }

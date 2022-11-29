@@ -3,25 +3,52 @@ namespace jkn_bay\models;
 
 class Message extends \jkn_bay\core\Models{
 
-	//Create discounts
-    public function insert(){
-        $SQL = "INSERT INTO message(sender_id, message, receiver_id, product_id) VALUES (:sender_id, :message,  :receiver_id, :product_id)";
+	public function insert(){
+        $SQL = "INSERT INTO message(sender_id, message, receiver_id, product_id, reply_to) VALUES (:sender_id, :message, :receiver_id, :product_id, :reply_to)";
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(
             ['receiver_id'=>$this->receiver_id,
              'message'=>$this->message,
-              'sender_id'=>$this->sender_id,
-            'product_id'=>$this->product_id]);
+             'sender_id'=>$this->sender_id,
+             'product_id'=>$this->product_id,
+         	 'reply_to'=>$this->reply_to]);
     }
 
-	//Gets all the messages based for a profile
-	public function getAllProfile($profile_id){
-		$SQL = "SELECT * FROM message WHERE sender_id = :sender_id";
+	//Create discounts
+	public function insertDiscount(){
+		$SQL = "INSERT INTO message(receiver_id, message, flag) VALUES (:receiver_id, :message, :flag)";
 		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['sender_id'=>$profile_id]);
+		$STMT->execute(
+			['receiver_id'=>$this->receiver_id,
+			 'message'=>$this->message,	
+			 'flag'=>$this->flag]);
+	}
+
+	//Gets all the messages based for a profile
+	public function getSender($profile_id){
+		$SQL = "SELECT message.*, product.name, profile.username FROM message JOIN product ON product.product_id = message.product_id JOIN profile ON profile.profile_id = message.receiver_id WHERE sender_id=:profile_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['profile_id'=>$profile_id]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Message");
 		return $STMT->fetchAll();
 	}
+
+	//Gets all the messages based for a profile
+	public function getReceiver($profile_id){
+		$SQL = "SELECT message.*, product.name, profile.username, profile.profile_id FROM message JOIN product ON product.product_id = message.product_id JOIN profile ON profile.profile_id = message.sender_id WHERE receiver_id=:profile_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['profile_id'=>$profile_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Message");
+		return $STMT->fetchAll();
+	}
+
+	public function getForDiscount($profile_id){
+		$SQL = "SELECT * FROM message WHERE receiver_id=:profile_id && flag=:flag";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['profile_id'=>$profile_id, 'flag'=> 'discount']);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Message");
+		return $STMT->fetchAll();
+	}	
 
 	//Deletes all messages based on the product
 	public function delete(){
@@ -42,7 +69,7 @@ class Message extends \jkn_bay\core\Models{
 
 	//Gets the specific order
 	public function getDiscountMessage($profile_id){
-		$SQL = "SELECT * FROM message WHERE profile_id=:profile_id && flag=:flag";
+		$SQL = "SELECT * FROM message WHERE receiver_id=:profile_id && flag=:flag";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['profile_id'=>$profile_id, 'flag'=>'discount']);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Message");

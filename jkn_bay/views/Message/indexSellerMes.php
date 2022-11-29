@@ -17,7 +17,14 @@
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/soldHistory.css"/>
+			<link rel="stylesheet" href="/css/messageView.css"/>
+
+			 <!-- Alertify -->
+      <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
 
 		<!-- Scripts -->
 			<script type="text/javascript">
@@ -26,6 +33,22 @@
                     	$(this).remove(); 
                 	});
             	}, 3000);
+        	</script>
+
+        	<script type="text/javascript">
+        		function prompt(reply_to, product_id, profile_id){
+                alertify.prompt("Reply to buyer", "Message", '',
+                  function(input, value){ 
+                          if(value == ''){
+                            value = null;
+                          }
+                          if (input){   
+                            window.location.href = '/Message/reply/' + value +'/'+ parseInt(reply_to) +'/'+ parseInt(product_id) + '/' + parseInt(profile_id);
+                          } else{
+                            alertify.error('Cancel'); 
+                          }
+                  }, "");
+            };
         	</script>
 
         <!-- Message Pop ups -->
@@ -52,67 +75,51 @@
 
 		<!-- Nav -->
 			<div class ="navbar">
-				<?php if(isset($_SESSION['username'])){
-			    	echo '
-			     		<a class="nav-link" href ="/Product/indexSeller">Home</a>
-			            <a class="nav-link" href ="/Messages/indexSellerMes">Messages</a>
+				<?php 
+		        	echo '
+		        		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+			            <a class="nav-link" href ="/Message/indexSellerMes">Messages</a>
 			            <a class="nav-link" href ="/Product/add">New Product</a>
 	  					<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
 						<a class="nav-link" href ="/Profile/soldHistory">History</a>
 						<a class="nav-link" href ="/Profile/logout">Logout</a>
-					';
-			    }?>	
+		        	';
+		        ?>
 			</div>
 
-		<h1 class='title'>My Sold Products</h1>	
+		<h1 class='title'>My Messages</h1>	
 
 		<div class="order">
 		<?php
-						$order_id = 0;
-						foreach($data['order'] as $item){
-							if($order_id != $item->order_id){
-									echo "
+
+						foreach($data as $item){
+							echo "
 											<div class='container'>
 		    									<article class='card'>
 		        									<div class='card-body'>
-		            									<h6>Order ID: $item->order_id</h6>
+		            									<h6>Product: $item->name</h6>
 		            									
 		            									<article class='card1'>
-								                		
-								                		<div class='card-body row'>
-								                    		<div class='card-body row'>
-								                    			<div class='col'> <strong>Status:</strong><br>$item->status</div>
-								                    			<div class='col'> <strong>Date:</strong><br>$item->date</div>
-								                    			<div class='col'> <strong>Buyer:</strong><br>$item->username</div>
-								                			</div>
-								                		</div>
-								            	</article>
+									                		
+									                		<div class='card-body row'>
+									                    		<div class='card-body row'>
+									                    			<div class='col'> <strong>Message:</strong><br>$item->message</div>
+									                    			<div class='col'> <strong>Date and Time:</strong><br>$item->date_time</div>
+									                    			<div class='col'> <strong>Sent from:</strong><br>$item->username</div>
+									                			</div>
+									                		</div>
+								            			</article>
+								            			<button onclick='prompt($item->message_id, $item->product_id, $item->profile_id)' class='btn btn-primary' style='margin-left: 90%;'>Reply</button>
 								            	<hr style='display:inline-block'>
 									        	<ul class='row'>
-									";
-								}
-								echo "
-												
-									            <ol class='col-md-4'>
-												<figure class='itemside'>
-							                        <div class='aside'><img src='/images/$item->image' class='img-sm border' style='max-width: 200px; max-height: 200px;'></div>
-							                        <figcaption class='info align-self-center'>
-							                            <p class='title'>$item->name</p> <span class='text-muted'>$$item->price ($item->qty)</span>
-							                        </figcaption>
-							                    </figure>
-									 				</ol>
-									 											               
-								";
-								$order_id = $item->order_id;
-								echo "
-							          		</ul>
+									        	</ul>
 						 						</hr>
 				        					</div>
 
 							    			</article>
 										</div><br> 	
-								";
+									";
 						}
 		?>
 	</div>

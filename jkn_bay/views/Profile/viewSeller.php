@@ -16,8 +16,6 @@
 		<!--Font-Awesome CSS-->
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-			<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
 		<!-- CSS Styles -->
 			<link rel="stylesheet" href="/css/indexBuyer.css"/>
 			<link rel="stylesheet" href="/css/nav.css"/>
@@ -32,25 +30,6 @@
 	                	});
 	            	}, 3000);
 	        	</script>
-			
-			<!-- Set the name of category -->
-	        	<script type="text/javascript">
-					$(document).ready(
-						function(){
-							const url = window.location.href;
-							const myArray = url.split("/");
-							const lastVal = myArray.pop();
-							const select = document.getElementById('category');
-							
-								if(lastVal == "None" || lastVal =="" || (lastVal!= 1 && lastVal!= 2 && lastVal!= 3 && lastVal!= 4)){
-
-								} else{
-									select.value = lastVal;
-								}
-							}
-						);
-				</script>
-
 		
 		<!-- Message Pop ups -->
 			<?php
@@ -72,29 +51,17 @@
 		
 		<!-- Nav -->
 			<div class="navbar">
-				<?php 
-				
-				if(isset($_SESSION['username'])){
-		        	echo '
-		        		<a class="active" href ="/Product/indexBuyer">Home</a>
+				<?php if(isset($_SESSION['username'])){
+			    	echo '
+			     		<a class="active" href ="/Product/indexBuyer">Home</a>
 		        		<a  href ="/Profile/viewCart">Cart</a>
-		        		<a  href ="/Message/index">Messages</a>
+		        		<a  href ="/Message/indexBuyerMes">Messages</a>
   						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
 		        		<a  href ="/Profile/orderHistory">History</a>
 						<a  href ="/Profile/logout">Logout</a>
 					';
-		        }else{
-		        	echo '
-		        		<a  href ="/Product/indexBuyer">Home</a>
-		        		<a  href =""></a>
-		        		<a  href =""></a>
-  						<img src="/jknimage.png" alt="JKN" />
-		        		<a  href =""></a>
-		        		<a  href ="/Profile/index">Login</a>
-		        		<a href ="/Profile/register">Sign up</a>
-		        	';
-		        } ?>
+			    }?>		
 			</div>	
 	</header>
 	<br>
@@ -107,68 +74,57 @@
     <div class="row">
         <div id = "profileMenu" class=" border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" style ="width: 200px; height: 200px;" src="/images/<?= $data['profile']->image?>"><span class="firstName"><?=$data['profile']->first_name?></span><span class="text-black-50"><?=$data['profile']->last_name?></span><span> </span></div>
-           
         </div>
         <div class="col-md-3">
 
                     <h4 class="text-right">Products</h4>
                     <?php
                     foreach($data['products'] as $item){
-
+                    	if($item->status == 'selling'){
 						echo"
-				
-								<div id='container'>	
-									<div class='product-details'>					
-										<h1>$item->name</h1>
-								
+									<div id='container'>	
+										<div class='product-details'>					
+											<h1>$item->name</h1>
 									
-							
-										<p class = 'ratingNum'>Test</p>
-							 			
-										<span class='desc'>$item->description</span>
 										
-										
-										<a href='/Profile/contactSeller/$item->profile_id/$item->product_id' class='btn'>
-							   				<span class='buy'>Contact Seller about product</span>
-							 			</a>
-							
-										
-										<div class='control2'>
-												<a class='btn' href='/Profile/addToCart/$item->product_id'>
-							   					<span class='shopping-cart'><i class='fa fa-shopping-cart' aria-hidden='true'></i></span>
-							   					<span class='buy'>Add to Cart</span>
-							 				</a>
-										</div>
-									</div>
 								
-									<div class='product-image'>
-										<img src='/images/$item->image' alt=''>
-								
-										<div class='info'>
-											<h2>Details</h2>
+											<p class = 'ratingNum'>Test</p>
+								 			
+											<span class='desc'>$item->description</span>
 											
-											<ul>
-												<li><strong>Quality: </strong>$item->state </li>
-												<li><strong>In stock: </strong>$item->quantity</li>
-												<li><strong>Price: </strong>$$item->price</li>
-											</ul>
+											
+											<a href='/Message/contactSeller/$item->profile_id/$item->product_id' class='btn'>
+								   				<span class='buy'>Contact Seller about product</span>
+								 			</a>
+								
+											
+											<div class='control2'>
+													<a class='btn' href='/Profile/addToCart/$item->product_id'>
+								   					<span class='shopping-cart'><i class='fa fa-shopping-cart' aria-hidden='true'></i></span>
+								   					<span class='buy'>Add to Cart</span>
+								 				</a>
+											</div>
+										</div>
+									
+										<div class='product-image'>
+											<img src='/images/$item->image' alt=''>
+									
+											<div class='info'>
+												<h2>Details</h2>
+												
+												<ul>
+													<li><strong>Quality: </strong>$item->state </li>
+													<li><strong>In stock: </strong>$item->quantity</li>
+													<li><strong>Price: </strong>$$item->price</li>
+												</ul>
+											</div>
 										</div>
 									</div>
-								</div>
+						
 							";
-			}
-
-			?>
-                
-                    
-                
-                   
-          
-   
-  
-               
-        
-    
+						}
+				}
+			?> 
 </div>
 </div>
 </div>

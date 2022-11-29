@@ -189,8 +189,6 @@ class Product extends \jkn_bay\core\Controller{
 		$this->view('Product/indexBuyer', ['product'=>$products, 'categorys'=>$categorys]);
 	}
 
-	
-
 	//Allows buyers to filter ther catalog
 	public function filterCategory($category_id){
 		

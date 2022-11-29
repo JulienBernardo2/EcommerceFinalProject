@@ -3,15 +3,8 @@
 	<link rel="stylesheet" href="/css/login.css"/>
 
 	<head>
-
 		<!-- Scripts -->
-			<script type="text/javascript">
-            	window.setTimeout(function() {
-                	$("#alert-message").fadeTo(500, 0).slideUp(500, function(){
-                    	$(this).remove(); 
-                	});
-            	}, 3000);
-        	</script>
+    		<script type="text/javascript" src="/js/popUp.js"></script>
 
         <!-- Message Pop ups -->
 			<?php
@@ -44,43 +37,39 @@
 
 	</head>
 	
-	<body>
-		
+	<body onload="timeout()">
+		<!-- This is the navbar -->
+		<div class="navbar"> 
+			<a class="active" href ="/Product/indexBuyer">Home</a>
+		  <img src="/jknimage.png" alt="JKN" />	
+		</div>
 
-		<div id="page">
-			<div class="description">
-  				<h1 class="title" >Welcome to JKN-Bay</h1>
-  				<p>
-  					The company, which caters to individual sellers and small businesses, is a market leader in e-commerce worldwide. JKN-Bay is headquartered in Montreal, Canada. Customers can participate in Web sites set up within their own country or use one of the company's international sites.
-  					<br></br>
-  					The company, which caters to individual sellers and small businesses, is a market leader in e-commerce worldwide. JKN-Bay is headquartered in Montreal, Canada. Customers can participate in Web sites set up within their own country or use one of the company's international sites.
-  				</p>
-  			</div>
+        <!-- Form to allow user to edit profile-->
+        <form action='' method='post'>
+            <div id="main" class='float-container' style="margin-top: 5%;">
+              <div class='float-child'>
+                <h2 style="margin-bottom: 3%;">Login</h2>
 
-			<h1>Log-In</h1>
-		
-			<div class ="line">
-  			</div>
-		<form action='' method='post'>
-			<div class="form-group1">
-    			<label for="username">Username</label>
-    			<input type="text" class="form-control" id="username" name='username' placeholder="Enter username">
-  			</div>
+                <label>Username</label>
+                <input type="text" name='username' class="form-control" style='max-width: 60%;  margin-bottom: 5%; '/>
+                  
+                <label>Password</label>
+                <input type="password" name='password' class="form-control" style='max-width:60%;  margin-bottom: 5%;'/>
 
-  			<div class="form-group2">
-    			<label for="password">Password</label>
-    			<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
-  			</div>
+              </div>
 
-  			<br>
-  			<br>
-  			<button type="submit" name='action' value='Login' class="btn btn-primary">Login</button>
-  			<br>
-		</form>
-
-		<p>Don't have an Account? <a href ="/Profile/register">Sign Up</a></p>
+              <div class='float-child'>
+                <h2>Welcome to JKN Bay</h2>
+	                <p>
+					The company, which caters to individual sellers and small businesses, is a market leader in e-commerce worldwide. JKN-Bay is headquartered in Montreal, Canada. Customers can participate in Web sites set up within their own country or use one of the company's international sites.
+					<br></br>
+					The company, which caters to individual sellers and small businesses, is a market leader in e-commerce worldwide. JKN-Bay is headquartered in Montreal, Canada. Customers can participate in Web sites set up within their own country or use one of the company's international sites.
+				</p>
+              </div>
+            </div>
+            <button type="submit" name='action' class='btn btn-primary'  style='margin-left: 48%;' value='Login'>Login</button>
+        </form> 
 	</body>
-</div>
 </html>
 </html>
 
