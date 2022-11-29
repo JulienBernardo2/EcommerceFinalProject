@@ -28,7 +28,7 @@
 19. As a buyer I will be able to rate sellers.
 20. As a buyer, I will be able to, view seller profiles.
 21. As a buyer or person, i will be able to filter by category.
-22. 10. As a seller, I will be able to, view messages as a buyer.
+20. As a seller, I will be able to, view messages as a buyer.
 23. As a seller, I will be able to, view all of my products.
 24. As a seller, I will be able to, add products to the catalog.
 25. As a seller, I will be able to, edit my products for sale.
