@@ -70,11 +70,25 @@
 		<div class="order">
 		<?php
 						$order_id = 0;
-						foreach($data['order'] as $item){
+						$price = 0;
+						foreach($data['order'] as $item){	
 							if($order_id != $item->order_id){
+								$price = 0;
+								echo '
+									</ul>
+										</hr>
+										</div>
+									</article>
+									<br>
+								';
+							}
+							if($order_id != $item->order_id){
+								if($price == 0){
+									$price += ($item->price * $item->qty);
+								}
 									echo "
-											<div class='container'>
-		    									<article class='card'>
+												<div class='container'>
+													<article class='card' style='margin-bottom: 2%; width: 80%; margin-left: 10%;'>
 		        									<div class='card-body'>
 		            									<h6>Order ID: $item->order_id</h6>
 		            									
@@ -83,37 +97,31 @@
 								                		<div class='card-body row'>
 								                    		<div class='card-body row'>
 								                    			<div class='col'> <strong>Status:</strong><br>$item->status</div>
+								                    			<div class='col'> <strong>Total:</strong><br>$$price</div>
 								                    			<div class='col'> <strong>Date:</strong><br>$item->date</div>
-								                    			<div class='col'> <strong>Buyer:</strong><br>$item->username</div>
 								                			</div>
 								                		</div>
-								            	</article>
+								            		</article>
 								            	<hr style='display:inline-block'>
 									        	<ul class='row'>
 									";
-								}
+							}
+								$price += ($item->price * $item->qty);
+
 								echo "
-												
-									            <ol class='col-md-4'>
+									            <ol class='col-md-4' >
 												<figure class='itemside'>
-							                        <div class='aside'><img src='/images/$item->image' class='img-sm border' style='max-width: 200px; max-height: 200px;'></div>
+							                        <div class='aside'><img src='/images/$item->image' class='img-sm border' style='max-width: 200px; max-height: 200px; min-height: 200px; min-width: 200px'></div>
 							                        <figcaption class='info align-self-center'>
-							                            <p class='title'>$item->name</p> <span class='text-muted'>$$item->price ($item->qty)</span>
+							                            <p class='title' style='width: 200px; text-align: center; margin-left: 2px;'>$item->name</p> 
+							                            <span style='margin-left: 45%;'>($item->qty)</span>
 							                        </figcaption>
 							                    </figure>
-									 				</ol>
-									 											               
+									 				</ol>	 											               
 								";
 								$order_id = $item->order_id;
-								echo "
-							          		</ul>
-						 						</hr>
-				        					</div>
 
-							    			</article>
-										</div><br> 	
-								";
-						}
+						}	
 		?>
 	</div>
 	</body>		

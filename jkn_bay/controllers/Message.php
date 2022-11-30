@@ -8,7 +8,7 @@ class Message extends \jkn_bay\core\Controller{
 	public function indexBuyerMes(){
 		$message = new \jkn_bay\models\Message();
 
-		$messages = $message->getSender($_SESSION['profile_id']);
+		$messages = $message->getMessages($_SESSION['profile_id']);
 		$discountM = $message->getForDiscount($_SESSION['profile_id']);
 		
 		$this->view('Message/indexBuyerMes', ['messages'=>$messages, 'discountM'=>$discountM]);
@@ -18,8 +18,7 @@ class Message extends \jkn_bay\core\Controller{
 	#[\jkn_bay\filters\Seller]
 	public function indexSellerMes(){
 		$message = new \jkn_bay\models\Message();
-
-		$messages = $message->getReceiver($_SESSION['profile_id']);
+		$messages = $message->getMessagesSeller($_SESSION['profile_id']);
 
 		$this->view('Message/indexSellerMes', $messages);
 	}
@@ -27,12 +26,12 @@ class Message extends \jkn_bay\core\Controller{
 	#[\jkn_bay\filters\Login]
 	#[\jkn_bay\filters\Buyer]
  	public function contactSeller($profile_id, $product_id){
- 		$message = new \jkn_bay\models\Message();
-		$messages = $message->getSender($_SESSION['profile_id']);
-	 	$check = false;
-	 	
-
+ 		
  		if(isset($_POST['action'])){
+ 			$message = new \jkn_bay\models\Message();
+			$messages = $message->getMessages($_SESSION['profile_id']);
+	 		$check = false;
+
  			foreach($messages as $item){	
 		 		if($item->product_id == $product_id){
 		 			$check = true;
@@ -57,24 +56,30 @@ class Message extends \jkn_bay\core\Controller{
 				$profile = $profile->getProfileId($profile_id);
 
 			 	$product = new \jkn_bay\models\Product();
-			 	$products = $product->get($product_id);
+			 	$product = $product->get($product_id);
 
-			 	$this->view('Profile/contactSeller', ['product'=>$products, 'profile'=>$profile]);
+			 	$this->view('Profile/contactSeller', ['product'=>$product, 'profile'=>$profile]);
 		}
  	}
 
 	#[\jkn_bay\filters\Login]
-	#[\jkn_bay\filters\Seller]
-	public function reply($message, $message_id, $product_id, $profile_id){
-
+	public function reply($message_id){
+		$old_message = new \jkn_bay\models\Message();
+		$old_message = $old_message->get($message_id);
+		
+		if(!isset($_POST['message'])){
+	 		header('location:/Message/indexSellerMes?error=Message was empty');
+	 		return;
+		} else{
 			$message = new \jkn_bay\models\Message();
-			$message->message = $message;
-			$message->reply_to = $intMessage_id;
+			$message->message = $_POST['message'];
+			$message->reply_to = $message_id;
 			$message->sender_id = $_SESSION['profile_id'];
-			$message->receiver_id = $intProfile_id;
-			$message->product_id = $intProduct_id;
+			$message->receiver_id = $old_message->sender_id;
+			$message->product_id = $old_message->product_id;
 			$message->insert();
 
 			header('location:/Message/indexSellerMes/?message=Your message was sent');
+		}
 	}
 }

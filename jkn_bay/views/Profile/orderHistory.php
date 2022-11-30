@@ -67,61 +67,59 @@
 
 		<h1 class='title'>My Orders</h1>	
 
+
+
+
 		<div class="order">
+
 		<?php
 						$order_id = 0;
-						$check = false;
 						foreach($data['order'] as $item){
-							if($order_id != $item->order_id && $check == false){
+							if($order_id != $item->order_id){
+								echo '
+									</ul>
+										</hr>
+										</div>
+									</article>
+									<br>
+								';
+							}
+							if($order_id != $item->order_id){
 									echo "
-											<div class='container'>
-		    									<article class='card'>
+												<div class='container'>
+													<article class='card' style='margin-bottom: 2%; width: 80%; margin-left: 10%;'>
 		        									<div class='card-body'>
-		            									<h6>Order ID: $item->order_id</h6>
+		            									<h6>Order: $item->order_id</h6>
 		            									
 		            									<article class='card1'>
-								                		
-								                		<div class='card-body row'>
-								                    		<div class='card-body row'>
-								                    			<div class='col'> <strong>Status:</strong><br>$item->status</div>
-								                    			<div class='col'> <strong>Total:</strong><br>$$item->total</div>
-								                    			<div class='col'> <strong>Date:</strong><br>$item->date</div>
-								                			</div>
-								                		</div>
-								            	</article>
+									                		
+									                		<div class='card-body row'>
+									                    		<div class='card-body row'>
+									                    			<div class='col'> <strong>Status:</strong><br>$item->status</div>
+									                    			<div class='col'> <strong>Total:</strong><br>$$item->total</div>
+									                    			<div class='col'> <strong>Date:</strong><br>$item->date</div>
+									                			</div>
+									                		</div>
+									            		</article>
 								            	<hr style='display:inline-block'>
 									        	<ul class='row'>
 									";
-									$check = true;
 							}
 								echo "
-									            <ol class='col-md-4'>
+									            <ol class='col-md-4' >
 												<figure class='itemside'>
-							                        <div class='aside'><img src='/images/$item->image' class='img-sm border' style='max-width: 200px; max-height: 200px;'></div>
+							                        <div class='aside'><img src='/images/$item->image' class='img-sm border' style='max-width: 200px; max-height: 200px; min-height: 200px; min-width: 200px'></div>
 							                        <figcaption class='info align-self-center'>
-							                            <p class='title'>$item->name</p> 
-							                            <span>($item->qty)</span>
+							                            <p class='title' style='width: 200px; text-align: center; margin-left: 2px;'>$item->name</p> 
+							                            <span style='margin-left: 45%;'>($item->qty)</span>
 							                        </figcaption>
 							                    </figure>
-									 				</ol>
-									 				
-									 											               
+									 				</ol>	 											               
 								";
 								$order_id = $item->order_id;
-
-								if($check){
-									echo '
-										</ul>
-							 						</hr>
-					        					</div>
-
-								    			</article>
-											</div><br> 
-									';
-									$check = false;
-								}
 						}	
 		?>
+										
 	</div>
 	</body>		
 </html>
