@@ -13,7 +13,8 @@
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/messageView.css"/>
+			<link rel="stylesheet" href="/css/nav.css"/>
+			<link rel="stylesheet" href="/css/Message/messageView.css"/>
 
 		<!-- Scripts -->
 			<script type="text/javascript">
@@ -49,12 +50,12 @@
 			<div class ="navbar">
 				<?php 
 		        	echo '
-		        		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+		        		<a class="nav-link" href ="/Seller/index">Home</a>
 			            <a class="nav-link" href ="/Message/indexSellerMes">Messages</a>
-			            <a class="nav-link" href ="/Product/add">New Product</a>
+			            <a class="nav-link" href ="/Seller/add">New Product</a>
 	  					<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 			            <a class="nav-link" href ="/Profile/edit/<?=$_SESSION["profile_id"]?">My profile</a>
-						<a class="nav-link" href ="/Profile/soldHistory">History</a>
+						<a class="nav-link" href ="/Seller/soldHistory">History</a>
 						<a class="nav-link" href ="/Profile/logout">Logout</a>
 		        	';
 		        ?>
@@ -89,7 +90,6 @@
 		    									<article class='card' style='width: 70%; margin-left: 15%;'>
 		        									<div class='card-body'>
 		            									<h6>Product: $item->name</h6>
-		            									<p>Sent from: $item->username</p>
 		            									
 		            									<article class='card1'>    		
 								            
@@ -100,12 +100,19 @@
 								            	<div class='card-body row'>
 													<div class='col'> <strong>Message:</strong><br>$item->message</div>
 												    <div class='col'> <strong>Date:</strong><br>$item->date_time</div>
+												    <div class='col'> <strong>Sent from:</strong><br>$item->username</div>
 												</div>
 								    		</div>
 												
 								            		
 									";
 							$product_id_saved = $item->product_id;
+							$message_id = $item->message_id;
+						}
+						if($data != null){
+						echo '
+		<button class="mbtn btn btn-primary turned-button" message_id= "' . $message_id . '" style="width: 120px; margin-left: 80%; margin-bottom: 3%;">Reply</button>';
+							
 						}
 						
 		?>

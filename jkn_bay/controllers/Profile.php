@@ -20,10 +20,10 @@ class Profile extends \jkn_bay\core\Controller{
 				$_SESSION['role'] = $profile->role;
 
 				//Checks which main page to create depending on the profile role
-				if($_SESSION['role'] == 'seller'){
-					header('location:/Product/indexSeller?message=You have been successfully logged in');
+				if($_SESSION['role'] == 'buyer'){
+					header('location:/Buyer/index?message=You have been successfully logged in');
 				}else{
-					header('location:/Product/indexBuyer?message=You have been successfully logged in');
+					header('location:/Seller/index?message=You have been successfully logged in');
 				}
 
 			}else{
@@ -40,7 +40,7 @@ class Profile extends \jkn_bay\core\Controller{
 		
 		//Destorys the current session
 		session_destroy();
-		header('location:/Product/indexBuyer?message=You\'ve been successfully logged out');
+		header('location:/Buyer/index?message=You\'ve been successfully logged out');
 	}
 
  	//Allows people to create a profile
@@ -122,231 +122,79 @@ class Profile extends \jkn_bay\core\Controller{
 
 			//Checks which page to go back to depending on the role of the current session
 			if ($profile->role == 'buyer' ) {
-				header('location:/Product/indexBuyer?message=Profile Updated');
+				header('location:/Buyer/index?message=Profile Updated');
 			} else {
-				header('location:/Product/indexSeller?message=Profile Updated');
+				header('location:/Seller/index?message=Profile Updated');
 			}
 		}else{
 			$this->view('Profile/edit', $profile);
 		}	
 	}
 
-	#[\jkn_bay\filters\Login]
-	#[\jkn_bay\filters\Buyer]
-	//Allows buyers to add products to their cart
-	public function addToCart($product_id){
- 	 	
- 	 	//Gets the cart for the buyer
- 	 	$cart = new \jkn_bay\models\Order();
- 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
+	//Allows buyers to search through the catalog
+ 	public function search(){
+	 	
+		//Gets the value from the search box
+	 	$search_val = $_GET['searchbar'];
 
- 	 	//Gets the product that the buyer wants to add
- 	 	$product = new \jkn_bay\models\Product();
- 	 	$product = $product->get($product_id);
-
- 	 	//Checks if their is a cart created for the buyer and if not then creates it
- 	 	if ($cart == null) {
- 	 		$cart = new \jkn_bay\models\Order();
-	 	 	$cart->profile_id = $_SESSION['profile_id'];
-	 	 	$cart->status = 'cart';
- 			$cart->total = 0;
-	 	 	$cart->order_id = $cart->insert();
- 	 	}
-
- 	 	$product_order_detail = new \jkn_bay\models\Order_detail();
- 	 	$product_order_detail = $product_order_detail->getProductForOrder($product->product_id);
-
- 	 	//Checks if the product is already in the cart, and if the quantity is to much to add
- 	 	if($product_order_detail != null){
- 	 		if($product_order_detail->qty >= $product->quantity){
- 	 			header('location:/Product/indexBuyer?error=Maximum quantity reached');	
- 	 		} else{
- 	 			$new_product = $this->newOrderDetail($cart->order_id, $product->price, $product->product_id);
-
-		 		header('location:/Product/indexBuyer?message=The product was added to your cart');
- 	 		}
- 	 	}else{
-	 		//Creates the order detail for the buyer
-	 		$new_product = $this->newOrderDetail($cart->order_id, $product->price, $product->product_id);
-	 		header('location:/Product/indexBuyer?message=The product was added to your cart');
+	 	//Check if person or buyer input search box values
+	 	if($search_val == null){
+	 		header('location:/Buyer/index?error=Please enter the value that you are searching for');
 	 	}
+	 	//Gets all of the products related to the search box value
+	 	$product = new \jkn_bay\models\Product();
+		$products = $product->getAllSimilar($search_val);
 
-	 	$discount = new \jkn_bay\models\Discount();
- 	 	$discount = $discount->get($_SESSION['profile_id']);
 
-	 	if($discount->status == 'applied' || $discount == null){
-	 		$original_total = ($cart->total) + ($cart->total * 0.25);
- 	 		$cart->total = $total + $newProduct->price;
- 	 		$cart->update();
- 	 		$discount->status = 'created';
- 	 		$discount->update();
-	 		header('location:/Product/indexBuyer?message=The product was added to your cart, re-apply discount when ready');
-	 	}
- 	}
+		//Gets all of the profiles related to the search box value
+	 	$profile = new \jkn_bay\models\Profile();
+		$profiles = $profile->getAllSimilar($search_val);
 
- 	private function newOrderDetail($order_id, $product_price, $product_id){
- 		$newProduct = new \jkn_bay\models\Order_detail();
-		 		
-		//Sets all of the values for the order detail
-		$newProduct->order_id = $order_id;
-		$newProduct->product_id = $product_id;
-		$newProduct->price = $product_price;
-		$newProduct->qty = 1;
+		//Sends an error that no products matched the search box value
+		if($products == null){
+			header('location:/Buyer/index?error=No products match');
+		}
 
-		//Creates the order detail
-		$newProduct->insert();
-		return $newProduct;
- 	}
+		//Sends an error that no profiles matched the search box value
+		// if($profiles == null){
+		// 	header('location:/Product/indexBuyer?error=No profiles match');
+		// }
 
- 	#[\jkn_bay\filters\Login]
-	#[\jkn_bay\filters\Buyer]
- 	//Allows buyers to view their cart
- 	public function viewCart(){
-
- 		//Gets the cart for the buyer
- 	 	$cart = new \jkn_bay\models\Order();
- 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
- 	 	
- 	 	//Checks if their is a cart created for that buyer and if not then creates it
- 	 	if ($cart == null) {
- 	 		$cart = new \jkn_bay\models\Order();
-	 	 	$cart->profile_id = $_SESSION['profile_id'];
-	 	 	$cart->status = 'cart';
- 			$cart->total = 0;
-	 	 	$cart->order_id = $cart->insert();
- 	 	}
-
- 	 	$order_detail = new \jkn_bay\models\Order_detail();
- 	 	$order_detail = $order_detail->getForOrder($cart->order_id);
- 	 	
- 	 	$discount = new \jkn_bay\models\Discount();
- 	 	$discount = $discount->get($_SESSION['profile_id']);
+		//Gets all of the categorys for the catalog
+	 	$category = new \jkn_bay\models\Category();
+	 	$categorys = $category->getAll();
 	
- 	 	if($discount == null ||$discount->status == 'created'){
-			$total = 0;
-	 	 	if($order_detail != null){
-	 	 		foreach($order_detail as $item){
-	 	 			$total += $item->price * $item->qty;
-	 	 		}
-				$cart->total = $total;	
-	 	 		$cart->update();
-	 	 	}
- 	 	}
- 	 		
- 	 	//Gets all of the products for that cart
- 	 	$product = new \jkn_bay\models\Order_detail();
- 	 	$products = $product->getForOrder($cart->order_id);
+		$this->view('Buyer/index', ['product'=>$products, 'categorys'=>$categorys]);
+	}
 
+	//Allows buyers to filter ther catalog
+	public function filterCategory($category_id){
+		
+		//If no filter is selected
+		if($category_id == 'None'){
+			
+			//Gets all of the products for the catalog
+			$product = new \jkn_bay\models\Product();
+	 		$products = $product->getAll();
+	 		
+	 		//Gets all of the categorys for the catalog
+	 		$category = new \jkn_bay\models\Category();
+	 		$categorys = $category->getAll();
 
-		$this->view('Profile/cart', ['product'=>$products, 'cart'=>$cart]);
-	 	}
+			$this->view('Buyer/index', ['product'=>$products, 'categorys'=>$categorys]);
+		}else{
+			
+			//Gets all of the products for the specified category
+			$product = new \jkn_bay\models\Product();
+			$products = $product->getAllCategory($category_id);
+	 		
+	 		//Gets all of the categorys for the catalog
+	 		$category = new \jkn_bay\models\Category();
+	 		$categorys = $category->getAll();
 
- 	#[\jkn_bay\filters\Login]
-	#[\jkn_bay\filters\Buyer]
- 	//Allows buyers to delete products from their cart
-  	public function removeFromCart($order_detail_id){
- 	 	
- 	 	//gets the order detail for the current buyer 
- 	 	$product = new \jkn_bay\models\Order_detail();
- 	 	$product = $product->get($order_detail_id);
-
- 	 	//Gets the order for that order_detail
- 	 	$cart = new \jkn_bay\models\Order();
- 	 	$cart = $cart->get($product->order_id);
-
- 	 	$discount = new \jkn_bay\models\Discount();
- 	 	$discount = $discount->get($_SESSION['profile_id']);	
-
- 	 	//Checks if the order profile matches the current profile logged in
- 	 	if($cart->profile_id == $_SESSION['profile_id']){
- 	 		$product->delete();
- 	 		if($discount == null || $discount->status == 'created'){
- 	 			$cart->total = $cart->total - $product->price;
- 	 			$cart->update();
-				header('location:/Profile/viewCart?message=The product was deleted from your cart');
- 	 		} else{
- 	 			$original_total = ($cart->total) + ($cart->total * 0.25);
- 	 			$total = $original_total - $product->price;
- 	 			$cart->total = $total;
- 	 			$cart->update();
- 	 			$discount->status = 'created';
- 	 			$discount->update();
- 	 			header('location:/Profile/viewCart?message=The product was deleted from your cart, re-apply discount when ready');
- 	 		}
- 	 	}else{
- 	 		header('location:/Profile/viewCart?error=The product could not be deleted from the cart');
- 	 	}
- 	}
-
-
- 	#[\jkn_bay\filters\Login]
-	#[\jkn_bay\filters\Buyer]
- 	//Allows buyers to checkout their cart
- 	public function checkout(){
-
- 		//Gets the cart for the buyer
- 	 	$cart = new \jkn_bay\models\Order();
- 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
- 	 	
- 	 	$order_detail = new \jkn_bay\models\Order_detail();
- 	 	$order_detail = $order_detail->getForOrder($cart->order_id);
-
- 	 	if($order_detail == null){
- 	 		header('location:/Profile/viewCart?error=Cart empty');
- 	 	} else{
- 	 		$products_to_change = new \jkn_bay\models\Product();
- 	 	$products_to_change = $products_to_change->productsToChangeQuantity($cart->order_id);
-
- 	 	 foreach($order_detail as $order_details){
- 	 	 	foreach($products_to_change as $products){
- 	 	  		if($order_details->product_id == $products->product_id){
-	 	  			$products->subtract($products->product_id, $order_details->qty);
-		 			if($products->quantity == 0){
- 		 						$products->status = 'sold';
- 	 	  						$products->updateStatus();	
- 	 	  			}
-		 		} 
- 	 	  	}
- 	 	}
-	 	 
-	 	$discount = new \jkn_bay\models\Discount();
-		$discount = $discount->get($_SESSION['profile_id']);
- 	 	
- 	 	if($discount->status == 'applied' || $discount != null){
-			$message = new \jkn_bay\models\Message();
-			$discount->delete();
-			$message = $message->get($discount->message_id);
-			$message->delete();
- 	 	}
-
- 	 	 $cart->status = 'paid';
-
- 	 	 $cart->update();
- 	 	 header('location:/Profile/viewCart?message=Your cart has been checked out');
- 	 	}
- 	 	
- 	}
-
- 	#[\jkn_bay\filters\Login]
-	#[\jkn_bay\filters\Buyer]
- 	//Allows buyers to check their orders
- 	public function orderHistory(){
-
- 		//Gets the every order and order_detail for the buyer
- 	 	$order = new \jkn_bay\models\Order();
- 	 	$orders = $order->findProfileCartPaid($_SESSION['profile_id']);
- 	 	
- 	 	$this->view('Profile/orderHistory', ['order'=>$orders]);
- 	 }
-
- 	#[\jkn_bay\filters\Login]
- 	//Allows sellers to check their sold products
- 	public function soldHistory(){
- 		//Gets the every order and order_detail for the buyer
- 	 	$order = new \jkn_bay\models\Order();
- 	 	$orders = $order->findProductsPaid($_SESSION['profile_id']);
- 	 	$this->view('Profile/soldHistory', ['order'=>$orders]);
- 	}
+			$this->view('Buyer/index', ['product'=>$products, 'categorys'=>$categorys]);
+		}
+	}
 
 	private function createDiscountMessage($profile_id){
 		$message = new \jkn_bay\models\Message();
@@ -373,52 +221,5 @@ class Profile extends \jkn_bay\core\Controller{
 	    $discount_code->status = 'created';
 	    $discount_code->code = password_hash($randomString, PASSWORD_DEFAULT);
 	    $discount_code->insert();
-	}
-	
-
-	#[\jkn_bay\filters\Login]
-	#[\jkn_bay\filters\Buyer]
-	public function applyDiscount($profile_id){
-		$discount = new \jkn_bay\models\Discount();
-		$discount = $discount->get($profile_id);
-		
-		//Gets the cart for the buyer
- 	 	$cart = new \jkn_bay\models\Order();
- 	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
-
- 	 	$order_detail = new \jkn_bay\models\Order_detail();
- 	 	$order_detail = $order_detail->getForOrder($cart->order_id);
-
-
-		if(isset($_POST['action'])){
-			if($order_detail == null){
- 	 			header('location:/Profile/viewCart?error=Please add items to your cart');
- 	 		}else{
- 	 			if(password_verify($_POST['code'], $discount->code)  && $discount->status == 'created'){		
-					$cart->total = ($cart->total) - ($cart->total * 0.2);
-					$cart->update();
-					$discount->status = 'applied';
-					$discount->update();
-					header('location:/Profile/viewCart?message=Your discount code was applied');
-				} else{
-					header('location:/Profile/viewCart?error=Your discount code has already been used');
-				}
- 	 		}
-			
-		}
-	}
-
-	#[\jkn_bay\filters\Login]
-	#[\jkn_bay\filters\Buyer]
- 	public function viewSeller($profile_id){
-
-		$profile = new \jkn_bay\models\Profile();
-		$profile = $profile->getProfileId($profile_id);
-
- 		$product = new \jkn_bay\models\Product();
-	 	$products = $product->getAllProfile($profile_id);
-
-	 	$this->view('Profile/viewSeller', ['products'=>$products, 'profile'=>$profile]);
-
- 	}
+	} 
 }

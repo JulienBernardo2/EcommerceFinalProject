@@ -1,134 +1,97 @@
 <html>
-<head>
-	<!-- Jquery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<head>
+		<!-- Jquery -->
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	 <!--Bootstrap CSS --> 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/
-	bootstrap.min.css" integrity="sha384-Vkoo8×4CGsO3+Hhxv8T/
-	Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
+		<!-- Bootstrap Css --> 
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
-	<!-- Bootstrap JS -->
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+		<!-- Bootstrap JS -->
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+		<!-- Alertify -->
+			<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+			<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+			<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+			<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+			<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+		
+		<!--Font-Awesome -->	
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+		<!-- Scripts -->
+			<script type="text/javascript" src="/js/popup.js"></script>
+
+		<!-- Css file -->
+			<link rel="stylesheet" href="/css/nav.css"/>
+			<link rel="stylesheet" href="/css/Profile/edit.css"/>
+
+		<title>Edit Profile</title>
+	</head>
 	
-	<!--Font-Awesome CSS-->
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
-
-	<link rel="stylesheet" href="/css/profileEdits.css"/>
-
-	<!-- Scripts -->
-			<script type="text/javascript">
-            	window.setTimeout(function() {
-                	$("#alert-message").fadeTo(500, 0).slideUp(500, function(){
-                    	$(this).remove(); 
-                	});
-            	}, 3000);
-        	</script>
-	<!-- Message Pop ups -->
-			<?php
-				if(isset($_GET['error'])){ ?>
-					<div class="alert alert-danger" id="alert-message">
-  						<a href="#" id='alert-message' class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  						<?= $_GET['error'] ?>
+	<body>
+		<!-- Nav -->
+    		<?php $this->view('nav'); ?>
+      		
+		<h1 style="margin: 3% 0% 3% 42%">Edit Profile</h1>
+			
+		<!-- Form to allow user to edit profile -->
+			<div class="everything">
+				<div class="col-md-5">
+		    		<div class="p-3 py-5">
+						<form action='' method='post' enctype="multipart/form-data">
+							<div class="form-group">
+								<label>Username</label>
+								<input type="text" class="form-control" name='username' value="<?= $data->username ?>">
+							
+								<label>First Name</label>
+								<input type="text" class="form-control" name="first_name" value="<?= $data->first_name ?>">
+							
+								<label>Last Name</label>
+								<input type="text" class="form-control" name="last_name" value="<?= $data->last_name ?>">
+							
+								<label>Postal Code</label>
+								<input type="text" class="form-control" name="postal_code" value="<?= $data->postal_code ?>">
+							
+								<label>City</label>
+								<input type="text" class="form-control" name="city"value="<?= $data->city ?>">
+								
+								<label>Profile Image:<input type="file" name="image" id="image" />
+								</label><img id='image_preview' src='/images/blank.jpg' style="max-width:200px; max-height: 200px" /><br>
+								
+								<button style='margin-left: 37%; margin-top: 4%;' type="submit" name='action' class="btn btn-success">Save</button>
+							</div>
+						</form>
 					</div>
-			<?php  }
-				if(isset($_GET['message'])){ ?>
-					<div class="alert alert-success" id="alert-message">
-  						<a href="#"  class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  						<?= $_GET['message'] ?>
-					</div>
-			<?php  }
-			?>
-	<title>Profile Edit</title>
-		<div class='navbar'>
-				<?php if($_SESSION['role'] == 'buyer'){
-		        	echo '
-		        		<a class="active" href ="/Product/indexBuyer">Home</a>
-		        		<a  href ="/Profile/viewCart">Cart</a>
-		        		<a  href ="/Message/indexBuyerMes">Messages</a>
-  						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
-		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-		        		<a  href ="/Profile/orderHistory">History</a>
-						<a  href ="/Profile/logout">Logout</a>
-					';
-		        }else{
-		        	echo '
-		        		<a class="nav-link" href ="/Product/indexSeller">Home</a>
-			            <a class="nav-link" href ="/Message/indexSellerMes">Messages</a>
-			            <a class="nav-link" href ="/Product/add">New Product</a>
-	  					<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
-			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-						<a class="nav-link" href ="/Profile/soldHistory">History</a>
-						<a class="nav-link" href ="/Profile/logout">Logout</a>
-		        	';
-		        } ?>
-		</div>
-
-
-</head>
-<body>
-
-	<h1 class = "signup">Edit Profile</h1>
-	<div class="everything">
-		<div class="col-md-5">
-    		<div class="p-3 py-5">
-				<div class = "left">
-					<form action='' method='post' enctype="multipart/form-data">
-						<div class="form-group">
-							<label for="username">Username</label>
-							<input type="text" class="form-control" id="username" name='username' value="<?= $data->username ?>">
-						</div>
-
-						<div class="form-group">
-							<label for="first_name">First Name</label>
-							<input type="text" class="form-control" id="first_name" name="first_name" value="<?= $data->first_name ?>">
-						</div>
 				</div>
-
-				<div class = "right">
-					<div class="form-group">
-						<label for="last_name">Last Name</label>
-						<input type="text" class="form-control" id="last_name" name="last_name" value="<?= $data->last_name ?>">
-					</div>
-
-					<div class="form-group">
-						<label for="postal_code">Postal Code</label>
-						<input type="text" class="form-control" id="postal_code" name="postal_code" value="<?= $data->postal_code ?>">
-					</div>
-
-					<div class="form-group">
-						<label for="city">City</label>
-						<input type="text" class="form-control" id="city" name="city"value="<?= $data->city ?>">
-					</div>
-
-					<div class="form-group">
-						<label>Profile Image:<input type="file" name="image" id="image" />
-						</label><img id='image_preview' src='/images/blank.jpg' style="max-width:200px;max-height: 200px" /><br>
-					</div>
-
-					<button type="submit" name='action' class="btn btn-primary">Save Changes</button>
-					<br>		
-				</div>
-			</form>
-    	</div>
-	</div>
-</div>
-
-		<!-- Display Image -->
-			<script>
-				image.onchange = evt => {
-		  		const [file] = image.files
-		  		if (file) {
-		    		image_preview.src = URL.createObjectURL(file)
-		  			}
-				}
-
-				file = "<?= $data->image ?>";
-				if (file != "") {
-				document.getElementById("image_preview").src = "/images/" + file;
-				}
-			</script>
-</body>
+			</div>		
+	</body>
 </html>
+
+	<!-- PopUp Acceptances -->
+		<?php
+		if(isset($_GET['message'])){
+			echo"<script>popUpSuccess('$_GET[message]');</script>";
+		}
+		?>
+
+		<?php
+		if(isset($_GET['error'])){
+			echo"<script>popUpError('$_GET[error]');</script>";
+		}
+		?>
+
+	<!-- Display Image -->
+		<script>
+			image.onchange = evt => {
+	  		const [file] = image.files
+	  		if (file) {
+	    		image_preview.src = URL.createObjectURL(file)
+	  			}
+			}
+
+			file = "<?= $data->image ?>";
+			if (file != "") {
+			document.getElementById("image_preview").src = "/images/" + file;
+			}
+		</script>

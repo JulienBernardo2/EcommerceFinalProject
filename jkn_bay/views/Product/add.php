@@ -13,7 +13,8 @@
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
 
-		<link rel="stylesheet" href="/css/addProduct.css"/>
+		<link rel="stylesheet" href="/css/nav.css"/>
+		<link rel="stylesheet" href="/css/Product/addProduct.css"/>
 		
 		<title>Add Product</title>
 	</head>
@@ -35,17 +36,17 @@
 
 			<!-- Nav -->
 			<div class ="navbar">
-				<?php if(isset($_SESSION['username'])){
+				<?php
 			    	echo '
-			     		<a class="nav-link" href ="/Product/indexSeller">Home</a>
+			     		<a class="nav-link" href ="/Product/index">Home</a>
 			            <a class="nav-link" href ="/Message/indexSellerMes">Messages</a>
 			            <a class="nav-link" href ="/Product/add">New Product</a>
 	  					<img src="/jknimage.png" alt="JKN" />
 			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-						<a class="nav-link" href ="/Profile/soldHistory">History</a>
+						<a class="nav-link" href ="/Product/soldHistory">History</a>
 						<a class="nav-link" href ="/Profile/logout">Logout</a>
 					';
-			    }?>	
+			    ?>	
 			</div>
 
 
@@ -77,7 +78,7 @@
 
 			    		<div class="form-group">
 				    		<label> Filter by Category:
-									<select name='category' id='category' onchange='changeURL(this)'>
+									<select name='category' id='category'>
 										<option selected>None</option>
 										<?php
 											foreach ($data['categorys'] as $category){

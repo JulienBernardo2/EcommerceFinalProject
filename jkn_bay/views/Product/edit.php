@@ -17,7 +17,8 @@
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/profileEdit.css"/>
+			<link rel="stylesheet" href="/css/nav.css"/>
+			<link rel="stylesheet" href="/css/Product/addProduct.css"/>
 
 		<!-- Scripts -->
 				<script type="text/javascript">
@@ -84,16 +85,17 @@
 	
 		<!-- Nav -->
 			<div class ="navbar">
-				<?php if(isset($_SESSION['username'])){
+				<?php
 			    	echo '
-			     		<a class="nav-link" href ="/Product/indexSeller">Home</a>
-			            <a class="nav-link" href ="/Messages/indexSellerMes">Messages</a>
+			     		<a class="nav-link" href ="/Product/index">Home</a>
+			            <a class="nav-link" href ="/Message/indexSellerMes">Messages</a>
 			            <a class="nav-link" href ="/Product/add">New Product</a>
 	  					<img src="/jknimage.png" alt="JKN" />
 			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
+						<a class="nav-link" href ="/Product/soldHistory">History</a>
 						<a class="nav-link" href ="/Profile/logout">Logout</a>
 					';
-			    }?>	
+			    ?>	
 			</div>	
 
 		<!-- Display Product Info -->

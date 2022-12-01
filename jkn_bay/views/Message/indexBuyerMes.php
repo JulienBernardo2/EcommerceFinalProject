@@ -14,7 +14,8 @@
 			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/messageView.css"/>
+			<link rel="stylesheet" href="/css/nav.css"/>
+			<link rel="stylesheet" href="/css/Message/messageView.css"/>
 
 		<!-- Scripts -->
 			<script type="text/javascript">
@@ -51,12 +52,12 @@
 			<div class ="navbar">
 				<?php
 				echo '
-		        		<a class="active" href ="/Product/indexBuyer">Home</a>
-		        		<a  href ="/Profile/viewCart">Cart</a>
+		        		<a class="active" href ="/Buyer/index">Home</a>
+		        		<a  href ="/Buyer/viewCart">Cart</a>
 		        		<a  href ="/Message/indexBuyerMes">Messages</a>
   						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
 		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-		        		<a  href ="/Profile/orderHistory">History</a>
+		        		<a  href ="/Buyer/orderHistory">History</a>
 						<a  href ="/Profile/logout">Logout</a>
 					';
 		        ?>
@@ -65,11 +66,10 @@
 		<h1 class='title' style="margin-bottom: 5%;">My Messages</h1>	
 
 		<?php
-
-						foreach($data['discountM'] as $item){
+			foreach($data['discountM'] as $item){
 							echo "
 											<div class='container'>
-		    									<article class='card'>
+		    									<article class='card' style='width: 70%; margin-left: 15%;'>
 		        									<div class='card-body'>
 		            									<h6>Discount</h6>
 		            									
@@ -94,16 +94,22 @@
 						}
 
 						$product_id_saved = 0;
+						$message_id = 0;
 						foreach($data['messages'] as $item){
+							if($message_id == 0){
+								$message_id = $item->message_id;
+							}
+							
 							if($item->product_id != $product_id_saved && $product_id_saved != 0){
 								echo'
-									<button class="btn btn-primary" style="width: 120px; margin-left: 80%; margin-bottom: 3%;">Reply</button>
+									<button class="mbtn btn btn-primary turned-button" message_id= "' . $message_id . '" style="width: 120px; margin-left: 80%; margin-bottom: 3%;">Reply</button>
 										</article>
 										</div>
 							    	</article>
 							    	</div>	
 									<br> 
 								';
+								$message_id = $item->message_id;
 							}
 
 							if($item->product_id != $product_id_saved){
@@ -112,7 +118,6 @@
 		    									<article class='card' style='width: 70%; margin-left: 15%;'>
 		        									<div class='card-body'>
 		            									<h6>Product: $item->name</h6>
-		            									<p>Sent to: $item->username</p>
 		            									
 		            									<article class='card1'>    		
 								            
@@ -123,18 +128,75 @@
 								            	<div class='card-body row'>
 													<div class='col'> <strong>Message:</strong><br>$item->message</div>
 												    <div class='col'> <strong>Date:</strong><br>$item->date_time</div>
+												    <div class='col'> <strong>Sent from:</strong><br>$item->username</div>
 												</div>
 								    		</div>
 												
 								            		
 									";
 							$product_id_saved = $item->product_id;
+							$message_id = $item->message_id;	
 						}
-						
-						if($product_id_saved != 0){
-						echo ' 
-									<button class="btn btn-primary" style="width: 120px; margin-left: 80%; margin-bottom: 3%;">Reply</button>
-						';}
+						if($data['messages'] != null){
+						echo '
+		<button class="mbtn btn btn-primary turned-button" message_id= "' . $message_id . '" style="width: 120px; margin-left: 80%; margin-bottom: 3%;">Reply</button>';
+							
+						}
 		?>
-	</body>		
+	</body>
+
+<!-- The modal -->
+	<div id='modalDialog' class='modal' style="width:40%; margin-top: 5%; margin-left:30%;">
+		<div class='modal-content animate-top'>
+				<div class='modal-header' style="background-color: lightgrey;">
+					<h5 class="modal-title">Reply</h5>
+					<button type="button" class='btn' id="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">x</span>
+					</button>
+				</div>
+				<form method="post" id="replyFrm">
+					<div class="modal-body">
+						<div class="response"></div>
+
+						<div class="form-group">
+							<label for="message">Enter Message</label>
+							<input type="text" class="form-control" id="message" name="message">
+						</div>
+					</div>
+
+					<div class="modal-footer">
+							<button type="submit" name='action' id="submit" class="btn btn-success">Send</button>
+					</div>	
+				</form>
+				
+		</div>
+	</div>
+	<script>
+		var message_id;
+		var modal = $('#modalDialog');
+		var span = $("#close");
+
+		$(document).ready(function(){
+			// $('#submit').click(function(e){
+			// 	_message = $('#message').val();
+			// 	$.ajax({
+			// 		type: "POST",
+			// 		url: "/Message/reply/" + message_id,
+			// 		data: { message : _message }
+			// 	});
+			// 	modal.hide();
+			// });
+
+			$('.mbtn').click(function(e){
+				message_id = $(this).attr('message_id');
+				$('#replyFrm').attr('action', '/Message/reply/' + message_id);
+				modal.show();
+
+			});
+
+			span.on('click', function(){
+				modal.hide();
+			});
+		});
+	</script>		
 </html>

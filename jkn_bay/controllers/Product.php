@@ -1,18 +1,18 @@
 <?php
 namespace jkn_bay\controllers;
 
-class Product extends \jkn_bay\core\Controller{
+class Seller extends \jkn_bay\core\Controller{
 
 	#[\jkn_bay\filters\Login]
 	#[\jkn_bay\filters\Seller]
 	//Creates the seller page with their products
-	public function indexSeller(){
+	public function index(){
 		
 		//Gets all of the products for the current seller logged in
 	 	$product = new \jkn_bay\models\Product();
 	 	$products = $product->getAllProfile($_SESSION['profile_id']);
 
-		$this->view('Product/indexSeller', ['product'=>$products]);
+		$this->view('Product/index', ['product'=>$products]);
  	}
 
  	#[\jkn_bay\filters\Login]
@@ -50,7 +50,7 @@ class Product extends \jkn_bay\core\Controller{
 			//Creates the product
 			$product->insert();
 
-			header('location:/Product/indexSeller?message=Product Created');
+			header('location:/Product/index?message=Product Created');
 		}else{
 
 			//Gets all of the categorys
@@ -90,7 +90,7 @@ class Product extends \jkn_bay\core\Controller{
 			
 			//Checks if seller selected the state of their object
 			if($_POST['state'] == null){
-				header('location:/Product/add?error=Please choose the state');
+				header('location:/Product/edit?error=Please choose the state');
 			} else{
 				$product->state = $_POST['state'];
 			}
@@ -105,7 +105,7 @@ class Product extends \jkn_bay\core\Controller{
 			//Updates the product
 			$product->update();
 
-			header('location:/Product/indexSeller/' . $_SESSION['profile_id']);
+			header('location:/Product/index?message=Product updated');
 		}else{
 			
 			//Gets all of the categorys
@@ -125,100 +125,50 @@ class Product extends \jkn_bay\core\Controller{
 			$product = new \jkn_bay\models\Product();
 			$product = $product->get($product_id);
 
-			//Gets the order details for the specified product incase buyers added them to their cart
-			$order_detail = new \jkn_bay\models\Order_detail();
-			$order_detail= $order_detail->getForProduct($product_id);
 
-			//It deletes the order details for the product in the buyers cart
-			if($order_detail != null){
-				$order_detail->deleteProductDetail();	
-			}
-			
-			//Deletes all messages between buyer and seller regarding the product
-			$product->deleteMessages();
+ 	 		$order = new \jkn_bay\models\Order();
+ 	 		$orders = $order->findProductsPaid($_SESSION['profile_id']);
 
-			//Deletes the product
-			$product->delete();
+ 	 		$check = false;
+
+ 	 		foreach($orders as $item){
+ 	 			if($product_id == $item->product_id){
+					$check = true;
+					break;
+				}
+ 	 		}
+
+ 	 		if(!$check){
+ 	 			//Gets the order details for the specified product incase buyers added them to their cart
+				$order_detail = new \jkn_bay\models\Order_detail();
+				$order_detail= $order_detail->getForProduct($product_id);
+
+				//It deletes the order details for the product in the buyers cart
+				if($order_detail != null){
+					$order_detail->deleteProductDetail();	
+				}
 				
-			header('location:/Product/indexSeller?message=Product Deleted');
+				//Deletes all messages between buyer and seller regarding the product
+				$product->deleteMessages();
+
+				//Deletes the product
+				$product->delete();
+					
+				header('location:/Product/index?message=Product Deleted');
+
+ 	 		} else{
+				header('location:/Product/index?error=Product could not be deleted because it has already been ordered');
+ 	 		}
+			
 	}
 
- 	//Creates the buyer page with the catalog
- 	public function indexBuyer(){
-
- 		//Gets all of the products for the catlog
-	 	$product = new \jkn_bay\models\Product();
-	 	$products = $product->getAll();
-	 	
-	 	//Gets all of the categorys for the catalog
-	 	$category = new \jkn_bay\models\Category();
-	 	$categorys = $category->getAll();
-
-	 	$this->view('Product/indexBuyer', ['product'=>$products, 'categorys'=>$categorys]);
+	#[\jkn_bay\filters\Login]
+	#[\jkn_bay\filters\Seller]
+ 	//Allows sellers to check their sold products
+ 	public function soldHistory(){
+ 		//Gets the every order and order_detail for the buyer
+ 	 	$order = new \jkn_bay\models\Order();
+ 	 	$orders = $order->findProductsPaid($_SESSION['profile_id']);
+ 	 	$this->view('Product/soldHistory', ['order'=>$orders]);
  	}
-
- 	//Allows buyers to search through the catalog
- 	public function search(){
-	 	
-		//Gets the value from the search box
-	 	$search_val = $_GET['searchbar'];
-
-	 	//Check if person or buyer input search box values
-	 	if($search_val == null){
-	 		header('location:/Product/indexBuyer?error=Please enter the value that you are searching for');
-	 	}
-	 	//Gets all of the products related to the search box value
-	 	$product = new \jkn_bay\models\Product();
-		$products = $product->getAllSimilar($search_val);
-
-
-		//Gets all of the profiles related to the search box value
-	 	$profile = new \jkn_bay\models\Profile();
-		$profiles = $profile->getAllSimilar($search_val);
-
-		//Sends an error that no products matched the search box value
-		if($products == null){
-			header('location:/Product/indexBuyer?error=No products match');
-		}
-
-		//Sends an error that no profiles matched the search box value
-		// if($profiles == null){
-		// 	header('location:/Product/indexBuyer?error=No profiles match');
-		// }
-
-		//Gets all of the categorys for the catalog
-	 	$category = new \jkn_bay\models\Category();
-	 	$categorys = $category->getAll();
-	
-		$this->view('Product/indexBuyer', ['product'=>$products, 'categorys'=>$categorys]);
-	}
-
-	//Allows buyers to filter ther catalog
-	public function filterCategory($category_id){
-		
-		//If no filter is selected
-		if($category_id == 'None'){
-			
-			//Gets all of the products for the catalog
-			$product = new \jkn_bay\models\Product();
-	 		$products = $product->getAll();
-	 		
-	 		//Gets all of the categorys for the catalog
-	 		$category = new \jkn_bay\models\Category();
-	 		$categorys = $category->getAll();
-
-			$this->view('Product/indexBuyer', ['product'=>$products, 'categorys'=>$categorys]);
-		}else{
-			
-			//Gets all of the products for the specified category
-			$product = new \jkn_bay\models\Product();
-			$products = $product->getAllCategory($category_id);
-	 		
-	 		//Gets all of the categorys for the catalog
-	 		$category = new \jkn_bay\models\Category();
-	 		$categorys = $category->getAll();
-
-			$this->view('Product/indexBuyer', ['product'=>$products, 'categorys'=>$categorys]);
-		}
-	} 
 }
