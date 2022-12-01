@@ -1,7 +1,6 @@
-
-.navbar{
+  .navbar{
   background-color: black;
-  max-height: 150px;
+  max-height: 120px;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -25,5 +24,5 @@
 
 .navbar img{
   width: 8%;
-  height: 100px;
+  height: 110px;
 }
