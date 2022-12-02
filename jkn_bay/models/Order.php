@@ -59,9 +59,8 @@ class Order extends \jkn_bay\core\Models{
 		return $STMT->fetch();
 	}
 
-	//Gets the order for the specific profile
 	public function findProfileCartPaid($profile_id){
-		$SQL = "SELECT `order`.*, product.name, product.image, order_detail.* FROM `order` LEFT JOIN order_detail ON order.order_id = order_detail.order_id JOIN product ON product.product_id = order_detail.product_id WHERE `order`.profile_id = :profile_id && `order`.status=:status ORDER BY order.order_id";
+		$SQL = "SELECT `order`.*, product.name, product.image,product.rating, rating.* ,order_detail.* FROM `order` LEFT JOIN order_detail ON `order`.order_id = order_detail.order_id JOIN product ON product.product_id = order_detail.product_id LEFT JOIN rating ON rating.r_profile_id = `order`.profile_id && rating.r_product_id = product.product_id WHERE `order`.profile_id = :profile_id && `order`.status=:status ORDER BY order.order_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['profile_id'=>$profile_id, 'status'=>'paid']);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order");
@@ -70,7 +69,7 @@ class Order extends \jkn_bay\core\Models{
 
 	//Gets the order for the specific profile
 	public function findProductsPaid($profile_id){
-		$SQL = "SELECT `order`.*, product.product_id, product.name, product.image, order_detail.*, profile.username FROM `order` LEFT JOIN order_detail ON order.order_id = order_detail.order_id JOIN product ON product.product_id = order_detail.product_id JOIN profile ON profile.profile_id = `order`.profile_id WHERE product.profile_id =:profile_id && `order`.status=:status ORDER BY order.order_id";
+		$SQL = "SELECT `order`.*, product.name, product.image, product.rating, order_detail.*, profile.username FROM `order` LEFT JOIN order_detail ON order.order_id = order_detail.order_id JOIN product ON product.product_id = order_detail.product_id JOIN profile ON profile.profile_id = `order`.profile_id WHERE product.profile_id =:profile_id && `order`.status=:status ORDER BY order.order_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['profile_id'=>$profile_id, 'status'=>'paid']);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Order");
