@@ -1,7 +1,7 @@
 <?php
 namespace jkn_bay\controllers;
 
-class Seller extends \jkn_bay\core\Controller{
+class Product extends \jkn_bay\core\Controller{
 
 	#[\jkn_bay\filters\Login]
 	#[\jkn_bay\filters\Seller]

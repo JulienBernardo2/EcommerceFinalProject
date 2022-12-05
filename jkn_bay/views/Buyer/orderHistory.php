@@ -1,78 +1,21 @@
 <html>
 	<head>
-		<!-- Jquery -->
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<!-- Imports -->
+    		<?php $this->view('header'); ?>
 
-		<!-- Bootstrap CSS --> 
-			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/
-			bootstrap.min.css" integrity="sha384-Vkoo8×4CGsO3+Hhxv8T/
-			Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-		<!-- Bootstrap JS -->
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-			crossorigin="anonymous"></script>
-
-		<!--Font-Awesome CSS-->
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/nav.css"/>
+		<!-- Css -->
 			<link rel="stylesheet" href="/css/Buyer/orderHistory.css"/>
-
-		<!-- Scripts -->
-			<script type="text/javascript">
-            	window.setTimeout(function() {
-                	$("#alert-message").fadeTo(500, 0).slideUp(500, function(){
-                    	$(this).remove(); 
-                	});
-            	}, 3000);
-        	</script>
-
-        <!-- Message Pop ups -->
-			<?php
-				if(isset($_GET['error'])){ ?>
-					<div class="alert alert-danger" id="alert-message">
-  						<a href="#" id='alert-message' class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  						<?= $_GET['error'] ?>
-					</div>
-			<?php  }
-				if(isset($_GET['message'])){ ?>
-					<div class="alert alert-success" id="alert-message">
-  						<a href="#"  class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  						<?= $_GET['message'] ?>
-					</div>
-			<?php  }
-			?>
-
-
-			<title>Order History</title>
+		
+		<!-- Nav -->
+	   		<?php $this->view('nav'); ?>
+		
+		<title>Order History</title>
 	</head>
 		
 	<body>	
-
-		<!-- Nav -->
-			<div class ="navbar">
-				<?php 
-			    	echo '
-			     		<a class="active" href ="/Buyer/index">Home</a>
-		        		<a  href ="/Buyer/viewCart">Cart</a>
-		        		<a  href ="/Message/indexBuyerMes">Messages</a>
-  						<img src="/jknimage.png" alt="JKN" style="max-width: 150px; max-height: 150px;"/>
-		        		<a  href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-		        		<a  href ="/Buyer/orderHistory">History</a>
-						<a  href ="/Profile/logout">Logout</a>
-					';
-			    ?>	
-			</div>
-
 		<h1 class='title'>My Orders</h1>	
 
-
-
-
 		<div class="order">
-
 		<?php
 						$order_id = 0;
 						foreach($data['order'] as $item){
@@ -100,6 +43,7 @@
 									                    			<div class='col'> <strong>Status:</strong><br>$item->status</div>
 									                    			<div class='col'> <strong>Total:</strong><br>$$item->total</div>
 									                    			<div class='col'> <strong>Date:</strong><br>$item->date</div>
+									                    			<div class='col'> <button class='mbtn btn btn-primary'>Leave rating</button></div>
 									                			</div>
 									                		</div>
 									            		</article>
@@ -123,5 +67,56 @@
 		?>
 										
 	</div>
-	</body>		
+	</body>
+
+	<!-- The modal -->
+	<div id='modalDialog' class='modal' style="width:40%; margin-top: 5%; margin-left:30%;">
+		<div class='modal-content animate-top'>
+			<div class='modal-header' style="background-color: lightgrey;">
+				<h5 class="modal-title">Reply</h5>
+				<button type="button" class='btn' id="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">x</span>
+				</button>
+			</div>
+			<form method="post" id="replyFrm">
+				<div class="modal-body">
+					<div class="response"></div>
+					
+
+
+
+					<div class="form-group">
+					<?php
+					foreach($data['order'] as $item){ 
+								echo '<label>Rate Product: <?= $data["order"]->name ?></label>
+								
+								';
+					}?>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" name='action' id="submit" class="btn btn-success">Rate</button>
+				</div>	
+			</form>
+		</div>
+	</div>
+
+	<script>
+		var modal = $('#modalDialog');
+		var span = $("#close");
+
+		$(document).ready(function(){
+			$('.mbtn').click(function(e){
+				// $('#replyFrm').attr('action', '/Message/reply/');
+				//location.href = "Rating/populateModal";
+				modal.show();
+			});
+
+			span.on('click', function(){
+				modal.hide();
+			});
+		});
+	</script>
+
 </html>

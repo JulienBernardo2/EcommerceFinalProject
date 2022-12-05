@@ -1,81 +1,39 @@
 <html>
 	<head>
-		<!-- Jquery -->
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<!-- Imports -->
+    		<?php $this->view('header'); ?>
+			<link rel="stylesheet" href="/css/Product/editProduct.css"/>
 
-		<!-- Bootstrap CSS --> 
-			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/
-			bootstrap.min.css" integrity="sha384-Vkoo8×4CGsO3+Hhxv8T/
-			Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-		<!-- Bootstrap JS -->
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-			crossorigin="anonymous"></script>
-		
-		<!--Font-Awesome CSS-->
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/nav.css"/>
-			<link rel="stylesheet" href="/css/Product/addProduct.css"/>
-
-		<!-- Scripts -->
-				<script type="text/javascript">
-	            	window.setTimeout(function() {
-	                	$("#alert-message").fadeTo(500, 0).slideUp(500, function(){
-	                    	$(this).remove(); 
-	                	});
-	            	}, 3000);
-	        	</script>
-
-	    <!-- Set the state of the product -->
-	        	<script type="text/javascript">
-					$(document).ready(
-						function(){
-							var stateOfProduct = "<?= $data['product']->state ?>";
+			<script type="text/javascript">
+				$(document).ready(
+					function(){
+						var stateOfProduct = "<?= $data['product']->state ?>";
 								
-								if(stateOfProduct == 'new'){
-									const state = document.getElementById('state_new');
-									state.checked = true;
-								} else if(stateOfProduct == 'used'){
-									const state = document.getElementById('state_used');
-									state.checked = true;
-								}
+						if(stateOfProduct == 'new'){
+							const state = document.getElementById('state_new');
+							state.checked = true;
+						} else if(stateOfProduct == 'used'){
+							const state = document.getElementById('state_used');
+							state.checked = true;
+						}
 
-								var categoryOfProduct = "<?= $data['product']->category_id ?>";
-								var category = document.getElementById('category');
-							
-								if(categoryOfProduct == null){
-									category.value = 'None';
-								} else if(categoryOfProduct == '1'){
-									category.value = '1';
-								} else if(categoryOfProduct == '2'){
-									category.value = '2';
-								} else if(categoryOfProduct == '3'){
-									category.value = '3';
-								} else if(categoryOfProduct == '4'){
-									category.value = '4';
-								} 
-							}
-						);
-				</script>
-
-		<!-- Message Pop ups -->
-				<?php
-					if(isset($_GET['error'])){ ?>
-						<div class="alert alert-danger" id="alert-message">
-	  						<a href="#" id='alert-message' class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	  						<?= $_GET['error'] ?>
-						</div>
-				<?php  }
-					if(isset($_GET['message'])){ ?>
-						<div class="alert alert-success" id="alert-message">
-	  						<a href="#"  class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	  						<?= $_GET['message'] ?>
-						</div>
-				<?php  }
-				?>
+						var categoryOfProduct = "<?= $data['product']->category_id ?>";
+						var category = document.getElementById('category');
+						
+						if(categoryOfProduct == null){
+							category.value = 'None';
+						} else if(categoryOfProduct == '1'){
+							category.value = '1';
+						} else if(categoryOfProduct == '2'){
+							category.value = '2';
+						} else if(categoryOfProduct == '3'){
+							category.value = '3';
+						} else if(categoryOfProduct == '4'){
+							category.value = '4';
+						} 
+					}
+				);
+			</script>
 
 		<title>Edit Product Page</title>
 
@@ -84,35 +42,14 @@
 	<body>
 	
 		<!-- Nav -->
-			<div class ="navbar">
-				<?php
-			    	echo '
-			     		<a class="nav-link" href ="/Product/index">Home</a>
-			            <a class="nav-link" href ="/Message/indexSellerMes">Messages</a>
-			            <a class="nav-link" href ="/Product/add">New Product</a>
-	  					<img src="/jknimage.png" alt="JKN" />
-			            <a class="nav-link" href ="/Profile/edit/<?= $_SESSION["profile_id"]?">My profile</a>
-						<a class="nav-link" href ="/Product/soldHistory">History</a>
-						<a class="nav-link" href ="/Profile/logout">Logout</a>
-					';
-			    ?>	
-			</div>	
+	   		<?php $this->view('nav'); ?>
+
+	   		<h1>Product Settings</h1>
 
 		<!-- Display Product Info -->
-			<div class="container rounded bg-white mt-5 mb-5">
-				<div class="row">
-					<div class="col-md-3 border-right">
-			
-					</div>
-
 					<div class="col-md-5 border-right">
-			    		<div class="p-3 py-5">
-			        		<div class="d-flex justify-content-between align-items-center mb-3">
-				            	<h4 class="text-right">Product Settings</h4>
-			        		</div>
-
-							<div class = "left">
-								<h1 class = "signup">Edit Product</h1>
+			    		<div class="p-3 py-5">		
+							<h2> Edit Product </h2>
 
 								<form action='' method='post' enctype="multipart/form-data">
 									<div class="form-group">
@@ -124,17 +61,16 @@
 										<label for="description">Description</label>
 										<input type="text" class="form-control" id="description" name="description" value="<?= $data['product']->description ?>">
 									</div>
-							</div>
-
+					
 							<div class = "right">
 								<div class="form-group">
 									<label for="price">Price</label>
-									<input type="text" class="form-control" id="price" name="price" value="<?= $data['product']->price ?>">
+									<input type="text" min="0" step='0.01' class="form-control" id="price" name="price" value="<?= $data['product']->price ?>">
 								</div>
 
 								<div class="form-group">
 									<label for="quantity">Quantity</label>
-									<input type="text" class="form-control" id="quantity" name="quantity" value="<?= $data['product']->quantity ?>">
+									<input type="text" min="0" class="form-control" id="quantity" name="quantity" value="<?= $data['product']->quantity ?>">
 								</div>
 
 								<div class="form-group" id='states'>
@@ -163,27 +99,26 @@
 									<label>Image:<input type="file" name="image" id="image" /></label><img id='image_preview' src='/images/blank.jpg' style="max-width:200px;max-height:200px" /><br>
 								</div>
 
-								<button type="submit" name='action' value='Register' class="btn btn-secondary">Save Changes</button>
+								<button type="submit" name='action' value='Register' class="btn btn-success">Save Changes</button>
 							</div>
 
 						</form>
 			    	</div>
-
-
-		<!-- Display Image -->
-			<script>
-				image.onchange = evt => {
-		  		const [file] = image.files
-		  		if (file) {
-		    		image_preview.src = URL.createObjectURL(file)
-		  			}
-				}
-
-				file = "<?= $data['product']->image ?>";
-				if (file != "") {
-				document.getElementById("image_preview").src = "/images/" + file;
-				}
-			</script>
 	</body>
 	
 </html>
+
+<!-- Display Image -->
+	<script>
+		image.onchange = evt => {
+	  		const [file] = image.files
+  			if (file) {
+				image_preview.src = URL.createObjectURL(file)
+		  		}
+			}
+
+			file = "<?= $data['product']->image ?>";
+			if (file != "") {
+				document.getElementById("image_preview").src = "/images/" + file;
+			}
+	</script>

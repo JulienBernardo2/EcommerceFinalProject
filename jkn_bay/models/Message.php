@@ -27,7 +27,7 @@ class Message extends \jkn_bay\core\Models{
 	//Gets all the messages based for a profile
 	public function getMessagesBuyer($profile_id){
 		$SQL = "SELECT message.*,product.name, profile.username FROM message JOIN product ON product.product_id = message.product_id
-				JOIN profile ON profile.profile_id = receiver_id WHERE message.sender_id =:profile_id OR message.receiver_id =:profile_id ORDER BY product.product_id, date_time";
+				JOIN profile ON profile.profile_id = sender_id WHERE message.sender_id =:profile_id OR message.receiver_id =:profile_id ORDER BY product.product_id, date_time";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['profile_id'=>$profile_id]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Message");
@@ -37,7 +37,7 @@ class Message extends \jkn_bay\core\Models{
 	//Gets all the messages based for a profile
 	public function getMessagesSeller($profile_id){
 		$SQL = "SELECT message.*,product.name, profile.username FROM message JOIN product ON product.product_id = message.product_id
-				JOIN profile ON profile.profile_id = sender_id WHERE message.sender_id =:profile_id OR message.receiver_id =:profile_id ORDER BY product.product_id";
+				JOIN profile ON profile.profile_id = sender_id WHERE message.sender_id =:profile_id OR message.receiver_id =:profile_id ORDER BY reply_to ASC";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['profile_id'=>$profile_id]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Message");

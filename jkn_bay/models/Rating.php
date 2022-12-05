@@ -21,8 +21,6 @@ class Rating extends \jkn_bay\core\Models{
 			 'profile_id'=>$this->profile_id]);
 	}
 
-	
-
 	public function subRatingStatus(){
 		$SQL = "DELETE FROM rating WHERE r_product_id=:product_id AND r_profile_id=:profile_id";
 		$STMT = self::$_connection->prepare($SQL);
@@ -31,7 +29,6 @@ class Rating extends \jkn_bay\core\Models{
 			 'profile_id'=>$this->profile_id]);
 	}
 
-	
 
 	public function changeRatingData(){
 		$SQL ="UPDATE product SET rating=:rating WHERE product_id =:product_id";
