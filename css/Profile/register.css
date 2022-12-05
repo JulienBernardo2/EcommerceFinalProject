@@ -1,24 +1,57 @@
-body{
+body {
   background-color: lightblue;
 }
 
-#imageJKN{
-  margin-right: 45%;
+form {
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 20px; 
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
-.float-container {
-  padding: 20px;
-  height: 350px;
+h1{
+  padding-top: 2.5%;
+  text-align: center;
+  grid-column: span 2; 
 }
 
-.float-child {
-  width: 50%;
-  float: left;
-  padding: 20px;
-  padding-left: 10%;
-  height: 100%;
+form h4{
+  text-align: center;
+  grid-column: span 2; 
 }
 
-.float-child > input{
-  max-width:60%;  margin-bottom: 5%;
+form button {
+  grid-column: span 2; 
+  text-align: center;
+  margin-left: 40%;
+  margin-right: 40%;
+  margin-bottom: 2.5%;
+}
+
+.form-group-left {
+  margin-left: 40%;
+  display: flex;
+  flex-direction: column;
+ }
+
+ .form-group {
+  display: flex;
+  flex-direction: column;
+ }
+
+ .form-group-button button{
+    margin-top: 10%;
+    margin-left: -9%;
+    font-size: 17;
+    padding: 2%;
+ }
+
+ .form-control{
+     width: 100%;
+}
+
+
+ .right{
+     width: 60%;
 }

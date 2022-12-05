@@ -1,50 +1,42 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
-
-body{
-    background-color: lightblue;
-}   
-.product-image{
-    max-height: 400px;
-    max-width: 250px;
-}
 body{
 	background-color: lightblue;
 }
 
-.title{
-   padding-left: 5%;
-   padding-top: 10%;	
- }
-
-.search{
-	padding-left: 5%;
-	padding-top: 2%;
+div{
+   background-color: lightblue;
 }
 
-#searchIcon{
-	width: 2%;
+h1{
+	padding-top: 2%;
+	margin-right: 4%;
+	text-align: center;
 }
 
-.filters{
-	padding-left: 5%;
-	padding-top: 2%;
+h3{
+	text-align: center;
+}
+
+#container img {
+	width: 100%;height: 100%;
 }
 
 #container{
 	box-shadow: 0 15px 30px 1px grey;
-	background: rgba(255, 255, 255, 0.90);
+	background: #191907;
 	text-align: center;
-	border-radius: 2px;
-	overflow: hidden;
-	margin: 1em auto;
+	border-radius: 7px;
+	margin: auto;
+	margin-top: 1em;
+	margin-left: 1px;
+	margin-right: 5px;
 	height: 300px;
 	width: 500px;
 	float: left;
-	padding: 10px;
+	padding: 5px;
 }
 
-
 .product-details {
+	background-color: ivory;
 	position: inherit;
 	text-align: left;
 	overflow: hidden;
@@ -54,94 +46,12 @@ body{
 	margin-left: 0px;
 	width: 55%;
 	margin-top: 0px;
-
 }
 
-
-
-.btn1{
-	float: left;
-	margin-right: 20%;
-	margin-top: 10%;
-}
-
-.btn2{
-	float: left;
-	margin-right: 10%;
-	margin-top: 10%;
-}
-
-
-
-
-#container .product-details > p {
-font-family: 'EB Garamond', serif;
-	text-align: center;
-	font-size: 30px;
-	color: black;
-	float: left;
-	margin-left: 100px;
-	padding: 0;
-	width: 90%;
-}
-
-.btn {
-	transform: translateY(0px);
-	transition: 0.3s linear;
-	background:  #809fff;
-	border-radius: 5px;
-  	position: relative;
-  	overflow: hidden;
-	cursor: pointer;
-	outline: none;
-	border: none;
-	color: black;
-	padding: 0;
-	margin: 0;
-}
-
-.btn:hover{transform: translateY(-6px);
-	background: #1a66ff;}
-
-
-
-.btn span {
-	font-family: 'Farsan', cursive;
-	transition: transform 0.3s;
+.controls{
 	display: inline-block;
-  padding: 10px 20px;
-	font-size: 1.0em;
-	margin:0;
-	
+	margin-left: 4%;
 }
-.btn .price, .shopping-cart{
-	background: white;
-	border: 0;
-	margin: 0;
-}
-
-.btn .price {
-	transform: translateX(-10%); padding-right: 15px;
-	background: lightblue;
-}
-
-.btn .shopping-cart {
-	transform: translateX(-100%);
-   position: absolute;
-	background: white;
-	z-index: 1;
-  	left: 0;
-  	border-radius: 5%;
-  	top: 0;
-}
-
-.btn .buy {z-index: 3; font-weight: bolder;}
-
-.btn:hover .price {transform: translateX(-110%);}
-
-.btn:hover .shopping-cart {transform: translateX(0%);}
-
-
 
 .product-image {
 	transition: all 0.3s ease-out;
@@ -153,8 +63,6 @@ font-family: 'EB Garamond', serif;
 	width: 45%;
 	display: inline-block;
 }
-
-#container img {width: 100%;height: 100%;}
 
 .info {
     background: rgba(27, 26, 26, 0.9);
@@ -182,166 +90,13 @@ font-family: 'EB Garamond', serif;
 .product-image:hover img {transition: all 0.3s ease-out;}
 .product-image:hover img {transform: scale(1.2, 1.2);}
 
-img{
-   width: 8%;
-    height: auto;
+.search{
+	margin-top: 2%;
+	display: inline-block;
 }
 
-.form-group1{
-    font-size: 20px;
-padding: 20px 10px;
-margin-left: 60px;
-margin-right: 900px;
+.filters{
+	margin-left: 35%;
+	margin-right: 15%;
+	display: inline-block;
 }
-
-.left{
-   float:left; 
-             padding: 20px 0px;
-                width:25%;
-                height:280px;
-                margin-left: 320px;
-}
-.right{
-   float:right;
-                padding: 167px 0px;
-                width:25%;
-                height:280px;
-                margin-right:320px;
-}
-.break{
-    margin: 0px -100px;
-    padding: 0px;
-    width: 800px;
-    float: right;
-    font-family: cursive;
-}
-
-.form-group2{
-    font-size: 20px;
-margin-left: 70px;
-margin-right: 900px;
-}
-
-.bttn{
-padding: 40px 10px;
-margin-left: -120px;
-margin-right: 200px;
-}
-
-p{
-   padding: 50px 10px;
-margin-left: 70px;
-margin-right: 200px;
-}
-
-.accounttype{
-   padding: 10px 0px;
-}
-
-div{
-   background-color: lightblue;
-}
-
- 
-html{
-    background-color: lightblue;
- }
-
-
-@media screen and (max-width: 500px) {
-  .navbar a {
-    float: none;
-    display: block;
-    width: 100%;
-    text-align: left;
-  }
- 
- #test {
-    left: -150px;
-    position: absolute;
-    top: 0;
-  }
- 
-
- 
- a:link{
-    color: white;
-    background-color: black;
-    display: inline-block;
-    padding: 10px 20px;
-    text-decoration: none;
-    justify-content: center;
-    font: 14px Arial, sans-serif;
-    border-radius: 5px;
-    }
-    
-    
-   a:visited{
-    color: white;
-    display: inline-block;
-    padding: 10px 20px;
-    text-decoration: none;
-    text-align: center;
-    font: 14px Arial, sans-serif;
-    border-radius: 5px;
-    }
-
-
-
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
-
-.navbar{
-  background-color: black;
-	font-family: "Montserrat", sans-serif;
-  position: absolute;
-  width: 100%;  
-}
-
-.navbar a {
-  background-color: black;
-  text-decoration: none;
-  font-size: 130%;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: white;
-  display: inline-block;
-  transition: all 0.2s ease-in-out;
-}
-
-.navbar a:hover {
-  background-color: lightblue;
-}
-
-.navbar .dot {
-  width: 6px;
-  height: 6px;
-  background: #fddb3a;
-  border-radius: 50%;
-  opacity: 0;
-  transition: all 0.2s ease-in-out;
-}
-
-.navbar a:nth-child(1):hover ~ .dot {
-  transform: translateX(-19300%);
-  transition: all 0.2s ease-in-out;
-  opacity: 5;
-}
-
-.navbar a:nth-child(2):hover ~ .dot {
-  transform: translateX(-14100%);
-  transition: all 0.2s ease-in-out;
-  opacity: 1;
-}
-
-.navbar a:nth-child(4):hover ~ .dot {
-  transform: translateX(-5700%);
-  transition: all 0.2s ease-in-out;
-  opacity: 1;
-}
-
-.navbar a:nth-child(5):hover ~ .dot {
-  transform: translateX(-1800%);
-  transition: all 0.2s ease-in-out;
-  opacity: 1;
-}
-

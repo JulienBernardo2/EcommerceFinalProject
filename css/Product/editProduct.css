@@ -4,11 +4,16 @@ body{
 
 h1{
 	margin-left: 39%;
-	margin-top: 1%;
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+h2{
+	margin-left: 35%;
 }
 
 img{
-	width: 18%;
+	width: 38%;
 }
 
 .col-md-5{
@@ -17,13 +22,8 @@ img{
      margin: auto;
 }
 
-.btn-primary{
-	margin-left: 25%;
-	padding-left: 5%;
-	padding-right: 5%;
-}
 .btn-success{
-	margin-left: 30%;
+	margin-left: 37%;
 }
 
 .form-group{
