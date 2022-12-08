@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2022 at 03:11 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Generation Time: Dec 08, 2022 at 05:07 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -61,6 +61,13 @@ CREATE TABLE `discount` (
   `status` enum('created','applied') NOT NULL DEFAULT 'created'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `discount`
+--
+
+INSERT INTO `discount` (`discount_id`, `profile_id`, `message_id`, `code`, `status`) VALUES
+(59, 141, 193, '$2y$10$Uiy2iPtQDV048fOPnqh8teA6HGxqr9vjT2gTrcG5YXyDeTA5CFZKC', 'created');
+
 -- --------------------------------------------------------
 
 --
@@ -84,18 +91,7 @@ CREATE TABLE `message` (
 --
 
 INSERT INTO `message` (`message_id`, `product_id`, `sender_id`, `receiver_id`, `date_time`, `flag`, `message`, `reply_to`) VALUES
-(179, 72, 21, 22, '2022-12-01 22:30:45', 'none', 'Hello, is it really w?', NULL),
-(180, 73, 21, 22, '2022-12-01 22:31:00', 'none', 'blah blah', NULL),
-(181, 72, 21, 22, '2022-12-01 22:31:10', 'none', 'or a?', 179),
-(182, 72, 30, 22, '2022-12-01 22:31:31', 'none', 'Is it windy?', NULL),
-(183, 73, 30, 22, '2022-12-01 22:31:45', 'none', 'For the win', NULL),
-(184, 73, 30, 22, '2022-12-01 22:31:58', 'none', 'Or lose', 183),
-(185, 72, 22, 21, '2022-12-01 22:35:14', 'none', 'its a', 181),
-(186, 72, 22, 21, '2022-12-01 22:35:27', 'none', 'and b', 185),
-(188, 73, 22, 30, '2022-12-01 22:35:58', 'none', 'lose', 184),
-(189, 73, 22, 21, '2022-12-01 22:37:42', 'none', 'fuck', 180),
-(190, 72, 22, 30, '2022-12-01 22:41:45', 'none', 'no', 182),
-(191, 72, 21, 22, '2022-12-05 19:51:57', 'none', 'hEY sexy', 186);
+(193, NULL, NULL, 141, '2022-12-08 09:37:36', 'discount', 'Welcome to JKN Bay, here is your discount code: 3ZD9X', NULL);
 
 -- --------------------------------------------------------
 
@@ -117,13 +113,10 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`order_id`, `profile_id`, `status`, `date`, `total`) VALUES
-(177, 21, 'paid', '2022-12-01', 223),
-(178, 21, 'paid', '2022-12-01', 200),
-(179, 21, 'cart', '2022-12-01', 0),
-(180, 30, 'paid', '2022-12-08', 50),
-(181, 30, 'paid', '2022-12-08', 200),
-(182, 30, 'paid', '2022-12-08', 250),
-(183, 30, 'cart', '2022-12-08', 0);
+(184, 140, 'paid', '2022-12-08', 3114),
+(185, 140, 'paid', '2022-12-08', 339),
+(186, 140, 'paid', '2022-12-08', 24),
+(187, 140, 'cart', '2022-12-08', 0);
 
 -- --------------------------------------------------------
 
@@ -145,13 +138,12 @@ CREATE TABLE `order_detail` (
 --
 
 INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `qty`, `price`) VALUES
-(456, 177, 57, 1, '200'),
-(457, 177, 77, 1, '23'),
-(458, 178, 57, 1, '200'),
-(460, 180, 78, 1, '50'),
-(461, 181, 57, 1, '200'),
-(462, 182, 57, 1, '200'),
-(463, 182, 78, 1, '50');
+(464, 184, 79, 1, '1999'),
+(465, 184, 85, 1, '15'),
+(466, 184, 84, 1, '1100'),
+(467, 185, 82, 1, '100'),
+(468, 185, 83, 1, '239'),
+(469, 186, 86, 2, '12');
 
 -- --------------------------------------------------------
 
@@ -179,12 +171,14 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `profile_id`, `name`, `description`, `price`, `quantity`, `state`, `category_id`, `image`, `status`, `rating`) VALUES
-(57, 22, 'Jordan 1 University Red', 'The Air Jordan 1 is one of the most influential and memorable models in the history of sneakers. Transcending the game', 200, 1, 'new', 2, '638912e0ae0c0.jpg', 'selling', 5),
-(59, 37, 'Coding for dummies', 'Helps with code', 40, 0, 'new', 4, '63741f31057a8.jpg', 'sold', 0),
-(72, 22, 'w', '1', 1, 9, 'new', 2, '6387e7d8ea6d2.jpg', 'selling', 0),
-(73, 22, '1', '1', 1, 1, 'used', 1, '63890937e2413.jpg', 'selling', 0),
-(77, 22, 'qwqw', 'wqwqwqwqw', 23, 33, 'used', 1, '63891d87da6fa.jpg', 'selling', 8),
-(78, 37, 'Gym', 'really cool', 50, 0, 'new', 1, '63918f4d699da.jpg', 'sold', 1);
+(79, 139, 'Dell Inspire Pro', 'Stay connected wherever you go with Inspiron\'s easy-to-use PCs. With lightweight designs and long-battery life, our laptops and 2-in-1s keep you moving.', 1999, 4, 'new', 3, '6391f89a62f77.png', 'selling', 0),
+(80, 139, 'Air Force One', 'Air Force 1 black trainers: iconic design with a fresh spin. Discover sleek basketball-inspired shoes in a must-have colour.', 145, 12, 'new', 2, '6391f9385b207.png', 'selling', 0),
+(81, 139, 'Harry Potter', 'Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling.', 5, 7, 'used', 4, '6391f9d7b6caa.png', 'selling', 0),
+(82, 139, 'Nike Tech Fleece', 'Elevate Your Look While Staying Warm, Dry And Comfortable With Nike Tech Fleece. Nike Products Designed For Performance And Every Day Wear. Gear Up At Nike.', 100, 0, 'used', 1, '6391fa7017b94.png', 'sold', 0),
+(83, 142, 'Kyrie 5TB', 'The Nike Men\'s Kyrie 5 TB Basketball Shoe gives his fast, all-angle attack a new cushioning technology that aligns with the curved shape of the outsole.', 239, 5, 'new', 2, '6391fb43ac1f6.png', 'selling', 0),
+(84, 142, 'Samsung Galaxy S22', 'Welcome to the epic new standard. Introducing Galaxy S22 Ultra 5G, with a built-in S Pen, Nightography camera and a battery that goes beyond all day.', 1100, 2, 'used', 3, '6391fc065edec.png', 'selling', 4),
+(85, 142, 'Snapback Hat', 'Why are snapback hats so popular? They\'re famous for their casual ease, their breathability, and just how awesome they look on everyone!', 15, 19, 'new', 1, '6391fc9bbc8ce.png', 'selling', 12),
+(86, 142, 'The Bible', 'The Bible is a collection of religious texts or scriptures that are held to be sacred in Christianity, Judaism, Samaritanism, and many other religions.', 12, 48, 'used', 4, '6391fcf0577ee.png', 'selling', 0);
 
 -- --------------------------------------------------------
 
@@ -211,14 +205,10 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`profile_id`, `username`, `first_name`, `last_name`, `postal_code`, `city`, `password_hash`, `role`, `image`, `ratingSeller`) VALUES
-(21, 'Mia', 'Mia', 'Bernardo', 'H7Y2C4', 'Lavals', '$2y$10$TDBPkz/zpzkyRPt9L5KHnuX2qKZ2qt49kzkKS6lzj0GttbSowgto2', 'buyer', '637198ab659d6.jpg', 0),
-(22, 'Julien', 'Julien', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$SaYMZEBEQG0Zxo/4ft9pVOBPm5iYAQD.XRergI6EbnP7WA3wnOsTO', 'seller', '6371cccd3881d.png', 2),
-(30, 'Olivia', 'Julien', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$6KYxHkCqiGSuj5d7caoDDuaVEwr4G6enOJUZt4WcP5a4KJXCIparu', 'buyer', '636ff197b5e08.jpg', 0),
-(37, 'Spiky', 'Spiky', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$qtXqCqn.jJeoTx7MpDt.ae/9WWCHDckVNaw27P8.tA.5tS36kwQLS', 'seller', '6384c6a920b18.jpg', 1),
-(120, 'Raphie', 'Raphie', 'Raphie', 'Raphie', 'St Bruno', '$2y$10$4HTX90GHjq/WKE03swQp7O03Qvmuw2eNnEBdK4WaISz.OYS5UBkaG', 'buyer', '6377e6f0242ea.jpg', 0),
-(135, 'test', '', '', '', '', '$2y$10$xJxWZItGj9jnoJXr2aXnu.IepOgJkZjDMMl59eqkomp25v7hnEuv.', 'buyer', '', 0),
-(136, 'q', '', '', '', '', '$2y$10$Sj9Mqw7ix4mOiCTWFYRb7uavKHNnQ4YfyWj23z1n4RbnfvwneUFTi', 'buyer', '', 0),
-(138, 'drake', 'Drake', 'LastName', 'the 6', 'toronto', '$2y$10$l0bfcl0rRpBmNwBbtkYOYeaAlKkwencqfzprc6hV3uEYCwMqgzBAi', 'buyer', '6388ffd882d3d.jpg', 0);
+(139, 'Natan', 'Natan', 'Lellouche', 'H7Y2C4', 'Laval', '$2y$10$aaTx4jDTQyFp.h4pVYOpTOIfklxPywanToEcCktXD16FRwdNtDmHy', 'seller', '6391f61c98761.jpg', 0),
+(140, 'Kyle', 'Kyle', 'Husbands', 'H7Y2C4', 'Laval', '$2y$10$g/wdeWfHB2XEju2WZKD2g.1F3/5ixaZuC0FEFZXya8h2zPRM1/FF6', 'buyer', '6391f666c6b77.jpg', 0),
+(141, 'Julien', 'Julien', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$k4FovbS3GZTvsWTPpQuTve./gSyOl/v7Pgr4RC23jvVsNVdi0aYiq', 'buyer', '6391f6b009e79.jpg', 0),
+(142, 'Michel', 'Michel', 'Paquette', 'H7Y2C4', 'Laval', '$2y$10$xR6C3H3MMjJJYnNsyxotm.sHzgv7c2BlNGImQ9/O0daxa1fomEQ0i', 'seller', '6391f757897ed.png', 0);
 
 -- --------------------------------------------------------
 
@@ -237,10 +227,7 @@ CREATE TABLE `rating` (
 --
 
 INSERT INTO `rating` (`r_product_id`, `r_profile_id`) VALUES
-(57, 21),
-(57, 30),
-(77, 21),
-(78, 30);
+(84, 140);
 
 -- --------------------------------------------------------
 
@@ -259,9 +246,7 @@ CREATE TABLE `ratingseller` (
 --
 
 INSERT INTO `ratingseller` (`rate_seller_id`, `rate_profile_id`) VALUES
-(22, 21),
-(22, 30),
-(37, 30);
+(142, 140);
 
 --
 -- Indexes for dumped tables
@@ -347,37 +332,37 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `discount`
 --
 ALTER TABLE `discount`
-  MODIFY `discount_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `discount_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=192;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=464;
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=472;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
 --
 -- Constraints for dumped tables
