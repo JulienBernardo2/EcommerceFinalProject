@@ -9,6 +9,10 @@ body{
   background-size: cover;
 }	
 
+h1{
+color: white;
+}
+
 .navbar{
 	background-color: black;
 	max-height: 160px;
