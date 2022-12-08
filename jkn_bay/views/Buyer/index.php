@@ -59,7 +59,7 @@
 			</form>
 		</div>
 
-		<div class='filters'>
+		
 			<label> <?= _("Filter by Category:") ?>
 				<select class='form-select' name='category' id='category' onchange='changeURL(this)'>
 					<option selected> None </option>
@@ -72,7 +72,7 @@
 					?>
 				</select>
 			</label><br>
-		</div>
+		
 
 		<?php
 			foreach($data['product'] as $item) {	
