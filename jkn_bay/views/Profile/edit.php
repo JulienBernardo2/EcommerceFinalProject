@@ -6,7 +6,7 @@
 		<!-- Css file -->
 			<link rel="stylesheet" href="/css/Profile/edit.css"/>
 
-		<title>Edit Profile</title>
+		<h1>Edit Profile</h1>
 	</head>
 	
 	<body>
