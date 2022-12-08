@@ -1,6 +1,12 @@
 body{
 	background-color: lightblue;
+  background-image: url('bay.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
+  background-size: cover;
 }
+
+
 
 h1{
   padding-top: 1%;
