@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2022 at 07:38 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Dec 08, 2022 at 03:11 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -119,7 +119,11 @@ CREATE TABLE `order` (
 INSERT INTO `order` (`order_id`, `profile_id`, `status`, `date`, `total`) VALUES
 (177, 21, 'paid', '2022-12-01', 223),
 (178, 21, 'paid', '2022-12-01', 200),
-(179, 21, 'cart', '2022-12-01', 0);
+(179, 21, 'cart', '2022-12-01', 0),
+(180, 30, 'paid', '2022-12-08', 50),
+(181, 30, 'paid', '2022-12-08', 200),
+(182, 30, 'paid', '2022-12-08', 250),
+(183, 30, 'cart', '2022-12-08', 0);
 
 -- --------------------------------------------------------
 
@@ -143,7 +147,11 @@ CREATE TABLE `order_detail` (
 INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `qty`, `price`) VALUES
 (456, 177, 57, 1, '200'),
 (457, 177, 77, 1, '23'),
-(458, 178, 57, 1, '200');
+(458, 178, 57, 1, '200'),
+(460, 180, 78, 1, '50'),
+(461, 181, 57, 1, '200'),
+(462, 182, 57, 1, '200'),
+(463, 182, 78, 1, '50');
 
 -- --------------------------------------------------------
 
@@ -171,11 +179,12 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `profile_id`, `name`, `description`, `price`, `quantity`, `state`, `category_id`, `image`, `status`, `rating`) VALUES
-(57, 22, 'Jordan 1 University Red', 'The Air Jordan 1 is one of the most influential and memorable models in the history of sneakers. Transcending the game', 200, 3, 'new', 2, '638912e0ae0c0.jpg', 'selling', 0),
+(57, 22, 'Jordan 1 University Red', 'The Air Jordan 1 is one of the most influential and memorable models in the history of sneakers. Transcending the game', 200, 1, 'new', 2, '638912e0ae0c0.jpg', 'selling', 5),
 (59, 37, 'Coding for dummies', 'Helps with code', 40, 0, 'new', 4, '63741f31057a8.jpg', 'sold', 0),
 (72, 22, 'w', '1', 1, 9, 'new', 2, '6387e7d8ea6d2.jpg', 'selling', 0),
 (73, 22, '1', '1', 1, 1, 'used', 1, '63890937e2413.jpg', 'selling', 0),
-(77, 22, 'qwqw', 'wqwqwqwqw', 23, 33, 'used', 1, '63891d87da6fa.jpg', 'selling', 0);
+(77, 22, 'qwqw', 'wqwqwqwqw', 23, 33, 'used', 1, '63891d87da6fa.jpg', 'selling', 8),
+(78, 37, 'Gym', 'really cool', 50, 0, 'new', 1, '63918f4d699da.jpg', 'sold', 1);
 
 -- --------------------------------------------------------
 
@@ -193,22 +202,23 @@ CREATE TABLE `profile` (
   `city` varchar(15) NOT NULL,
   `password_hash` varchar(72) NOT NULL,
   `role` enum('buyer','seller') NOT NULL DEFAULT 'seller',
-  `image` varchar(50) NOT NULL
+  `image` varchar(50) NOT NULL,
+  `ratingSeller` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `profile`
 --
 
-INSERT INTO `profile` (`profile_id`, `username`, `first_name`, `last_name`, `postal_code`, `city`, `password_hash`, `role`, `image`) VALUES
-(21, 'Mia', 'Mia', 'Bernardo', 'H7Y2C4', 'Lavals', '$2y$10$TDBPkz/zpzkyRPt9L5KHnuX2qKZ2qt49kzkKS6lzj0GttbSowgto2', 'buyer', '637198ab659d6.jpg'),
-(22, 'Julien', 'Julien', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$SaYMZEBEQG0Zxo/4ft9pVOBPm5iYAQD.XRergI6EbnP7WA3wnOsTO', 'seller', '6371cccd3881d.png'),
-(30, 'Olivia', 'Julien', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$6KYxHkCqiGSuj5d7caoDDuaVEwr4G6enOJUZt4WcP5a4KJXCIparu', 'buyer', '636ff197b5e08.jpg'),
-(37, 'Spiky', 'Spiky', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$qtXqCqn.jJeoTx7MpDt.ae/9WWCHDckVNaw27P8.tA.5tS36kwQLS', 'seller', '6384c6a920b18.jpg'),
-(120, 'Raphie', 'Raphie', 'Raphie', 'Raphie', 'St Bruno', '$2y$10$4HTX90GHjq/WKE03swQp7O03Qvmuw2eNnEBdK4WaISz.OYS5UBkaG', 'buyer', '6377e6f0242ea.jpg'),
-(135, 'test', '', '', '', '', '$2y$10$xJxWZItGj9jnoJXr2aXnu.IepOgJkZjDMMl59eqkomp25v7hnEuv.', 'buyer', ''),
-(136, 'q', '', '', '', '', '$2y$10$Sj9Mqw7ix4mOiCTWFYRb7uavKHNnQ4YfyWj23z1n4RbnfvwneUFTi', 'buyer', ''),
-(138, 'drake', 'Drake', 'LastName', 'the 6', 'toronto', '$2y$10$l0bfcl0rRpBmNwBbtkYOYeaAlKkwencqfzprc6hV3uEYCwMqgzBAi', 'buyer', '6388ffd882d3d.jpg');
+INSERT INTO `profile` (`profile_id`, `username`, `first_name`, `last_name`, `postal_code`, `city`, `password_hash`, `role`, `image`, `ratingSeller`) VALUES
+(21, 'Mia', 'Mia', 'Bernardo', 'H7Y2C4', 'Lavals', '$2y$10$TDBPkz/zpzkyRPt9L5KHnuX2qKZ2qt49kzkKS6lzj0GttbSowgto2', 'buyer', '637198ab659d6.jpg', 0),
+(22, 'Julien', 'Julien', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$SaYMZEBEQG0Zxo/4ft9pVOBPm5iYAQD.XRergI6EbnP7WA3wnOsTO', 'seller', '6371cccd3881d.png', 2),
+(30, 'Olivia', 'Julien', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$6KYxHkCqiGSuj5d7caoDDuaVEwr4G6enOJUZt4WcP5a4KJXCIparu', 'buyer', '636ff197b5e08.jpg', 0),
+(37, 'Spiky', 'Spiky', 'Bernardo', 'H7Y2C4', 'Laval', '$2y$10$qtXqCqn.jJeoTx7MpDt.ae/9WWCHDckVNaw27P8.tA.5tS36kwQLS', 'seller', '6384c6a920b18.jpg', 1),
+(120, 'Raphie', 'Raphie', 'Raphie', 'Raphie', 'St Bruno', '$2y$10$4HTX90GHjq/WKE03swQp7O03Qvmuw2eNnEBdK4WaISz.OYS5UBkaG', 'buyer', '6377e6f0242ea.jpg', 0),
+(135, 'test', '', '', '', '', '$2y$10$xJxWZItGj9jnoJXr2aXnu.IepOgJkZjDMMl59eqkomp25v7hnEuv.', 'buyer', '', 0),
+(136, 'q', '', '', '', '', '$2y$10$Sj9Mqw7ix4mOiCTWFYRb7uavKHNnQ4YfyWj23z1n4RbnfvwneUFTi', 'buyer', '', 0),
+(138, 'drake', 'Drake', 'LastName', 'the 6', 'toronto', '$2y$10$l0bfcl0rRpBmNwBbtkYOYeaAlKkwencqfzprc6hV3uEYCwMqgzBAi', 'buyer', '6388ffd882d3d.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -221,6 +231,37 @@ CREATE TABLE `rating` (
   `r_product_id` int(11) NOT NULL,
   `r_profile_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `rating`
+--
+
+INSERT INTO `rating` (`r_product_id`, `r_profile_id`) VALUES
+(57, 21),
+(57, 30),
+(77, 21),
+(78, 30);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratingseller`
+--
+
+DROP TABLE IF EXISTS `ratingseller`;
+CREATE TABLE `ratingseller` (
+  `rate_seller_id` int(10) NOT NULL,
+  `rate_profile_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `ratingseller`
+--
+
+INSERT INTO `ratingseller` (`rate_seller_id`, `rate_profile_id`) VALUES
+(22, 21),
+(22, 30),
+(37, 30);
 
 --
 -- Indexes for dumped tables
@@ -287,6 +328,12 @@ ALTER TABLE `rating`
   ADD PRIMARY KEY (`r_product_id`,`r_profile_id`);
 
 --
+-- Indexes for table `ratingseller`
+--
+ALTER TABLE `ratingseller`
+  ADD PRIMARY KEY (`rate_seller_id`,`rate_profile_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -312,19 +359,19 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=460;
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=464;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `profile`
