@@ -6,6 +6,11 @@ body{
   background-size: cover;
 }
 
+label{
+	margin-left: 800px;
+	color: white;
+}
+
 div{
    background-color: lightblue;
 }
