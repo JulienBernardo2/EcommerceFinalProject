@@ -221,6 +221,8 @@ class Buyer extends \jkn_bay\core\Controller{
  	 	$orders = $order->findProfileCartPaid($_SESSION['profile_id']);
  	 	
  	 	$this->view('Buyer/orderHistory', ['order'=>$orders]);
+
+ 	 	
  	 }
 
 	#[\jkn_bay\filters\Login]

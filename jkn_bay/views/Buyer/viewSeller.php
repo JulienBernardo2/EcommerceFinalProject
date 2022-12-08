@@ -17,6 +17,7 @@
 	    	<div class="row">
 	        	<div id = "profileMenu" class=" border-right">
 	            	<div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" style ="width: 200px; height: 200px;" src="/images/<?= $data['profile']->image?>"><span class="firstName"><?=$data['profile']->first_name?></span>			<span class="text-black-50"><?=$data['profile']->last_name?></span><span> </span></div>
+	            	  Seller Rating: <span class="text-black-50"><?=$data['profile']->ratingSeller?></span>
 	        	</div>
 
 	        	<div class="col-md-3">
@@ -53,6 +54,7 @@
 														<li><strong>Quality: </strong>$item->state </li>
 														<li><strong>In stock: </strong>$item->quantity</li>
 														<li><strong>Price: </strong>$$item->price</li>
+														<li><strong>Rating: </strong>$item->rating</li>
 													</ul>
 												</div>
 										</div>
@@ -63,6 +65,8 @@
 					?> 
 				</div>
 			</div>
+
+
 		</div>
 	</body>
 </html>

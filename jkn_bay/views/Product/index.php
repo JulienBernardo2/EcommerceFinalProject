@@ -49,6 +49,7 @@
 											<li><strong>Quality: </strong>$item->state </li>
 											<li><strong>In stock: </strong>$item->quantity</li>
 											<li><strong>Price: </strong>$$item->price</li>
+											<li><strong>Rating: </strong>$item->rating</li>
 										</ul>
 									</div>
 								</div>
