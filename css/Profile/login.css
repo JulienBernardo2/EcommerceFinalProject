@@ -6,6 +6,10 @@ body{
   background-size: cover;
 }
 
+*{
+  color: white;
+}
+
 #imageJKN{
   margin-right: 45%;
 }
