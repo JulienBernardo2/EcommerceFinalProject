@@ -12,7 +12,7 @@ label{
 }
 
 div{
-   background-color: lightblue;
+   background-color: white;
 }
 
 h1{
@@ -47,7 +47,7 @@ h3{
 }
 
 .product-details {
-	background-color: ivory;
+	background-color: lightblue;
 	position: inherit;
 	text-align: left;
 	overflow: hidden;
