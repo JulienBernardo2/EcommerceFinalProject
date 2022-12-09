@@ -35,7 +35,6 @@
 25. As a seller, I will be able to, edit my products for sale.
 26. As a seller, I will be able to, delete my products for sale.
 27. As a seller, I will be able to, view my history of my sold products.
-28. As a seller, I will be able to, reply to buyers about products
 
 Have to do but dont count : 
 <br/>As a seller, I will be able to, log out.
