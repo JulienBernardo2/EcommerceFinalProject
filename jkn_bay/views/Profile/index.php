@@ -1,21 +1,8 @@
-<html>
-	<head>
 		<!-- Imports -->
-    		<?php $this->view('header'); ?>
+    		<?php $this->view('header', ["style"=>'<link rel="stylesheet" href="/css/Profile/login.css"/>',
+    		"title"=>'Login']); ?>
 
-		<!-- Css file -->
-			<link rel="stylesheet" href="/css/Profile/login.css"/>
-
-		<title>Log in Page</title>
-	</head>
-
-	<body>
-		<!-- This is the navbar -->
-			<div class="navbar"> 
-				<a href ="/Buyer/index"> <?= _("Home") ?> </a>
-	  			<img id='imageJKN' src="/images/jknimage.png" alt="JKN" />	
-			</div>
-
+	<body>	
 		<!-- Form to allow user to login -->
 			<form action='' method='post'>
 				<div id="main" class='float-container' style="margin-top: 5%;">

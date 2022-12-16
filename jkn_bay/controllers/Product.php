@@ -31,7 +31,11 @@ class Product extends \jkn_bay\core\Controller{
 			$product->description = $_POST['description'];
 			$product->price = $_POST['price'];
 			$product->quantity = $_POST['quantity'];
-			$product->image = $filename;
+			if($filename){
+				$product->image = $filename;
+			} else{
+				$product->image = "blank.jpg";
+			}
 			
 			//Checks if seller selected the state of their object
 			if($_POST['state'] == null){
@@ -125,20 +129,10 @@ class Product extends \jkn_bay\core\Controller{
 			$product = new \jkn_bay\models\Product();
 			$product = $product->get($product_id);
 
-
  	 		$order = new \jkn_bay\models\Order();
- 	 		$orders = $order->findProductsPaid($_SESSION['profile_id']);
+ 	 		$orders = $order->findProductsOrdered($product_id);
 
- 	 		$check = false;
-
- 	 		foreach($orders as $item){
- 	 			if($product_id == $item->product_id){
-					$check = true;
-					break;
-				}
- 	 		}
-
- 	 		if(!$check){
+ 	 		if(!$orders){
  	 			//Gets the order details for the specified product incase buyers added them to their cart
 				$order_detail = new \jkn_bay\models\Order_detail();
 				$order_detail= $order_detail->getForProduct($product_id);

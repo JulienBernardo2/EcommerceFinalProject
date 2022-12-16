@@ -1,17 +1,7 @@
-<html>
-	<head>
 		<!-- Imports -->
-    		<?php $this->view('header'); ?>
+    		<?php $this->view('header', ["style"=>'<link rel="stylesheet" href="/css/Product/index.css"/>',
+    		"title"=>'Seller Page']); ?>
 
-		<!-- CSS Styles -->
-			<link rel="stylesheet" href="/css/Product/index.css"/>
-			<title>Seller Page</title>
-	</head>
-		
-	<body>	
-		<!-- Nav -->
-    		<?php $this->view('nav'); ?>
-	
 		<h1 class="display"> <?= _("My Products") ?> </h1>
 	
 		<div>
@@ -21,7 +11,7 @@
 						echo"
 							<div id='container'>	
 								<div class='product-details'>					
-									<h3>$item->name</h3>
+									<h3 type='name'>$item->name</h3>
 						 			
 									<span class='desc'>$item->description</span	>
 									<br><br>
@@ -49,6 +39,7 @@
 											<li><strong> " . _("Quality:") .  "</strong>$item->state </li>
 											<li><strong> " . _("In stock:") . "</strong>$item->quantity</li>
 											<li><strong> " . _("Price:") . "</strong>$$item->price</li>
+											<li><strong> " . _("Rating:") . "  </strong>$item->rating</li>
 										</ul>
 									</div>
 								</div>

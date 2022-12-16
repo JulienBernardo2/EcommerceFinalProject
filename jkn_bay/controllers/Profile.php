@@ -73,12 +73,11 @@ class Profile extends \jkn_bay\core\Controller{
 
 			 		//Creates the profile and sets it to the current session
 			 		$profile =  $profile->insert();
-			 		
+
 			 		$new_profile = new \jkn_bay\models\Profile();
 			 		$new_profile = $new_profile->getProfileId($profile);
-
+			 		
 			 		if($new_profile->role == 'buyer'){
-			 			$message = new \jkn_bay\models\Message();
 			 			$message = $this->createDiscountMessage($new_profile->profile_id);
 			 		}
 					header('location:/Profile/index?message=Your profile is set up, login when ready');
@@ -124,7 +123,7 @@ class Profile extends \jkn_bay\core\Controller{
 			if ($profile->role == 'buyer' ) {
 				header('location:/Buyer/index?message=Profile Updated');
 			} else {
-				header('location:/Seller/index?message=Profile Updated');
+				header('location:/Product/index?message=Profile Updated');
 			}
 		}else{
 			$this->view('Profile/edit', $profile);
@@ -154,11 +153,6 @@ class Profile extends \jkn_bay\core\Controller{
 		if($products == null){
 			header('location:/Buyer/index?error=No products match');
 		}
-
-		//Sends an error that no profiles matched the search box value
-		// if($profiles == null){
-		// 	header('location:/Product/indexBuyer?error=No profiles match');
-		// }
 
 		//Gets all of the categorys for the catalog
 	 	$category = new \jkn_bay\models\Category();
@@ -210,11 +204,10 @@ class Profile extends \jkn_bay\core\Controller{
 		$message->message = 'Welcome to JKN Bay, here is your discount code: ' . $randomString; 
 		$message->flag = 'discount';
 		$message->receiver_id = $profile_id;
-		$message->insertDiscount();
+		$message->insert();
 
 		$message = new \jkn_bay\models\Message();
 		$message = $message->getDiscountMessage($profile_id);
-		var_dump($message);
 		$discount_code = new \jkn_bay\models\Discount();
 	    $discount_code->profile_id = $profile_id;
 	    $discount_code->message_id = $message->message_id;

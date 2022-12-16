@@ -5,9 +5,12 @@ namespace jkn_bay\filters;
 class Buyer extends \jkn_bay\core\AccessFilter{
 	
 	public function execute(){
-		if($_SESSION['role'] != 'buyer'){
-			header('location:/Product/indexSeller?error=Your account does not have the privelage to this page');
-			return true;
+		if(isset($_SESSION['profile_id']))
+		{
+			if($_SESSION['role'] != 'buyer'){
+				header('location:/Product/index?error=Your account does not have the privelage to this page');
+				return true;
+			}
 		}
 		return false;
 	}

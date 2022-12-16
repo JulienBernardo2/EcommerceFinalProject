@@ -2,7 +2,7 @@
 namespace jkn_bay\models;
 
 class Discount extends \jkn_bay\core\Models{
-
+	
 	//Create discounts
 	public function insert(){
 		$SQL = "INSERT INTO discount(profile_id, message_id, code) VALUES (:profile_id, :message_id, :code)";

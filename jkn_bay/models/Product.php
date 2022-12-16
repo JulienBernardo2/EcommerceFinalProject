@@ -15,9 +15,6 @@ class Product extends \jkn_bay\core\Models{
 	#[\jkn_bay\validators\NonEmpty]
 	public $quantity;
 
-	#[\jkn_bay\validators\NonEmpty]
-	public $image;
-
 	//Creates a product
 	protected function insert(){
 		$SQL = "INSERT INTO product (profile_id, name, description, price, quantity, category_id, state, image) VALUES (:profile_id, :name, :description, :price, :quantity, :category_id, :state, :image)";
@@ -30,11 +27,11 @@ class Product extends \jkn_bay\core\Models{
 			 'quantity'=>$this->quantity,
 			 'state'=>$this->state,
 			 'category_id'=>$this->category_id,
-			 'image'=>$this->image,]);
+			 'image'=>$this->image]);
 	}
 
 	//Updates a product
-	public function update(){
+	protected function update(){
 		$SQL = "UPDATE product SET name=:name, description=:description, price=:price, quantity=:quantity, state=:state, category_id=:category_id, image=:image, status=:status WHERE product_id=:product_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(
@@ -152,8 +149,17 @@ class Product extends \jkn_bay\core\Models{
 
 
 	//Gets all of the products for a category
+	// public function productsToChangeQuantity($order_id){
+	// 	$SQL= "SELECT product.product_id, product.quantity, order_detail.qty FROM order_detail JOIN `order` ON order_detail.order_id=`order`.order_id JOIN product ON product.product_id=order_detail.product_id WHERE order_detail.order_id=:order_id";
+	// 	$STMT = self::$_connection->prepare($SQL);
+	// 	$STMT->execute(['order_id'=>$order_id]);//pass any data for the query
+	// 	$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Product");
+	// 	return $STMT->fetchAll();
+	// }
+
+	//Gets all of the products for a category
 	public function productsToChangeQuantity($order_id){
-		$SQL= "SELECT product.product_id, product.quantity, order_detail.qty FROM order_detail JOIN `order` ON order_detail.order_id=`order`.order_id JOIN product ON product.product_id=order_detail.product_id WHERE order_detail.order_id=:order_id";
+		$SQL= "SELECT order_detail.order_detail_id, order_detail.order_id, order_detail.qty, product.* FROM order_detail JOIN product ON order_detail.product_id = product.product_id WHERE order_detail.order_id = :order_id";
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['order_id'=>$order_id]);//pass any data for the query
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Product");

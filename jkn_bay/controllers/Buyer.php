@@ -4,6 +4,7 @@ namespace jkn_bay\controllers;
 class Buyer extends \jkn_bay\core\Controller{
 
 	//Creates the buyer page with the catalog
+	#[\jkn_bay\filters\Buyer]
  	public function index(){
 
  		//Gets all of the products for the catlog
@@ -70,6 +71,7 @@ class Buyer extends \jkn_bay\core\Controller{
 	 	}
  	}
 
+ 	//Creates a orderDetail for the cart
  	private function newOrderDetail($order_id, $product_price, $product_id){
  		$newProduct = new \jkn_bay\models\Order_detail();
 		 		
@@ -172,26 +174,19 @@ class Buyer extends \jkn_bay\core\Controller{
  	 	$cart = new \jkn_bay\models\Order();
  	 	$cart = $cart->findProfileCart($_SESSION['profile_id']);
  	 	
- 	 	$order_detail = new \jkn_bay\models\Order_detail();
- 	 	$order_detail = $order_detail->getForOrder($cart->order_id);
+ 	 	$product = new \jkn_bay\models\Product();
+ 	 	$product = $product->productsToChangeQuantity($cart->order_id);
 
- 	 	if($order_detail == null){
+ 	 	if($product == null){
  	 		header('location:/Buyer/viewCart?error=Cart empty');
  	 	} else{
- 	 		$products_to_change = new \jkn_bay\models\Product();
- 	 	$products_to_change = $products_to_change->productsToChangeQuantity($cart->order_id);
-
- 	 	 foreach($order_detail as $order_details){
- 	 	 	foreach($products_to_change as $products){
- 	 	  		if($order_details->product_id == $products->product_id){
-	 	  			$products->subtract($products->product_id, $order_details->qty);
-		 			if($products->quantity == 0){
- 		 						$products->status = 'sold';
- 	 	  						$products->updateStatus();	
+			foreach($product as $item){
+				$item->subtract($item->product_id, $item->qty);
+		 			if($item->quantity == 0){
+ 		 						$item->status = 'sold';
+ 	 	  						$item->updateStatus();	
  	 	  			}
-		 		} 
- 	 	  	}
- 	 	}
+			}
 	 	 
 	 	$discount = new \jkn_bay\models\Discount();
 		$discount = $discount->get($_SESSION['profile_id']);

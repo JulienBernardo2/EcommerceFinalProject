@@ -3,6 +3,7 @@ namespace jkn_bay\controllers;
 
 class Message extends \jkn_bay\core\Controller{
 
+	//Allows buyer to see all of his messages
 	#[\jkn_bay\filters\Login]
 	#[\jkn_bay\filters\Buyer]
 	public function indexBuyerMes(){
@@ -14,6 +15,7 @@ class Message extends \jkn_bay\core\Controller{
 		$this->view('Message/indexBuyerMes', ['messages'=>$messages, 'discountM'=>$discountM]);
 	}
 
+	//Allows seller to see all of his messages
 	#[\jkn_bay\filters\Login]
 	#[\jkn_bay\filters\Seller]
 	public function indexSellerMes(){
@@ -23,21 +25,16 @@ class Message extends \jkn_bay\core\Controller{
 		$this->view('Message/indexSellerMes', $messages);
 	}
 
+	//Allows buyers to contact sellers
 	#[\jkn_bay\filters\Login]
 	#[\jkn_bay\filters\Buyer]
  	public function contactSeller($profile_id, $product_id){
  		
  		if(isset($_POST['action'])){
  			$message = new \jkn_bay\models\Message();
-			$messages = $message->getMessagesBuyer($_SESSION['profile_id']);
-	 		$check = false;
-
- 			foreach($messages as $item){	
-		 		if($item->product_id == $product_id){
-		 			$check = true;
-		 		}	
-	 		}
- 			if($check){
+			$message = $message->getProductMessage($_SESSION['profile_id'], $product_id);
+			
+ 			if($message){
  				header('location:/Buyer/viewSeller/ '. $profile_id . '?error=You have already sent the seller a message about this product');
  			} else{
  			$message = new \jkn_bay\models\Message();
@@ -45,6 +42,7 @@ class Message extends \jkn_bay\core\Controller{
 			$message->sender_id = $_SESSION['profile_id'];
 			$message->receiver_id = $profile_id;
 			$message->product_id = $product_id;
+			$message->flag = 'none';
 			$message->insert();
 
 			header('location:/Buyer/viewSeller/ '. $profile_id . '?message=Your message was sent');
@@ -62,6 +60,7 @@ class Message extends \jkn_bay\core\Controller{
 		}
  	}
 
+ 	//Allows users to reply to one another
 	#[\jkn_bay\filters\Login]
 	public function reply($message_id){
 		$old_message = new \jkn_bay\models\Message();
@@ -78,6 +77,7 @@ class Message extends \jkn_bay\core\Controller{
 			$message = new \jkn_bay\models\Message();
 			$message->message = $_POST['message'];
 			$message->reply_to = $message_id;
+			$message->flag = 'none';
 			$message->sender_id = $_SESSION['profile_id'];
 			$message->product_id = $old_message->product_id;
 

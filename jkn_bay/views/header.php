@@ -1,3 +1,4 @@
+<html>
 <head>
 	<meta charset="utf-8" />
 	
@@ -24,10 +25,16 @@
 
 	<!-- Nav CSS -->
 		<link rel="stylesheet" href="/css/nav.css"/>
+		<?= (isset($data['style'])?$data['style']:"") ?>
+
+	<title><?= (isset($data['title'])?$data['title']:"") ?></title>
 </head>
 
-<footer>
-		<!-- PopUp Acceptances -->
+<body>
+	<!-- Nav -->
+    	<?php $this->view('nav'); ?>
+
+	<!-- PopUp Acceptances -->
 		<?php
 		if(isset($_GET['message'])){
 			echo"<script>popUpSuccess('$_GET[message]');</script>";
@@ -39,5 +46,4 @@
 			echo"<script>popUpError('$_GET[error]');</script>";
 		}
 		?>
-</footer>
 

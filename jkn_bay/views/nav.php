@@ -3,10 +3,10 @@
 	if(!isset($_SESSION['username'])){
 			echo '
     		<a  href ="/Buyer/index">' . _("Home") . '</a>
-    		<a  href =""></a>
-    		<a  href =""></a>
-			<img src="/images/jknimage.png" alt="JKN" />
-    		<a  href =""></a>
+    		<a></a>
+    		<a></a>
+				<img src="/images/jknimage.png" alt="JKN" />
+    		<a></a>
     		<a  href ="/Profile/index"> ' . _("Login") . '</a>
     		<div class="dropdown">
                       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

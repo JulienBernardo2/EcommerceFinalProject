@@ -3,26 +3,20 @@ namespace jkn_bay\models;
 
 class Message extends \jkn_bay\core\Models{
 
-	public function insert(){
-        $SQL = "INSERT INTO message(sender_id, message, receiver_id, product_id, reply_to) VALUES (:sender_id, :message, :receiver_id, :product_id, :reply_to)";
+	#[\jkn_bay\validators\NonEmpty]
+	public $message;
+
+	protected function insert(){
+        $SQL = "INSERT INTO message(sender_id, message, receiver_id, product_id, reply_to, flag) VALUES (:sender_id, :message, :receiver_id, :product_id, :reply_to, :flag)";
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(
             ['receiver_id'=>$this->receiver_id,
              'message'=>$this->message,
              'sender_id'=>$this->sender_id,
-             'product_id'=>$this->product_id,
+             'product_id'=>$this->product_id,	
+			 'flag'=>$this->flag,
          	 'reply_to'=>$this->reply_to]);
     }
-
-	//Create discounts
-	public function insertDiscount(){
-		$SQL = "INSERT INTO message(receiver_id, message, flag) VALUES (:receiver_id, :message, :flag)";
-		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(
-			['receiver_id'=>$this->receiver_id, 
-			 'message'=>$this->message,	
-			 'flag'=>$this->flag]);
-	}
 
 	//Gets all the messages based for a profile
 	public function getMessagesBuyer($profile_id){
@@ -76,5 +70,14 @@ class Message extends \jkn_bay\core\Models{
 		$STMT->execute(['profile_id'=>$profile_id, 'flag'=>'discount']);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Message");
 		return $STMT->fetch();
+	}
+
+	public function getProductMessage($profile_id, $product_id){
+		$SQL = "SELECT message.* FROM message JOIN product ON product.product_id = message.product_id
+				JOIN profile ON profile.profile_id = sender_id WHERE message.sender_id =:profile_id && product.product_id=:product_id";
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['profile_id'=>$profile_id, 'product_id'=>$product_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "jkn_bay\\models\\Message");
+		return $STMT->fetchAll();
 	}
 }

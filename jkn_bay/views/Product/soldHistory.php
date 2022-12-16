@@ -1,17 +1,6 @@
-<html>
-	<head>
 		<!-- Imports -->
-    		<?php $this->view('header'); ?>
-		<!-- Css file -->
-			<link rel="stylesheet" href="/css/Product/soldHistory.css"/>
-
-		<title>Sold History</title>
-	</head>
-		
-	<body>	
-
-		<!-- Nav -->
-    		<?php $this->view('nav'); ?>
+    		<?php $this->view('header', ["style"=>'<link rel="stylesheet" href="/css/Product/soldHistory.css"/>',
+    		"title"=>'Sodl History']); ?>
 
 		<h1 class='title'> <?= _("My Sold Products") ?> </h1>	
 

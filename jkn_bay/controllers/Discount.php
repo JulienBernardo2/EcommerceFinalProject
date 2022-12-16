@@ -22,6 +22,7 @@ class Discount extends \jkn_bay\core\Controller{
  	 			header('location:/Buyer/viewCart?error=Please add items to your cart');
  	 		}else{
  	 			if(password_verify($_POST['code'], $discount->code)  && $discount->status == 'created'){		
+					//Applies the 20 percent discount to the cart
 					$cart->total = ($cart->total) - ($cart->total * 0.2);
 					$cart->update();
 					$discount->status = 'applied';

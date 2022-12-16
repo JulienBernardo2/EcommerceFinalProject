@@ -1,22 +1,16 @@
-<html>
-	<header>
 		<!-- Imports -->
-    		<?php $this->view('header'); ?>
+    		<?php $this->view('header', ["style"=>'<link rel="stylesheet" href="/css/Buyer/index.css"/>',
+    		"title"=>'Buyer']); ?>
 
-
-			<link rel="stylesheet" href="/css/Buyer/index.css"/>
-			<link rel="stylesheet" href="/css/Buyer/viewSeller.css"/>	
-		
-		<title>View Seller</title>
-		
-		<!-- Nav -->
-	   		<?php $this->view('nav'); ?>
-	</header>
-	<body>
 		<div class="container rounded bg-white mt-5 mb-5">
 	    	<div class="row">
 	        	<div id = "profileMenu" class=" border-right">
-	            	<div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" style ="width: 200px; height: 200px;" src="/images/<?= $data['profile']->image?>"><span class="firstName"><?=$data['profile']->first_name?></span>			<span class="text-black-50"><?=$data['profile']->last_name?></span><span> </span></div>Seller Rating: <span class="text-black-50"><?=$data['profile']->ratingSeller?></span>
+	            	<div class="d-flex flex-column align-items-center text-center p-3 py-5">
+	            		<img class="rounded-circle mt-5" style ="width: 200px; height: 200px;" src="/images/<?= $data['profile']->image?>">
+	            		<span id='firstnameS' class="firstName"><?=$data['profile']->first_name?></span>
+	            		<span class="text-black-50"><?=$data['profile']->last_name?></span>
+	            		<span>Seller Rating: <span class="text-black-50"><?=$data['profile']->ratingSeller?></span></span>
+	            	</div>
 	        	</div>
 
 	        	<div class="col-md-3">
@@ -31,7 +25,7 @@
 															 	
 											<span class='desc'>$item->description</span>		
 											<a href='/Message/contactSeller/$item->profile_id/$item->product_id' class='btn btn-primary'>
-										   				<span class='buy'> " . _("Contact Seller about product") . "</span>
+										   				<span class='buy'> " . _("Contact Seller") . "</span>
 										 	</a>
 																				
 											<div class='control2'>
@@ -51,6 +45,7 @@
 														<li><strong> " . _("Quality:") . "</strong>$item->state </li>
 														<li><strong> " . _("In stock:") . "</strong>$item->quantity</li>
 														<li><strong> " . _("Price:") . "</strong>$$item->price</li>
+														<li><strong> " . _("Rating:") . "  </strong>$item->rating</li>
 													</ul>
 												</div>
 										</div>
