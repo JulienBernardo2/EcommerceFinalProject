@@ -66,7 +66,6 @@ class AcceptanceTester extends \Codeception\Actor
      */
      public function iSee($arg1)
      {
-        //$this->wait(2);
         $this->see($arg1);
      }
 
