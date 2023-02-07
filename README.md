@@ -1,11 +1,11 @@
 # **_Ecommerce Website_**
 
-## Project description and goals 💡:goal_net:
+## Project description and goals 💡
 
  For our project, we are aiming to create a web marketplace application which will resemble Ebay. Clients will be able to sell their own products and
  also buy products for sale.
 
-## Platform of choice
+## Run website :arrow_forward:
  Our project will be using Xampp to run the website and phpmyadmin for our database, here are the following steps on how to run the project
  
    1. Download Xampp and install it
